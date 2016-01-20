@@ -10,3 +10,27 @@ system services are long-running processes such as daemons, e.g. SSH, database o
 
 orphans: Process whose parent has finished somehow, gets adopted by init system
 -> when a process terminates its parent must call wait() to get its exit() code, if there is no init system adopting orphans the process would become a zombie
+### 4
+Before systemd there were simple init systems that just did the tasks listed on the previous slide.
+Init scripts -> increased greatly in complexity over time, look at incomprehensible skeleton for Debian service init scripts
+Runlevels -> things such as single-user mode, full multiuser mode, reboot, halt
+
+Init will run all the scripts, but it will not do much more than print information on success/failure of started scripts
+
+Init scripts run strictly sequential
+
+Init is unaware of inter-service dependencies, expressed through prefixing scripts with numbers etc.
+
+Init will not watch processes after system is booted -> crashing daemons will not automatically restart
+### 5
+### 6
+How systemd came to be
+
+Considering the lack of process monitoring, problematic things about init scripts -> legacy init systems have drawbacks
+
+Apple had already built launchd, a more featured init system that monitored running processes, could automatically restart them and allowed for certain advanced features -> however it is awful to use and wrap your head around
+
+Lennart Poettering of Pulseaudio fame and Kay Sievers decided to implement a new init system to address these problems, while taking certain clues from Apple's design
+### 7
+Systemd's design goals
+### 8

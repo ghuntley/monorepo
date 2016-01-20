@@ -15,17 +15,39 @@
   An init system is the first process (PID 1) started in a Unix like system. It handles:
 
   \begin{itemize}
-    \item Starting system processes and services
-    \item Adopting and ``reaping'' orphaned processes
+  \item Starting system processes and services to prepare environment
+  \item Adopting and ``reaping'' orphaned processes
   \end{itemize}
 \end{frame}
 
-\begin{frame}{What is systemd?}
-  Bar baz
+\begin{frame}{Classical init systems}
+  Init systems before systemd - such as SysVinit - were very simple.
+
+  \begin{itemize}
+  \item Services and processes to run are organised into ``init scripts''
+  \item Scripts are linked to specific runlevels
+  \item Init system is configured to boot into a runlevel
+  \end{itemize}
+
 \end{frame}
 
-\begin{frame}{Systemd units}
-  Foo bar
+\section{systemd}
+
+\begin{frame}{Can we do better?}
+  \begin{itemize}
+  \item ``legacy'' init systems have a lot of drawbacks
+  \item Apple is taking a different approach on OS X
+  \item Systemd project was founded to address these issues
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Systemd design goals}
+  \begin{itemize}
+  \item Expressing service dependencies
+  \item Monitoring service status
+  \item Enable parallel service startups
+  \item Ease of use
+  \end{itemize}
 \end{frame}
 
 \section{Demo}
