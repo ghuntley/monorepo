@@ -1,0 +1,12 @@
+[file]
+slides.pdf
+[notes]
+### 1
+### 2
+Let's start off by looking at what an init system is, how they used to work and what systemd does different before we go into more systemd-specific details.
+### 3
+system processes that are started include for example FS mounts, network settings, powertop...
+system services are long-running processes such as daemons, e.g. SSH, database or web servers, session managers, udev ...
+
+orphans: Process whose parent has finished somehow, gets adopted by init system
+-> when a process terminates its parent must call wait() to get its exit() code, if there is no init system adopting orphans the process would become a zombie
