@@ -14,10 +14,10 @@
 \section{Introduction}
 
 \begin{frame}{What is an init system?}
-  An init system is the first process (PID 1) started in a Unix like system. It handles:
+  An init system is the first userspace process (PID 1) started in a UNIX-like system. It handles:
 
   \begin{itemize}
-  \item Starting system processes and services to prepare environment
+  \item Starting system processes and services to prepare the environment
   \item Adopting and ``reaping'' orphaned processes
   \end{itemize}
 \end{frame}
@@ -54,12 +54,12 @@
 
 \begin{frame}{Systemd - the basics}
   \begin{itemize}
-    \item No scripts are executed, only declarative units
-    \item Units have explicit dependencies
-    \item Processes are supervised
-    \item cgroups are utilised to apply resource limits
-    \item Service logs are managed and centrally queryable
-    \item Much more!
+  \item No scripts are executed, only declarative units
+  \item Units have explicit dependencies
+  \item Processes are supervised
+  \item cgroups are utilised to apply resource limits
+  \item Service logs are managed and centrally queryable
+  \item Much more!
   \end{itemize}
 \end{frame}
 
@@ -69,20 +69,20 @@
     \small
     \begin{columns}[T,onlytextwidth]
       \column{0.5\textwidth}
-        \begin{itemize}
-          \item systemd.service
-          \item systemd.target
-          \item systemd.timer
-          \item systemd.path
-          \item systemd.socket
-        \end{itemize}
+      \begin{itemize}
+      \item systemd.service
+      \item systemd.target
+      \item systemd.timer
+      \item systemd.path
+      \item systemd.socket
+      \end{itemize}
       \column{0.5\textwidth}
-        \begin{itemize}
-          \item systemd.device
-          \item systemd.mount
-          \item systemd.swap
-          \item systemd.slice
-        \end{itemize}
+      \begin{itemize}
+      \item systemd.device
+      \item systemd.mount
+      \item systemd.swap
+      \item systemd.slice
+      \end{itemize}
     \end{columns}
   \end{code}
 \end{frame}
