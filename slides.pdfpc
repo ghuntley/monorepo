@@ -67,3 +67,13 @@ systemd-analyze is used for figuring out performance issues, for example by anal
 systemd-cgtop is like top, but not on a process level - it's on a cgroup/slice level, shows combined usage of cgroups
 systemd-cgls lists contents of systemd's cgroups to see which services are in what group
 there also exist a bunch of others that we'll skip for now
+### 13
+### 14
+### 15
+Systemd criticism comes from many directions and usually focuses on a few points
+feature-creep: systemd is absorbing a lot of different services
+### 16
+explain diagram a bit
+### 17
+opaque: as a result, systemd has a lot more internal complexity that people can't easily wrap your mind around. However I argue that unless you're using something like suckless' sinit with your own scripts, you probably have no idea what your init does today anyways
+unstable: this was definitely true even in the first stable release, with the binary log format getting corrupted for example. I haven't personally experienced any trouble with it recently though.
