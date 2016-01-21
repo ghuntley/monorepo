@@ -87,7 +87,40 @@
   \end{code}
 \end{frame}
 
-\begin{frame}{}
+
+\begin{frame}{Resource management}
+  Systemd utilises Linux \texttt{cgroups} for resource management, specifically CPU, disk I/O and memory usage.
+
+  \begin{itemize}
+  \item Hierarchical setup of groups makes it easy to limit resources for a set of services
+  \item Units can be attached to a \texttt{systemd.slice} for controlling resources for a group of services
+  \item Resource limits can also be specified directly in the unit
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{journald}
+  Systemd comes with an integrated log management solution, replacing software such as \texttt{syslog-ng}.
+  \begin{itemize}
+  \item All process output is collected in the journal
+  \item \texttt{journalctl} tool provides many options for querying and tailing logs
+  \item Children of processes automatically log to the journal as well
+  \item \textbf{Caveat:} Hard to learn initially
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Systemd tooling}
+  A variety of CLI-tools exist for managing systemd systems.
+  \begin{code}
+    \begin{itemize}
+    \item systemctl
+    \item journalctl
+    \item systemd-analyze
+    \item systemd-cgtop
+    \item systemd-cgls
+    \end{itemize}
+  \end{code}
+
+  Let's look at some of them.
 \end{frame}
 
 \section{Demo}

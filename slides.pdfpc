@@ -52,3 +52,18 @@ systemd.mount - systemd equivalent of fstab entries
 systemd.swap - like mount
 systemd.slice - unit groups for resource management purposes
 ... and a few more specialised ones
+### 10
+Linux cgroups are a new resource management feature added quite a long time ago, but not used much.
+Cgroups can be created manually and processes can be moved into them in order to control resource utilisation
+Few people used them before systemd, limits.conf was often much easier but not as fine-grained
+Systemd changed this
+### 11
+Systemd collects standard output and stderr from all processes into its journal system
+they provide a tool for querying the log, for example grouping service logs together with correct timestamps, querying,
+### 12
+Systemd tooling, most important one is systemctl for general service management
+journalctl is the query and management tool for journald
+systemd-analyze is used for figuring out performance issues, for example by analysing the boot process, can make cool graphs of dependencies
+systemd-cgtop is like top, but not on a process level - it's on a cgroup/slice level, shows combined usage of cgroups
+systemd-cgls lists contents of systemd's cgroups to see which services are in what group
+there also exist a bunch of others that we'll skip for now
