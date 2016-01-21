@@ -77,3 +77,9 @@ explain diagram a bit
 ### 17
 opaque: as a result, systemd has a lot more internal complexity that people can't easily wrap your mind around. However I argue that unless you're using something like suckless' sinit with your own scripts, you probably have no idea what your init does today anyways
 unstable: this was definitely true even in the first stable release, with the binary log format getting corrupted for example. I haven't personally experienced any trouble with it recently though.
+Another thing is that services start depending on systemd when they shouldn't, a problem for the BSD world (who cares (hey christoph!))
+### 18
+Despite criticism, systemd was adopted rapidly by large portions of the Linux
+Initially in RedHat, because Poettering and co work there and it was clear from the beginning that it would be there
+ArchLinux (which I'm using) and a few others followed suit quite quickly
+Eventually, the big Debian init system discussion - after a lot of flaming - led to Debian adopting it as well, which had a ripple effect for related distros such as Ubuntu which abandoned upstart for it.
