@@ -34,3 +34,21 @@ Lennart Poettering of Pulseaudio fame and Kay Sievers decided to implement a new
 ### 7
 Systemd's design goals
 ### 8
+No more init scripts with opaque effects -> services are clearly defined units
+Unit dependencies -> systemd can figure out what can be started in parallel
+Process supervision: Unit can be configured in many ways, e.g. always restart, only restart on success etc
+Service logs: We'll talk more about this later
+### 9
+Units are the core component of systemd that users deal with. They define services and everything else that systemd needs to start and manage.
+Note that all these are the names of the respective man page on a system with systemd installed
+Types:
+systemd.service - processes controlled by systemd
+systemd.target - equivalent to "runlevels", grouping of units for synchronisation
+systemd.timer - more powerful replacement of cron that starts other units
+systemd.path - systemd equvialent of inotify, watches files/folders -> launches units
+systemd.socket - expose local IPC or network sockets, launch units on connections
+systemd.device - trigger units when certain devices are connected
+systemd.mount - systemd equivalent of fstab entries
+systemd.swap - like mount
+systemd.slice - unit groups for resource management purposes
+... and a few more specialised ones

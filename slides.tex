@@ -1,6 +1,8 @@
 \documentclass[14pt]{beamer}
 \usetheme{metropolis}
 
+\newenvironment{code}{\ttfamily}{\par}
+
 \title{systemd}
 \subtitle{The standard Linux init system}
 
@@ -48,6 +50,44 @@
   \item Enable parallel service startups
   \item Ease of use
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Systemd - the basics}
+  \begin{itemize}
+    \item No scripts are executed, only declarative units
+    \item Units have explicit dependencies
+    \item Processes are supervised
+    \item cgroups are utilised to apply resource limits
+    \item Service logs are managed and centrally queryable
+    \item Much more!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Systemd units}
+  Units specify how and what to start. Several types exist:
+  \begin{code}
+    \small
+    \begin{columns}[T,onlytextwidth]
+      \column{0.5\textwidth}
+        \begin{itemize}
+          \item systemd.service
+          \item systemd.target
+          \item systemd.timer
+          \item systemd.path
+          \item systemd.socket
+        \end{itemize}
+      \column{0.5\textwidth}
+        \begin{itemize}
+          \item systemd.device
+          \item systemd.mount
+          \item systemd.swap
+          \item systemd.slice
+        \end{itemize}
+    \end{columns}
+  \end{code}
+\end{frame}
+
+\begin{frame}{}
 \end{frame}
 
 \section{Demo}
