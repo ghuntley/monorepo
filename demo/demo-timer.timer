@@ -1,0 +1,12 @@
+[Unit]
+Description=Demonstrate systemd timers
+
+[Timer]
+OnActiveSec=2
+OnUnitActiveSec=5
+AccuracySec=5
+
+# OnCalendar=Thu,Fri 2016-*-1,5 11:12:13
+
+[Install]
+WantedBy=multi-user.target

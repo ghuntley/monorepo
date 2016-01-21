@@ -1,0 +1,8 @@
+[Unit]
+Description=Limited resources demo
+DefaultDependencies=no
+Before=slices.target
+
+[Slice]
+CPUQuota=10%
+MemoryLimit=1G

@@ -1,0 +1,6 @@
+[Unit]
+Description=Demonstrate systemd templating by sending a notification
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/notify-send 'Systemd notification' '%i'

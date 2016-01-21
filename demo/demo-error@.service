@@ -1,0 +1,7 @@
+[Unit]
+Description=Demonstrate failing units
+OnFailure=demo-notify@%n.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/false
