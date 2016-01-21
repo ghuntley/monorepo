@@ -5,4 +5,3 @@ Before=slices.target
 
 [Slice]
 CPUQuota=10%
-MemoryLimit=1G

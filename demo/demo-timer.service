@@ -1,6 +1,0 @@
-[Unit]
-Description=Demo unit for systemd timers
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/echo "Systemd timer fired! Hello Hackeriet."

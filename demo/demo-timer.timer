@@ -5,7 +5,7 @@ Description=Demonstrate systemd timers
 OnActiveSec=2
 OnUnitActiveSec=5
 AccuracySec=5
-
+Unit=demo.service
 # OnCalendar=Thu,Fri 2016-*-1,5 11:12:13
 
 [Install]
