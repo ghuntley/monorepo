@@ -1,4 +1,4 @@
--module(stomp.erl_app).
+-module(stomp_app).
 -behaviour(application).
 
 -export([start/2]).
