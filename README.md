@@ -9,7 +9,7 @@ It provides an application called `stomp` which takes configuration of the form:
 
 ```erlang
 [{stomp, #{host     => "stomp-server.somedomain.sexy", % required
-           port     => 61613,                          % required
+           port     => 61613,                          % optional
            login    => <<"someuser">>,                 % optional
            passcode => <<"hunter2>>,                   % optional
  }}].
@@ -47,12 +47,11 @@ Once the application starts it will register a process under the name
 %% Subscribe to a destination, receive the subscription ID
 -spec subscribe(binary(),   % Destination (e.g. <<"/queue/lizards">>)
                 ack_mode(), % Client-acknowledgement mode
-                pid())      % PID of the process that wants to receive messages
                 -> {ok, sub_id()}.
 ```
 
 This synchronous call subscribes to a message queue. The `stomp_worker` will
-link itself to the PID and forward received messages as
+link itself to the caller and forward received messages as
 `{msg, sub_id(), stomp_msg()}`.
 
 Depending on the acknowledgement mode specified on connecting, the subscriber

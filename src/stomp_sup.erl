@@ -19,4 +19,4 @@ stomp_spec() ->
       restart  => permanent,
       shutdown => 5000,
       type     => worker,
-      module   => [stomp_worker]}
+      module   => [stomp_worker]}.
