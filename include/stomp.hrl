@@ -17,3 +17,6 @@
 -record(stomp_msg, { headers :: #{ binary() => binary() },
                      body    :: binary() }).
 -type stomp_msg() :: #stomp_msg{}.
+
+%% STOMP frame components
+-type headers() :: #{binary() => binary()}.
