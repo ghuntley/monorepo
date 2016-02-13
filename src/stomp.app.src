@@ -4,4 +4,4 @@
                       {registered, [stomp_worker]},
                       {env, []},
                       {applications, [kernel, stdlib]},
-                      {mod, {stomp_app, []}}].
+                      {mod, {stomp_app, []}}]}.

@@ -12,6 +12,9 @@
 -export([terminate/2]).
 -export([code_change/3]).
 
+%% Testing
+-compile(export_all).
+
 -include("stomp.hrl").
 
 %% State of a stomp_worker
@@ -69,7 +72,7 @@ handle_call({subscribe, Dest, Ack}, From, State) ->
 handle_call(_Req, _From, State) ->
     {reply, ignored, State}.
 
-handle_info({tcp, Conn, Frame}, State#state{connection = Conn}) ->
+handle_info({tcp, Conn, Frame}, State) when Conn =:= State#state.connection ->
     handle_frame(Frame, State);
 handle_info(_Msg, State) ->
     {noreply, State}.
@@ -110,10 +113,7 @@ subscribe(Socket, Id, Queue, Ack) ->
 
 %%% Parsing STOMP frames
 
-handle_frame(<<"MESSAGE", "\n", Frame/binary>>,
-             #state{subscribers = Subscribers,
-                    subscriptions = Subscriptions}) ->
-    
+handle_frame(<<"MESSAGE", "\n", _Frame/binary>>, State) ->
     {noreply, State};
 handle_frame(Frame, State) ->
     io:format("Received unknown frame ~p", [Frame]),
@@ -134,15 +134,15 @@ parse_headers(HeadersBin) ->
 %% Format a header
 -spec format_header({binary(), binary()}) -> binary().
 format_header({Key, Val}) ->
-    <<Key, ":", Val, "\n">>.
+    <<Key/binary, ":", Val/binary, "\n">>.
 
 %% Build a single STOMP frame
 -spec make_frame(binary(),
-                 list({binary(), binary()}),
+                 headers(),
                  binary())
                 -> {ok, iolist()}.
 make_frame(Command, HeaderMap, Body) ->
-    Headers = lists:map(fun format_header/1, HeaderMap),
+    Headers = lists:map(fun format_header/1, maps:to_list(HeaderMap)),
     Frame = [Command, <<"\n">>, Headers, <<"\n">>, Body, <<0>>],
     {ok, Frame}.
 
@@ -151,31 +151,31 @@ make_frame(Command, HeaderMap, Body) ->
 -spec connect_frame(list(), any(), any()) -> iolist().
 connect_frame(Host, {ok, Login}, {ok, Pass}) ->
     make_frame(<<"CONNECT">>,
-               [{"accept-version", "1.2"},
-                {"host", Host},
-                {"login", Login},
-                {"passcode", Pass},
-                {"heart-beat", "0,5000"}],
+               #{<<"accept-version">> => <<"1.2">>,
+                 <<"host">>           => Host,
+                 <<"login">>          => Login,
+                 <<"passcode">>       => Pass,
+                 <<"heart-beat">>     => <<"0,5000">>},
                []);
 connect_frame(Host, _Login, _Pass) ->
     make_frame(<<"CONNECT">>,
-               [{"accept-version", "1.2"},
-                {"host", Host},
-                %% Expect a server heartbeat every 5 seconds, let the server
-                %% expect one every 10. We don't actually check this and just
-                %% echo server heartbeats.
-                %% TODO: For now the server is told not to expect replies due to
-                %% a weird behaviour.
-                {"heart-beat", "0,5000"}],
+               #{<<"accept-version">> => <<"1.2">>,
+                 <<"host">>           => Host,
+                 %% Expect a server heartbeat every 5 seconds, let the server
+                 %% expect one every 10. We don't actually check this and just
+                 %% echo server heartbeats.
+                 %% TODO: For now the server is told not to expect replies due to
+                 %% a weird behaviour.
+                 <<"heart-beat">>     => <<"0,5000">>},
                []).
 
 
 -spec subscribe_frame(sub_id(), destination(), ack_mode()) -> iolist().
 subscribe_frame(Id, Queue, Ack) ->
     make_frame(<<"SUBSCRIBE">>,
-               [{"id", integer_to_binary(Id)},
-                {"destination", Queue},
-                {"ack", ack_mode_to_binary(Ack)}],
+               #{<<"id">>          => integer_to_binary(Id),
+                 <<"destination">> => Queue,
+                 <<"ack">>         => ack_mode_to_binary(Ack)},
                []).
 
 -spec ack_mode_to_binary(ack_mode()) -> binary().

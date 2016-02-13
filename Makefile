@@ -1,6 +1,6 @@
-PROJECT = stomp.erl
-PROJECT_DESCRIPTION = New project
-PROJECT_VERSION = 0.0.1
+PROJECT = stomp
+PROJECT_DESCRIPTION = STOMP client for Erlang
+PROJECT_VERSION = 0.1.0
 
 # Whitespace to be used when creating files from templates.
 SP = 4
