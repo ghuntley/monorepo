@@ -212,4 +212,11 @@ server() ->
 * Ole's talk, obviously!
 * Learn You Some Erlang!
   www.learnyousomeerlang.com
-* Watch out for the Oslo BEAM meetup group
+* Watch *Erlang the Movie*
+* (soon!) Join the Oslo BEAM meetup group
+
+---
+
+# [fit] Questions?
+
+`@tazjin`
