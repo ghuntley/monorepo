@@ -114,16 +114,102 @@ hello(Name) ->
 % ok
 ```
 
+---
+
+## [fit] Hello ~~world~~ Joe is boring!
+## [fit] Lets do it with processes.
+
+---
+### Hello Server
+
+```erlang
+-module(hello_server).
+-export([start_server/0]).
+
+start_server() ->
+    spawn(fun() -> server() end).
+
+server() ->
+    receive
+        {greet, Name} ->
+            io:format("Hello ~s!~n", [Name]),
+            server()
+    end.
+```
 
 ---
 
-## Drag & Drop images
+## [fit] Some issues with that ...
 
-### Simply *drop an image onto the Deckset window* and the Markdown you need to display the image is automatically created and *copied to the clipboard.*
+- What about unused messages?
+- What if the server crashes?
 
 ---
 
-* This works with both local files and web images
-* You don’t _need_ to drag the file, you can also type the Markdown yourself if you know how
+## [fit] Part 2: Open Telecom Platform
 
-![left,filtered](http://deckset-assets.s3-website-us-east-1.amazonaws.com/colnago1.jpg)
+### **It's called Erlang/OTP for a reason.**
+
+---
+
+# OTP: An Application Framework
+
+- Supervision - keep processes alive!
+
+- OTP Behaviours - common process patterns
+
+- Extensive standard library
+
+- Error handling, debuggers, testing, ...
+
+- Lots more!
+
+^ Standard library includes lots of things from simple network libraries over testing frameworks to cryptography, complete LDAP clients etc.
+
+---
+
+# Supervision
+
+![inline](http://erlang.org/doc/design_principles/sup6.gif)
+
+^ Supervision keeps processes alive, different restart behaviours, everything should be supervised to avoid "process" (and therefore memory) leaks
+
+---
+
+# OTP Behaviours
+
+* `gen_server`
+* `gen_statem` 
+* `gen_event`
+* `supervisor`
+
+^ gen = generic. explain server, explain statem, event = event handling with registered handlers, supervisor ...
+
+---
+
+`gen_server`
+
+---
+
+## [fit] Part 3: BEAM
+
+### Bogdan/Bjørn Erlang Abstract machine
+
+---
+
+## A VM for Erlang
+
+* Many were written, BEAM survived
+* Concurrent garbage-collection
+* Lower-level bytecode than JVM
+* Very open to new languages
+  (Elixir, LFE, Joxa, ...)
+
+---
+
+## What next?
+
+* Ole's talk, obviously!
+* Learn You Some Erlang!
+  www.learnyousomeerlang.com
+* Watch out for the Oslo BEAM meetup group

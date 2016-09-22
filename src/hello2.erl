@@ -2,7 +2,7 @@
 -export([hello/1]).
 
 hello(Name) ->
-    io:format("Hello ~s!~n", [Name]).
+    io:format("Hey ~s!~n", [Name]).
 
 % 3> c(hello2).
 % {ok,hello2}
