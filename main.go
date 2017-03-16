@@ -11,71 +11,126 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
-type Layer struct {
+const ImageContentType string = "application/vnd.docker.container.image.v1+json"
+const ManifestContentType string = "application/vnd.docker.distribution.manifest.v2+json"
+const LayerContentType string = "application/vnd.docker.image.rootfs.diff.tar.gzip"
+const DigestHeader string = "Docker-Content-Digest"
+
+type Element struct {
 	MediaType string `json:"mediaType"`
 	Size      int    `json:"size"`
 	Digest    string `json:"digest"`
 }
 
 type Manifest struct {
-	SchemaVersion int               `json:"schemaVersion"`
-	MediaType     string            `json:"mediaType"`
-	Config        map[string]string `json:"config"`
-	Layers        []Layer           `json:"layers"`
+	SchemaVersion int       `json:"schemaVersion"`
+	MediaType     string    `json:"mediaType"`
+	Config        Element   `json:"config"`
+	Layers        []Element `json:"layers"`
 }
 
 // A really "dumb" representation of an image, with a data blob (tar.gz image) and its hash as the type expected
 // in the manifest.
 type Image struct {
-	Layer Layer
-	Data  []byte
+	Data       []byte
+	TarDigest  string
+	GzipDigest string
 }
 
-const ManifestContentType string = "application/vnd.docker.distribution.manifest.v2+json"
-const LayerContentType string = "application/vnd.docker.image.rootfs.diff.tar.gzip"
-
 func main() {
+	log.Println("Starting quinistry")
+
 	img := getImage()
+	now := time.Now()
+
+	config := Config{
+		Created:      now,
+		Author:       "tazjin",
+		Architecture: "amd64",
+		Os:           "linux",
+		Config: &ImageConfig{
+			Cmd: []string{"main"},
+			Env: []string{"PATH=/"},
+		},
+		RootFs: RootFs{
+			DiffIds: []string{
+				img.TarDigest,
+			},
+			Type: "layers",
+		},
+		History: []History{
+			{
+				Created:   now,
+				CreatedBy: "quinistry magic",
+			},
+		},
+	}
+
+	configJson, _ := json.Marshal(config)
 
 	manifest := Manifest{
 		SchemaVersion: 2,
-		MediaType:     "application/vnd.docker.distribution.manifest.v2+json",
-		Config:        map[string]string{},
-		Layers: []Layer{
-			img.Layer,
+		MediaType:     ManifestContentType,
+		Config: Element{
+			MediaType: ImageContentType,
+			Size:      len(configJson),
+			Digest:    digest(configJson),
+		},
+		Layers: []Element{
+			{
+				MediaType: LayerContentType,
+				Size:      len(img.Data),
+				Digest:    img.GzipDigest,
+			},
 		},
 	}
 
 	log.Fatal(http.ListenAndServe(":8080", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Acknowledge that we speak V2
 		if r.RequestURI == "/v2/" {
-			log.Println("Acknowleding V2 API")
+			logRequest("Acknowleding V2 API", r)
 			fmt.Fprintln(w)
 			return
 		}
 
 		// Serve manifest
 		if r.RequestURI == "/v2/quinistry/manifests/latest" {
-			log.Printf("Serving manifest for %v\n", *r)
+			logRequest("Serving manifest", r)
 			w.Header().Add("Content-Type", ManifestContentType)
 			resp, _ := json.Marshal(manifest)
-			w.Header().Add("Docker-Content-Digest", digest(resp))
-			log.Println(digest(resp))
-			fmt.Fprintln(w, string(resp))
+			w.Header().Add(DigestHeader, digest(resp))
+			w.Write(resp)
 			return
 		}
 
 		// Serve actual image layer
-		if r.RequestURI == fmt.Sprintf("/v2/quinistry/blob/%s", img.Layer.Digest) {
-			fmt.Printf("Serving layer for %v\n", *r)
-			fmt.Fprint(w, img.Data)
+		layerUri := fmt.Sprintf("/v2/quinistry/blobs/%s", img.GzipDigest)
+		if r.RequestURI == layerUri {
+			logRequest("Serving image layer blob", r)
+			w.Header().Add(DigestHeader, img.GzipDigest)
+			w.Write(img.Data)
 			return
 		}
 
-		fmt.Printf("Unhandled: %v\n", *r)
+		// Serve image config
+		configUri := fmt.Sprintf("/v2/quinistry/blobs/%s", digest(configJson))
+		if r.RequestURI == configUri {
+			logRequest("Serving config", r)
+			w.Header().Set("Content-Type", ImageContentType)
+			w.Header().Set(DigestHeader, digest(configJson))
+			w.Write(configJson)
+			return
+		}
+
+		log.Printf("Unhandled request: %v\n", *r)
 	})))
+}
+
+func logRequest(msg string, r *http.Request) {
+	log.Printf("%s: %s %s\n", msg, r.Method, r.RequestURI)
 }
 
 func digest(b []byte) string {
@@ -97,7 +152,7 @@ func getImage() *Image {
 	tarBuf := new(bytes.Buffer)
 	tarW := tar.NewWriter(tarBuf)
 	hdr := &tar.Header{
-		Name: "main",
+		Name: "/main",
 		Mode: 0755,
 		Size: int64(len(file)),
 	}
@@ -109,23 +164,24 @@ func getImage() *Image {
 		os.Exit(1)
 	}
 
+	tarBytes := tarBuf.Bytes()
+
 	// Then GZIP it
 	zBuf := new(bytes.Buffer)
 	zw := gzip.NewWriter(zBuf)
 	zw.Name = "Docker registry fake test"
 
-	zw.Write(tarBuf.Bytes())
+	zw.Write(tarBytes)
 	if err := zw.Close(); err != nil {
 		log.Fatal(err)
 		os.Exit(1)
 	}
 
+	gzipData := zBuf.Bytes()
+
 	return &Image{
-		Layer: Layer{
-			MediaType: LayerContentType,
-			Size:      zBuf.Len(),
-			Digest:    digest(zBuf.Bytes()),
-		},
-		Data: zBuf.Bytes(),
+		TarDigest:  digest(tarBytes),
+		GzipDigest: digest(gzipData),
+		Data:       gzipData,
 	}
 }
