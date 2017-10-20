@@ -1,0 +1,8 @@
+[package]
+name = "mq"
+version = "0.1.0"
+authors = ["Vincent Ambo <tazjin@gmail.com>"]
+
+[dependencies]
+posix_mq = "0.1.1"
+clap = "2.26.2"
