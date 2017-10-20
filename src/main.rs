@@ -1,18 +1,18 @@
 extern crate clap;
 extern crate posix_mq;
 
-use clap::{App, SubCommand, Arg, AppSettings};
+use clap::{App, SubCommand, Arg, ArgMatches, AppSettings};
 use posix_mq::{Name, Queue};
+use std::fs::{read_dir, File};
+use std::io::Read;
+use std::process::exit;
 
 fn run_ls() {
-    use std::fs::{read_dir, File};
-    use std::io::Read;
 
     let mqueues = read_dir("/dev/mqueue")
         .expect("Could not read message queues");
 
     mqueues.for_each(|queue| {
-        //let queue_name = (&queue.unwrap().file_name()).into_string().unwrap();
         let path = queue.unwrap().path();
         let status = {
             let mut file = File::open(&path)
@@ -38,12 +38,44 @@ fn run_inspect(queue_name: &str) {
     println!("Max. # of pending messages: {}", queue.max_pending());
 }
 
+fn run_create(cmd: &ArgMatches) {
+    let name = Name::new(cmd.value_of("queue").unwrap())
+        .expect("Invalid queue name");
+
+    let max_pending: i64 = cmd.value_of("max-pending").unwrap().parse().unwrap();
+    let max_size: i64 = cmd.value_of("max-size").unwrap().parse().unwrap();
+
+    let queue = Queue::create(name, max_pending, max_size * 1024);
+
+    match queue {
+        Ok(_)  => println!("Queue created successfully"),
+        Err(e) => {
+            println!("Could not create queue: {}", e);
+            exit(1);
+        },
+    };
+}
+
 fn main() {
     let ls = SubCommand::with_name("ls").about("list message queues");
     let inspect = SubCommand::with_name("inspect")
         .about("inspect details about a queue")
         .arg(Arg::with_name("queue")
             .short("q")
+            .required(true)
+            .takes_value(true));
+
+    let create = SubCommand::with_name("create")
+        .about("Create a new queue")
+        .arg(Arg::with_name("queue")
+            .required(true)
+            .takes_value(true))
+        .arg(Arg::with_name("max-size")
+            .help("maximum message size (in kB)")
+            .required(true)
+            .takes_value(true))
+        .arg(Arg::with_name("max-pending")
+            .help("maximum # of pending messages")
             .required(true)
             .takes_value(true));
 
@@ -54,11 +86,13 @@ fn main() {
         .about("Administrate and inspect POSIX message queues")
         .subcommand(ls)
         .subcommand(inspect)
+        .subcommand(create)
         .get_matches();
 
     match matches.subcommand() {
         ("ls", _) => run_ls(),
         ("inspect", Some(cmd)) => run_inspect(cmd.value_of("queue").unwrap()),
+        ("create", Some(cmd))  => run_create(cmd),
         _ => unimplemented!(),
     }
 }
