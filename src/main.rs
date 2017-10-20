@@ -4,11 +4,10 @@ extern crate posix_mq;
 use clap::{App, SubCommand, Arg, ArgMatches, AppSettings};
 use posix_mq::{Name, Queue};
 use std::fs::{read_dir, File};
-use std::io::Read;
+use std::io::{self, Read, Write};
 use std::process::exit;
 
 fn run_ls() {
-
     let mqueues = read_dir("/dev/mqueue")
         .expect("Could not read message queues");
 
@@ -50,25 +49,47 @@ fn run_create(cmd: &ArgMatches) {
     match queue {
         Ok(_)  => println!("Queue created successfully"),
         Err(e) => {
-            println!("Could not create queue: {}", e);
+            writeln!(io::stderr(), "Could not create queue: {}", e).ok();
             exit(1);
         },
     };
 }
 
+fn run_receive(queue_name: &str) {
+    let name = Name::new(queue_name).expect("Invalid queue name");
+    let queue = Queue::open(name).expect("Could not open queue");
+
+    let message = match queue.receive() {
+        Ok(msg) => msg,
+        Err(e) => {
+            writeln!(io::stderr(), "Failed to receive message: {}", e).ok();
+            exit(1);
+        }
+    };
+
+    // Attempt to write the message out as a string, but write out raw bytes if it turns out to not
+    // be UTF-8 encoded data.
+    match String::from_utf8(message.data.clone()) {
+        Ok(string) => println!("{}", string),
+        Err(_) => {
+            writeln!(io::stderr(), "Message not UTF-8 encoded!").ok();
+            io::stdout().write(message.data.as_ref()).ok();
+        }
+    };
+}
+
 fn main() {
     let ls = SubCommand::with_name("ls").about("list message queues");
+
+    let queue_arg = Arg::with_name("queue").required(true).takes_value(true);
+
     let inspect = SubCommand::with_name("inspect")
         .about("inspect details about a queue")
-        .arg(Arg::with_name("queue")
-            .required(true)
-            .takes_value(true));
+        .arg(&queue_arg);
 
     let create = SubCommand::with_name("create")
         .about("Create a new queue")
-        .arg(Arg::with_name("queue")
-            .required(true)
-            .takes_value(true))
+        .arg(&queue_arg)
         .arg(Arg::with_name("max-size")
             .help("maximum message size (in kB)")
             .long("max-size")
@@ -80,6 +101,10 @@ fn main() {
             .required(true)
             .takes_value(true));
 
+    let receive = SubCommand::with_name("receive")
+        .about("Receive a message from a queue")
+        .arg(&queue_arg);
+
 
     let matches = App::new("mq")
         .setting(AppSettings::SubcommandRequiredElseHelp)
@@ -88,12 +113,14 @@ fn main() {
         .subcommand(ls)
         .subcommand(inspect)
         .subcommand(create)
+        .subcommand(receive)
         .get_matches();
 
     match matches.subcommand() {
         ("ls", _) => run_ls(),
         ("inspect", Some(cmd)) => run_inspect(cmd.value_of("queue").unwrap()),
         ("create", Some(cmd))  => run_create(cmd),
+        ("receive", Some(cmd)) => run_receive(cmd.value_of("queue").unwrap()),
         _ => unimplemented!(),
     }
 }
