@@ -11,7 +11,7 @@ fn run_ls() {
     let mqueues = read_dir("/dev/mqueue")
         .expect("Could not read message queues");
 
-    mqueues.for_each(|queue| {
+    for queue in mqueues {
         let path = queue.unwrap().path();
         let status = {
             let mut file = File::open(&path)
@@ -25,7 +25,7 @@ fn run_ls() {
 
         let queue_name = path.components().last().unwrap().as_os_str();
         println!("{:?}: {}", queue_name, status)
-    });
+    };
 }
 
 fn run_inspect(queue_name: &str) {
