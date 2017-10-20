@@ -2,7 +2,7 @@ extern crate clap;
 extern crate posix_mq;
 
 use clap::{App, SubCommand, Arg, ArgMatches, AppSettings};
-use posix_mq::{Name, Queue};
+use posix_mq::{Name, Queue, Message};
 use std::fs::{read_dir, File};
 use std::io::{self, Read, Write};
 use std::process::exit;
@@ -78,6 +78,24 @@ fn run_receive(queue_name: &str) {
     };
 }
 
+fn run_send(queue_name: &str, content: &str) {
+    let name = Name::new(queue_name).expect("Invalid queue name");
+    let queue = Queue::open(name).expect("Could not open queue");
+
+    let message = Message {
+        data: content.as_bytes().to_vec(),
+        priority: 0,
+    };
+
+    match queue.send(&message) {
+        Ok(_) => (),
+        Err(e) => {
+            writeln!(io::stderr(), "Could not send message: {}", e).ok();
+            exit(1);
+        }
+    }
+}
+
 fn main() {
     let ls = SubCommand::with_name("ls").about("list message queues");
 
@@ -105,6 +123,13 @@ fn main() {
         .about("Receive a message from a queue")
         .arg(&queue_arg);
 
+    let send = SubCommand::with_name("send")
+        .about("Send a message to a queue")
+        .arg(&queue_arg)
+        .arg(Arg::with_name("message")
+            .help("the message to send")
+            .required(true));
+
 
     let matches = App::new("mq")
         .setting(AppSettings::SubcommandRequiredElseHelp)
@@ -114,13 +139,18 @@ fn main() {
         .subcommand(inspect)
         .subcommand(create)
         .subcommand(receive)
+        .subcommand(send)
         .get_matches();
 
     match matches.subcommand() {
         ("ls", _) => run_ls(),
         ("inspect", Some(cmd)) => run_inspect(cmd.value_of("queue").unwrap()),
-        ("create", Some(cmd))  => run_create(cmd),
+        ("create",  Some(cmd)) => run_create(cmd),
         ("receive", Some(cmd)) => run_receive(cmd.value_of("queue").unwrap()),
+        ("send",    Some(cmd)) => run_send(
+            cmd.value_of("queue").unwrap(),
+            cmd.value_of("message").unwrap()
+        ),
         _ => unimplemented!(),
     }
 }
