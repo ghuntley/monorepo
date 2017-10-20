@@ -61,7 +61,6 @@ fn main() {
     let inspect = SubCommand::with_name("inspect")
         .about("inspect details about a queue")
         .arg(Arg::with_name("queue")
-            .short("q")
             .required(true)
             .takes_value(true));
 
@@ -72,10 +71,12 @@ fn main() {
             .takes_value(true))
         .arg(Arg::with_name("max-size")
             .help("maximum message size (in kB)")
+            .long("max-size")
             .required(true)
             .takes_value(true))
         .arg(Arg::with_name("max-pending")
             .help("maximum # of pending messages")
+            .long("max-pending")
             .required(true)
             .takes_value(true));
 
