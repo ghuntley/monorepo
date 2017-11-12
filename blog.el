@@ -20,6 +20,17 @@
   :group 'elblog
   :type 'string)
 
+;; org-mode settings need to be configured a certain way for elblog's HTML
+;; templating to work correctly.
+(defun configure-org-html-export ()
+  (setq org-html-postamble t)
+  (setq org-html-doctype "html5")
+  (setq org-html-head-include-scripts nil)
+  (setq org-html-style-default (f-read-text "blog.css"))
+  (setq org-html-preamble-format
+        '(("en" "<header><h1><a class=\"unstyled-link\" href=\"/\">Tazjin&#39;s blog</a></h1><hr></header>")))
+  (setq org-html-postamble-format `(("en" ,(f-read-text "postamble.html")))))
+
 ;; Article fetching & rendering functions
 
 (defun render-org-buffer (buffer &optional force)
@@ -46,7 +57,7 @@
 
 (defun render-article (article)
   "Renders an article, if it exists."
-  (let ((output-buffer (render-org-buffer (concat article ".org"))))
+  (let ((output-buffer (render-org-buffer (concat article ".org") t)))
     (if output-buffer `(200 . ,(get-buffer-string output-buffer))
       article-not-found)))
 
@@ -66,6 +77,7 @@
 
 (defun start-elblog ()
   (interactive)
+  (configure-org-html-export)
   (elnode-start 'elblog-handler
               :port elblog-port
               :host elblog-host))
