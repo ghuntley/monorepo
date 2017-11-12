@@ -44,6 +44,12 @@
 (defun elblog-handler (httpcon)
   (elnode-hostpath-dispatcher httpcon elblog-routes))
 
-(elnode-start 'elblog-handler
+(defun start-elblog ()
+  (interactive)
+  (elnode-start 'elblog-handler
               :port 8010
-              :host "localhost")
+              :host "localhost"))
+
+(defun stop-elblog ()
+  (interactive)
+  (elnode-stop 8010))
