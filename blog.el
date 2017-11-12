@@ -4,6 +4,24 @@
 (require 'elnode)
 (require 'f)
 
+;; Definition of customization options
+
+(defgroup elblog nil
+  "Configuration for the Emacs Lisp blog software"
+  :link '(url-link "https://github.com/tazjin/elblog"))
+
+(defcustom elblog-port 8010
+  "Port to run elblog's HTTP server on"
+  :group 'elblog
+  :type 'integer)
+
+(defcustom elblog-host "localhost"
+  "Host for elblog's HTTP server to listen on"
+  :group 'elblog
+  :type 'string)
+
+;; Article fetching & rendering functions
+
 (defun render-org-buffer (buffer &optional force)
   "Renders an org-mode buffer as HTML and returns the name of the output buffer."
   (letrec ((input-buffer (get-buffer buffer))
@@ -38,6 +56,8 @@
     (elnode-http-start httpcon  (car response) text-html)
     (elnode-http-return httpcon (cdr response))))
 
+;; Web server implementation
+
 (defvar-local elblog-routes
   '(("^.*//en/\\(.*\\)" . blog-post-handler)))
 
@@ -47,9 +67,9 @@
 (defun start-elblog ()
   (interactive)
   (elnode-start 'elblog-handler
-              :port 8010
-              :host "localhost"))
+              :port elblog-port
+              :host elblog-host))
 
 (defun stop-elblog ()
   (interactive)
-  (elnode-stop 8010))
+  (elnode-stop elblog-port))
