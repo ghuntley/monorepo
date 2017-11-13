@@ -1,8 +1,10 @@
 ;;; blog.el --- A simple org-mode & elnode blog software.
 ;;; -*- lexical-binding: t; -*-
 
+(require 'dash)
 (require 'elnode)
 (require 'f)
+(require 'ht)
 
 ;; Definition of customization options
 
@@ -25,6 +27,17 @@
   :group 'elblog
   :type 'string)
 
+(defcustom elblog-article-directory nil
+  "Directory in which elblog articles are stored"
+  :group 'elblog
+  :type 'string)
+
+;; Declare user-configurable variables needed at runtime.
+
+(defvar elblog-articles (ht-create)
+  "A hash-table of blog articles. This is used for looking up articles from
+   URL fragments as well as for rendering the index.")
+
 ;; HTML templating setup
 
 (defun template-preamble ()
@@ -42,10 +55,9 @@
 
 ;; Article fetching & rendering functions
 
-(defun render-org-buffer (buffer &optional force)
+(defun render-org-buffer (input-buffer &optional force)
   "Renders an org-mode buffer as HTML and returns the name of the output buffer."
-  (letrec ((input-buffer (get-buffer buffer))
-           (output-buffer (concat buffer "-rendered"))
+  (letrec ((output-buffer (concat (buffer-name input-buffer) "-rendered"))
            ;; Don't re-render articles unless forced.
            (must-render (or force
                             (not (get-buffer output-buffer)))))
@@ -66,8 +78,12 @@
 
 (defun render-article (article)
   "Renders an article, if it exists."
-  (let ((output-buffer (render-org-buffer (concat article ".org") t)))
-    (if output-buffer `(200 . ,(get-buffer-string output-buffer))
+  (letrec ((rendered (-some->>
+                      (ht-get elblog-articles article)
+                      (concat elblog-article-directory)
+                      (find-file)
+                      (render-org-buffer))))
+    (if rendered `(200 . ,(get-buffer-string rendered))
       article-not-found)))
 
 (defun blog-post-handler (httpcon)
