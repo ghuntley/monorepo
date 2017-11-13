@@ -20,13 +20,24 @@
   :group 'elblog
   :type 'string)
 
+(defcustom elblog-title "Elblog"
+  "Title text for this elblog instance"
+  :group 'elblog
+  :type 'string)
+
+;; HTML templating setup
+
+(defun template-preamble ()
+  "Templates the preamble snippet with the correct blog title."
+  (format (f-read-text "preamble.html") elblog-title))
+
 (defun configure-org-html-export ()
   "Configure org-mode settings for elblog's HTML templating to work correctly."
   (setq org-html-postamble t)
   (setq org-html-doctype "html5")
   (setq org-html-head-include-scripts nil)
   (setq org-html-style-default (f-read-text "blog.css"))
-  (setq org-html-preamble-format `(("en" ,(f-read-text "preamble.html"))))
+  (setq org-html-preamble-format `(("en" ,(template-preamble))))
   (setq org-html-postamble-format `(("en" ,(f-read-text "postamble.html")))))
 
 ;; Article fetching & rendering functions
