@@ -32,6 +32,11 @@
   :group 'elblog
   :type 'string)
 
+(defcustom elblog-additional-routes '()
+  "Additional Elnode routes to register in the Elblog instance"
+  :group 'elblog
+  :type '(alist :key-type regexp :value-type function))
+
 ;; Declare user-configurable variables needed at runtime.
 
 (defvar elblog-articles (ht-create)
@@ -94,11 +99,15 @@
 
 ;; Web server implementation
 
-(defvar-local elblog-routes
-  '(("^.*//en/\\(.*\\)" . blog-post-handler)))
+(defvar elblog-routes
+  '(("^.*//\\(.*\\)" . blog-post-handler))
+  "The default routes available in elblog. They can be extended by the user
+by setting the elblog-additional-routes customize option.")
 
 (defun elblog-handler (httpcon)
-  (elnode-hostpath-dispatcher httpcon elblog-routes))
+  (elnode-hostpath-dispatcher
+   httpcon
+   (-concat elblog-additional-routes elblog-routes)))
 
 (defun start-elblog ()
   (interactive)
