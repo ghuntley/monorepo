@@ -20,15 +20,13 @@
   :group 'elblog
   :type 'string)
 
-;; org-mode settings need to be configured a certain way for elblog's HTML
-;; templating to work correctly.
 (defun configure-org-html-export ()
+  "Configure org-mode settings for elblog's HTML templating to work correctly."
   (setq org-html-postamble t)
   (setq org-html-doctype "html5")
   (setq org-html-head-include-scripts nil)
   (setq org-html-style-default (f-read-text "blog.css"))
-  (setq org-html-preamble-format
-        '(("en" "<header><h1><a class=\"unstyled-link\" href=\"/\">Tazjin&#39;s blog</a></h1><hr></header>")))
+  (setq org-html-preamble-format `(("en" ,(f-read-text "preamble.html"))))
   (setq org-html-postamble-format `(("en" ,(f-read-text "postamble.html")))))
 
 ;; Article fetching & rendering functions
@@ -85,3 +83,5 @@
 (defun stop-elblog ()
   (interactive)
   (elnode-stop elblog-port))
+
+(provide 'elblog)
