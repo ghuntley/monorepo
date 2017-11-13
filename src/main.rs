@@ -1,5 +1,7 @@
 extern crate clap;
 extern crate posix_mq;
+extern crate libc;
+extern crate nix;
 
 use clap::{App, SubCommand, Arg, ArgMatches, AppSettings};
 use posix_mq::{Name, Queue, Message};
@@ -38,6 +40,10 @@ fn run_inspect(queue_name: &str) {
 }
 
 fn run_create(cmd: &ArgMatches) {
+    if let Some(rlimit) = cmd.value_of("rlimit") {
+        set_rlimit(rlimit.parse().expect("Invalid rlimit value"));
+    }
+
     let name = Name::new(cmd.value_of("queue").unwrap())
         .expect("Invalid queue name");
 
@@ -96,10 +102,62 @@ fn run_send(queue_name: &str, content: &str) {
     }
 }
 
+fn run_rlimit() {
+    let mut rlimit = libc::rlimit {
+        rlim_cur: 0,
+        rlim_max: 0,
+    };
+
+    let mut errno = 0;
+    unsafe {
+        let res = libc::getrlimit(libc::RLIMIT_MSGQUEUE, &mut rlimit);
+        if res != 0 {
+            errno = nix::errno::errno();
+        }
+    };
+
+    if errno != 0 {
+        writeln!(io::stderr(), "Could not get message queue rlimit: {}", errno).ok();
+    } else {
+        println!("Message queue rlimit:");
+        println!("Current limit: {}", rlimit.rlim_cur);
+        println!("Maximum limit: {}", rlimit.rlim_max);
+    }
+}
+
+fn set_rlimit(new_limit: u64) {
+    let rlimit = libc::rlimit {
+        rlim_cur: new_limit,
+        rlim_max: new_limit,
+    };
+
+    let mut errno: i32 = 0;
+    unsafe {
+        let res = libc::setrlimit(libc::RLIMIT_MSGQUEUE, &rlimit);
+        if res != 0 {
+            errno = nix::errno::errno();
+        }
+    }
+
+    match errno {
+        0 => println!("Set RLIMIT_MSGQUEUE hard limit to {}", new_limit),
+        _ => {
+            // Not mapping these error codes to messages for now, the user can
+            // look up the meaning in setrlimit(2).
+            panic!("Could not set hard limit: {}", errno);
+        }
+    };
+}
+
 fn main() {
     let ls = SubCommand::with_name("ls").about("list message queues");
 
     let queue_arg = Arg::with_name("queue").required(true).takes_value(true);
+
+    let rlimit_arg = Arg::with_name("rlimit")
+        .help("RLIMIT_MSGQUEUE to set for this command")
+        .long("rlimit")
+        .takes_value(true);
 
     let inspect = SubCommand::with_name("inspect")
         .about("inspect details about a queue")
@@ -108,6 +166,7 @@ fn main() {
     let create = SubCommand::with_name("create")
         .about("Create a new queue")
         .arg(&queue_arg)
+        .arg(&rlimit_arg)
         .arg(Arg::with_name("max-size")
             .help("maximum message size (in kB)")
             .long("max-size")
@@ -130,6 +189,9 @@ fn main() {
             .help("the message to send")
             .required(true));
 
+    let rlimit = SubCommand::with_name("rlimit")
+        .about("Get the message queue rlimit")
+        .setting(AppSettings::SubcommandRequiredElseHelp);
 
     let matches = App::new("mq")
         .setting(AppSettings::SubcommandRequiredElseHelp)
@@ -140,6 +202,7 @@ fn main() {
         .subcommand(create)
         .subcommand(receive)
         .subcommand(send)
+        .subcommand(rlimit)
         .get_matches();
 
     match matches.subcommand() {
@@ -151,6 +214,7 @@ fn main() {
             cmd.value_of("queue").unwrap(),
             cmd.value_of("message").unwrap()
         ),
+        ("rlimit",  _) => run_rlimit(),
         _ => unimplemented!(),
     }
 }
