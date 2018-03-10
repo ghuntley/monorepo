@@ -17,6 +17,11 @@
    that is defined via an ANSI standard that compiler implementations
    normally actually follow!
 
+   CL has several ecosystem components that focus on making
+   abstracting away implementation-specific calls and if a self-hosted
+   compiler is written in CL using those components it can be
+   cross-bootstrapped.
+
 ** Python
 
 * A note on runtimes
@@ -53,4 +58,17 @@
      to compile itself.
 
      Common examples:
-     - gcc builds with gcc
+     - C/C++ compilers needed to build C/C++ compilers:
+
+       GCC 4.7 was the last version of GCC that could be built with a
+       standard C-compiler, nowadays it is mostly written in C++.
+
+       Certain versions of GCC can be built with LLVM/Clang.
+
+       Clang/LLVM can be compiled by itself and also GCC.
+
+     - Rust was originally written in OCAML but moved to being
+       self-hosted in 2011. Currently rustc-releases are always built
+       with a copy of the previous release.
+
+       It's relatively new so we can build the chain all the way.
