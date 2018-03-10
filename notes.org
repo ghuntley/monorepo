@@ -1,0 +1,56 @@
+#+TITLE: Bootstrapping, reproducibility, etc.
+#+AUTHOR: Vincent Ambo
+#+DATE: <2018-03-10 Sat>
+
+* Compiler bootstrapping
+
+  This section contains notes about compiler bootstrapping, the
+  history thereof, which compilers need it - and so on:
+
+** C
+
+** Haskell
+   - self-hosted compiler (GHC)
+
+** Common Lisp
+   CL is fairly interesting in this space because it is a language
+   that is defined via an ANSI standard that compiler implementations
+   normally actually follow!
+
+** Python
+
+* A note on runtimes
+  Sometimes the compiler just isn't enough ...
+
+** LLVM
+** JVM
+
+* Resources:
+
+  http://bootstrappable.org/
+
+
+* Slide thoughts:
+  1. Hardware trust has been discussed here a bunch, most recently
+     during the puri.sm talk. Hardware trust is important, as we see
+     with IME, but it's striking that people often take a leap to "I'm
+     now on my trusted Debian with free software".
+
+     Unless you built it yourself from scratch (Spoiler: you haven't)
+     you're placing trust in what is basically foreign binary blobs.
+
+     Agenda: Implications/attack vectors of this, state of the chicken
+     & egg, the topic of reproducibility, what can you do? (Nix!)
+
+  2. Chicken-and-egg issue
+
+     It's an important milestone for a language to become self-hosted:
+     You begin doing a kind of dogfeeding, you begin to enforce
+     reliability & consistency guarantees to avoid having to redo your
+     own codebase constantly and so on.
+
+     However, the implication is now that you need your own compiler
+     to compile itself.
+
+     Common examples:
+     - gcc builds with gcc
