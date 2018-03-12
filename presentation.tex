@@ -68,4 +68,36 @@
       Let your imagination run wild!
     \end{center}
   \end{frame}
+
+  %% Slide 8:
+  \section{Countermeasures}
+
+  %% Slide 9:
+  \begin{frame}{Diverse Double-Compiling}
+    Assume we have:
+
+    \begin{itemize}
+    \item Target language compilers $A$ and $T$
+    \item The source code of $A$: $ S_{A} $
+    \end{itemize}
+  \end{frame}
+
+  %% Slide 10:
+  \begin{frame}{Diverse Double-Compiling}
+    Apply the first stage (functional equivalence):
+
+    \begin{itemize}
+    \item $ X = A(S_{A})$
+    \item $ Y = T(S_{A})$
+    \end{itemize}
+
+    Apply the second stage (bit-for-bit equivalence):
+
+    \begin{itemize}
+    \item $ V = X(S_{A})$
+    \item $ W = Y(S_{A})$
+    \end{itemize}
+
+    Now we have a new problem: Reproducibility!
+  \end{frame}
 \end{document}
