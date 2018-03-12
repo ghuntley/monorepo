@@ -27,7 +27,7 @@
   %% Slide 3:
   \begin{frame}{Trusting Trust}
     \begin{center}
-      Could this be exploited?
+      \large{Could this be exploited?}
     \end{center}
   \end{frame}
 
@@ -59,6 +59,7 @@
     \item Modify a compiler to detect when it's compiling itself.
     \item Let the modification insert \textit{itself} into the new compiler.
     \item Add arbitrary attack code to the modification.
+    \item \textit{Optional!} Remove the attack from the source after compilation.
     \end{enumerate}
   \end{frame}
 
@@ -111,6 +112,13 @@
     \item Non-deterministic VM \& memory states in outputs
     \item Randomness in builds (sic!)
     \end{itemize}
+  \end{frame}
+
+  \begin{frame}{Reproducibility}
+    \begin{center}
+      Without reproducibility, we can never trust that any shipped
+      binary matches the source code!
+    \end{center}
   \end{frame}
 
   %% Slide 12:
