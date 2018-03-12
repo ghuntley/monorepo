@@ -3,7 +3,6 @@
 #+DATE: <2018-03-10 Sat>
 
 * Compiler bootstrapping
-
   This section contains notes about compiler bootstrapping, the
   history thereof, which compilers need it - and so on:
 
@@ -30,10 +29,9 @@
 ** LLVM
 ** JVM
 
-* Resources:
-
-  http://bootstrappable.org/
-
+* References
+  https://github.com/mame/quine-relay
+  https://manishearth.github.io/blog/2016/12/02/reflections-on-rusting-trust/
 
 * Slide thoughts:
   1. Hardware trust has been discussed here a bunch, most recently
@@ -72,3 +70,7 @@
        with a copy of the previous release.
 
        It's relatively new so we can build the chain all the way.
+
+     Notable exceptions: Some popular languages are not self-hosted,
+     for example Clojure. Languages also have runtimes, which may be
+     written in something else (e.g. Haskell -> C runtime)
