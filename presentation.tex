@@ -138,7 +138,7 @@
     \begin{itemize}
     \item Sparse information on the Debian-wiki
     \item Bootstrapping discussions mostly resolve around new architectures
-    \item GCC is compiled by depending on previous versions of gcc
+    \item GCC is compiled by depending on previous versions of GCC
     \end{itemize}
   \end{frame}
 
@@ -169,11 +169,20 @@
     \end{center}
   \end{frame}
 
+  \begin{frame}{Bootstrapping NixOS}
+    Nix evaluation can not recurse forever: The bootstrap can not
+    simply depend on a previous GCC.
+
+    Result: \texttt{bootstrap-tools} tarball from a previous binary
+    cache is fetched and used.
+
+    An unfortunate magic binary blob ...
   \end{frame}
 
-  \section{The future of bootstrapping}
+  \begin{frame}{Reproducing NixOS}
+    Not all reproducibility patches have been ported from Debian.
 
-  \begin{frame}{MES}
+    However: Builds are fully repeatable via the Nix fundamentals!
   \end{frame}
 
   \begin{frame}{The Nix project(s)}
