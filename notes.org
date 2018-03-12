@@ -32,6 +32,7 @@
 * References
   https://github.com/mame/quine-relay
   https://manishearth.github.io/blog/2016/12/02/reflections-on-rusting-trust/
+  https://tests.reproducible-builds.org/debian/reproducible.html
 
 * Slide thoughts:
   1. Hardware trust has been discussed here a bunch, most recently
@@ -74,3 +75,15 @@
      Notable exceptions: Some popular languages are not self-hosted,
      for example Clojure. Languages also have runtimes, which may be
      written in something else (e.g. Haskell -> C runtime)
+* How to help:
+  Most of this advice is about reproducible builds, not bootstrapping,
+  as that is a much harder project.
+
+  - fix reproducibility issues listed in Debian's issue tracker (focus
+    on non-Debian specific ones though)
+  - experiment with NixOS / GuixSD to get a better grasp on the
+    problem space of reproducibility
+
+  If you want to contribute to bootstrapping, look at
+  bootstrappable.org and their wiki. Several initiatives such as MES
+  could need help!
