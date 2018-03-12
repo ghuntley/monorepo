@@ -124,8 +124,31 @@
   %% Slide 12:
   \section{(Partial) State of the Union}
 
-  \begin{frame}{Bootstrapping Debian}
+  \begin{frame}{The Desired State}
+    \begin{center}
+      \begin{enumerate}
+      \item Full-source bootstrap!
+      \item All packages reproducible!
+      \end{enumerate}
+    \end{center}
+  \end{frame}
 
+  %% Slide 13:
+  \begin{frame}{Bootstrapping Debian}
+    \begin{itemize}
+    \item Sparse information on the Debian-wiki
+    \item Bootstrapping discussions mostly resolve around new architectures
+    \item GCC is compiled by depending on previous versions of gcc
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}{Reproducing Debian}
+    Debian has a very active effort for reproducible builds:
+
+    \begin{itemize}
+    \item Organised information about reproducibility status
+    \item Over 90\% reproducibility in Debian package base!
+    \end{itemize}
   \end{frame}
 
   \begin{frame}{Bootstrapping NixOS}
