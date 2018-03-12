@@ -185,13 +185,45 @@
     However: Builds are fully repeatable via the Nix fundamentals!
   \end{frame}
 
-  \begin{frame}{The Nix project(s)}
+  \section{Future Developments}
+
+  \begin{frame}{Bootstrappable: stage0}
+    Hand-rolled ``Cthulhu's Path to Madness'' hex-programs:
+
+    \begin{itemize}
+    \item No non-auditable binary blobs
+    \item Aims for understandability by 70\% of programmers
+    \item End goal is a full-source bootstrap of GCC
+    \end{itemize}
+  \end{frame}
+
+
+  \begin{frame}{Bootstrappable: MES}
+    Bootstrapping the ``Maxwell Equations of Software'':
+
+    \begin{itemize}
+    \item Minimal C-compiler written in Scheme
+    \item Minimal Scheme-interpreter (currently in C, but intended to
+      be rewritten in stage0 macros)
+    \item End goal is full-source bootstrap of the entire GuixSD
+    \end{itemize}
   \end{frame}
 
   \begin{frame}{Other platforms}
-
+    \begin{itemize}
+    \item Nix for Darwin is actively maintained
+    \item Mobile devices (phones, tablets, etc.) are a lost cause at
+      the moment
+    \end{itemize}
   \end{frame}
-  %% Next up: Debian, Fedora, NixOS
-  %% Next up: Relevant projects: Nix, MES
-  %% Next up: There's hope, but don't even think about phones ...
+
+  \begin{frame}{Thanks!}
+    Resources:
+    \begin{itemize}
+    \item bootstrappable.org
+    \item reproducible-builds.org
+    \end{itemize}
+
+    @tazjin | mail@tazj.in
+  \end{frame}
 \end{document}
