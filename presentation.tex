@@ -11,7 +11,6 @@
   %% Slide 1:
   \section{Introduction}
 
-
   %% Slide 2:
   \begin{frame}{Chicken and egg}
     Self-hosted compilers are often built using themselves, for example:
@@ -27,7 +26,7 @@
   %% Slide 3:
   \begin{frame}{Trusting Trust}
     \begin{center}
-      \large{Could this be exploited?}
+      \huge{Could this be exploited?}
     \end{center}
   \end{frame}
 
@@ -53,7 +52,7 @@
 
   %% Slide 6:
   \begin{frame}{Trusting Trust}
-    An attack described by Ken Thompson in 1984:
+    An attack described by Ken Thompson in 1983:
 
     \begin{enumerate}
     \item Modify a compiler to detect when it's compiling itself.
@@ -66,7 +65,7 @@
   %% Slide 7:
   \begin{frame}{Damage potential?}
     \begin{center}
-      Let your imagination run wild!
+      \large{Let your imagination run wild!}
     \end{center}
   \end{frame}
 
@@ -169,6 +168,15 @@
     \end{center}
   \end{frame}
 
+  \begin{frame}{Short interlude: Nix}
+    \begin{center}
+      \includegraphics[
+        keepaspectratio=true,
+        height=0.7\textheight
+      ]{nixos-logo.png}
+    \end{center}
+  \end{frame}
+
   \begin{frame}{Bootstrapping NixOS}
     Nix evaluation can not recurse forever: The bootstrap can not
     simply depend on a previous GCC.
@@ -212,6 +220,8 @@
   \begin{frame}{Other platforms}
     \begin{itemize}
     \item Nix for Darwin is actively maintained
+    \item F-Droid Android repository works towards fully reproducible
+      builds of (open) Android software
     \item Mobile devices (phones, tablets, etc.) are a lost cause at
       the moment
     \end{itemize}
