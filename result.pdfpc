@@ -1,0 +1,147 @@
+[file]
+result
+[last_saved_slide]
+15
+[font_size]
+20000
+[notes]
+### 1
+- previous discussions of hardware trust (e.g. purism presentation)
+- people leap to "now I'm on my trusted Debian!"
+- unless you built it from scratch (spoiler: you haven't) you're *trusting* someone
+
+Agenda: Implications of trust with focus on bootstrap paths and reproducibility, plus how you can help.### 2
+
+- when making a new programming language, becoming self-hosted is an important milestone
+- you enforce consistency & reliability for yourself as the user of your language
+- you dogfeed all aspects of your language
+- however: if you only have one compiler, you now need that compiler to compile itself.
+
+This is very common!
+
+- C compilers: GCC<4.7, Clang (itself & by gcc)
+- SBCL reproducible & bootstrappable since 2004
+- rustc has hard dependency on previous version
+- Go has gccgo & Go compiler (one-directional)### 3
+
+Could this be exploited?
+
+People don't think about where their compiler comes from.
+
+Even if they do, they may only go so far as to say "I'll just recompile it using <other compiler>".
+
+Unfortunately, spoiler alert, life isn't that easy in the computer world and yes, exploitation is possible.### 4
+
+- describe what a quine is
+- classic Lisp quine
+- explain demo quine
+- demo demo quine
+
+- this is interesting, but not useful - can quines do more than that?### 5
+
+- quine-relay: "art project" with 128-language circular quine
+
+- show source of quine-relay
+
+- (demo quine relay?)
+
+- side-note: this program is very, very trustworthy!### 6
+
+Ken Thompson (designer of UNIX and a couple other things!) received Turing award in 1983, and described attack in speech.
+
+- figure out how to detect self-compilation
+- make that modification a quine
+- insert modification into new compiler
+- add attack code to modification
+- remove attack from source, distributed binary will still be compromised! it's like evolution :)### 7
+
+damage potential is basically infinite:
+
+- classic "login" attack
+=> also applicable to other credentials
+
+- attack (weaken) crypto algorithms
+
+- you can probably think of more!### 10
+
+if we get a bit-mismatch after DDC, not all hope is lost: Maybe the thing just isn't reproducible!
+
+- many reasons for failures
+- timestamps are a classic! artifacts can be build logs, metadata in ZIP-files or whatever
+- non-determinism is the devil
+- sometimes people actively introduce build-randomness (NaCl)### 11
+
+- Does that binary download on the project's website really match the source?
+
+- Your Linux packages are signed by someone - cool - but what does that mean?### 12
+
+Two things should be achieved - gross oversimplification - to get to the ideal "desired state of the union":
+
+1. full-source bootstrap: without ever introducing any binaries, go from nothing to a full Linux distribution
+
+2. when packages are distributed, we should be able to know the expected output of a source package beforehand
+
+=> suddenly binary distributions become a cache! But more on Nix later.### 13
+
+- Debian project does not seem as concerned with bootstrapping as with reproducibility
+- Debian mostly bootstraps on new architectures (using cross-compilation and similar techniques, from an existing binary base)
+- core bootstrap (GCC & friends) is performed with previous Debian version and depending on GCC### 14
+
+... however! Debian cares about reproducibility.
+
+- automated testing of reproducibility
+- information about the status of all packages is made available in repos
+- Over 90% packages of packages are reproducible!
+
+< show reproducible builds website >
+
+Debian is still fundamentally a binary distribution though, but it doesn't have to be that way.### 15
+
+Nix - a purely functional package manager
+
+It's not a new project (10+ years), been discussed here before, has multiple components: package manager, language, NixOS.
+
+Instead of describing *how* to build a thing, Nix describes *what* to build:### 16
+### 17
+
+- Nix creates repeatable, environments for builds with only the things requested in the build configuration
+
+- Nothing "leaks" in from the outside: no "works on my machine", pinned timestamps, etc.
+
+- packages and all their inputs can be hashed together and used to address a cache -> binary distribution is a side effect of having a cache
+
+- NixOS specifically has some other cool features we can look at later!### 18
+
+In Nix, it's impossible to say "GCC is the result of applying GCC to the GCC source", because that happens to be infinite recursion.
+
+Bootstrapping in Nix works by introducing a binary pinned by its full-hash, which was built on some previous Nix version.
+
+Unfortunately also just a magic binary blob ... ### 19
+
+NixOS is not actively porting all of Debian's reproducibility patches, but builds are fully repeatable:
+
+- introducing a malicious compiler would produce a different input hash -> different package
+
+Future slide: hope is not lost! Things are underway.### 20
+
+- bootstrappable.org (demo?) is an umbrella page for several projects working on bootstrappability
+
+- stage0 is an important piece: manually, small, auditable Hex programs to get to a Hex macro expander
+
+- end goal is a full-source bootrap, but pieces are missing### 21
+
+MES is out of the GuixSD circles (explain Guix, GNU Hurd joke)
+
+- idea being that once you have a Lisp, you have all of computing (as Alan Key said)
+
+- includes MesCC in Scheme -> can *almost* make a working tinyCC -> can *almost* make a working gcc 4.7
+
+- minimal Scheme interpreter, currently built in C to get the higher-level stuff to work, goal is rewrite in hex
+- bootstrapping Guix is the end goal### 22
+
+- userspace in Darwin has a Nix project
+- unsure about other BSDs, but if anyone knows - input welcome!
+- F-Droid has reproducible Android packages, but that's also userspace only
+- All other mobile platforms are a lost cause
+
+Generally, all closed-source software is impossible to trust.### 23
