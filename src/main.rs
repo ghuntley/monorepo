@@ -25,8 +25,11 @@ fn run_ls() {
             content
         };
 
-        let queue_name = path.components().last().unwrap().as_os_str();
-        println!("{:?}: {}", queue_name, status)
+        let queue_name = path.components().last().unwrap()
+            .as_os_str()
+            .to_string_lossy();
+
+        println!("/{}: {}", queue_name, status)
     };
 }
 
@@ -195,7 +198,7 @@ fn main() {
 
     let matches = App::new("mq")
         .setting(AppSettings::SubcommandRequiredElseHelp)
-        .version("0.0.1")
+        .version("1.0.0")
         .about("Administrate and inspect POSIX message queues")
         .subcommand(ls)
         .subcommand(inspect)
