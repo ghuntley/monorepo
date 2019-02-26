@@ -60,6 +60,7 @@ extern crate curl;
 use curl::easy::{Easy, Form, List, ReadError};
 use std::collections::HashMap;
 use std::io::Write;
+use std::path::Path;
 use std::string::{FromUtf8Error, ToString};
 
 #[cfg(feature = "json")] use serde::Serialize;
@@ -71,6 +72,11 @@ mod tests;
 /// HTTP method to use for the request.
 pub enum Method {
     Get, Post, Put, Patch, Delete
+}
+
+/// Certificate types for client-certificate key pairs.
+pub enum CertType {
+    P12, PEM, DER
 }
 
 /// Builder structure for an HTTP request.
@@ -147,6 +153,45 @@ impl <'a> Request<'a> {
     /// supplied token.
     pub fn bearer_auth(mut self, token: &str) -> Result<Self, curl::Error> {
         self.headers.append(&format!("Authorization: Bearer {}", token))?;
+        Ok(self)
+    }
+
+    /// Configure a TLS client certificate on the request.
+    ///
+    /// Depending on whether the certificate file contains the private
+    /// key or not, calling `tls_client_key` may be required in
+    /// addition.
+    ///
+    /// Consult the documentation for the `ssl_cert` and `ssl_key`
+    /// functions in `curl::easy::Easy2` for details on supported
+    /// formats and defaults.
+    pub fn tls_client_cert<P: AsRef<Path>>(mut self, cert_type: CertType, cert: P)
+                                           -> Result<Self, curl::Error> {
+        self.handle.ssl_cert(cert)?;
+        self.handle.ssl_cert_type(match cert_type {
+            CertType::P12 => "P12",
+            CertType::PEM => "PEM",
+            CertType::DER => "DER",
+        })?;
+
+        Ok(self)
+    }
+
+    /// Configure a TLS client certificate key on the request with an
+    /// optional key passphrase.
+    ///
+    /// Note that this does **not** need to be called again for
+    /// PKCS12-encoded key pairs which are set via `tls_client_cert`.
+    ///
+    /// Currently only PEM-encoded key files are supported.
+    pub fn tls_client_key<P, S>(mut self, key: P, passphrase: Option<S>)
+                                -> Result<Self, curl::Error>
+    where P: AsRef<Path>, S: AsRef<str> {
+        self.handle.ssl_key(key)?;
+        if let Some(pass) = passphrase {
+            self.handle.key_password(pass.as_ref())?;
+        }
+
         Ok(self)
     }
 
