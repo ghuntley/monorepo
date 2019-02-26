@@ -124,8 +124,15 @@ impl <'a> Request<'a> {
 
     /// Set the `User-Agent` for this request. By default this will be
     /// set to cURL's standard user agent.
-    pub fn user_agent<'b: 'a>(mut self, agent: &str) -> Result<Self, curl::Error> {
+    pub fn user_agent(mut self, agent: &str) -> Result<Self, curl::Error> {
         self.handle.useragent(agent)?;
+        Ok(self)
+    }
+
+    /// Set the `Authorization` header to a `Bearer` value with the
+    /// supplied token.
+    pub fn bearer_auth(mut self, token: &str) -> Result<Self, curl::Error> {
+        self.headers.append(&format!("Authorization: Bearer {}", token))?;
         Ok(self)
     }
 
