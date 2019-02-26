@@ -30,9 +30,9 @@
 //! and print the result to `stdout`:
 //!
 //! ```rust
-//! use crimp::{Method, Request};
+//! use crimp::Request;
 //!
-//! let response = Request::new(Method::Get, "http://httpbin.org/get")
+//! let response = Request::get("http://httpbin.org/get")
 //!     .user_agent("crimp test suite").unwrap()
 //!     .send().unwrap()
 //!     .as_string().unwrap();
@@ -91,7 +91,7 @@ use std::time::Duration;
 mod tests;
 
 /// HTTP method to use for the request.
-pub enum Method {
+enum Method {
     Get, Post, Put, Patch, Delete
 }
 
@@ -147,7 +147,7 @@ pub struct Response<T> {
 
 impl <'a> Request<'a> {
     /// Initiate an HTTP request with the given method and URL.
-    pub fn new(method: Method, url: &'a str) -> Self {
+    fn new(method: Method, url: &'a str) -> Self {
         Request {
             url,
             method,
@@ -156,6 +156,21 @@ impl <'a> Request<'a> {
             body: Body::NoBody,
         }
     }
+
+    /// Initiate a GET request with the given URL.
+    pub fn get(url: &'a str) -> Self { Request::new(Method::Get, url) }
+
+    /// Initiate a POST request with the given URL.
+    pub fn post(url: &'a str) -> Self { Request::new(Method::Post, url) }
+
+    /// Initiate a PUT request with the given URL.
+    pub fn put(url: &'a str) -> Self { Request::new(Method::Put, url) }
+
+    /// Initiate a PATCH request with the given URL.
+    pub fn patch(url: &'a str) -> Self { Request::new(Method::Patch, url) }
+
+    /// Initiate a DELETE request with the given URL.
+    pub fn delete(url: &'a str) -> Self { Request::new(Method::Delete, url) }
 
     /// Add an HTTP header to a request.
     pub fn header(mut self, k: &str, v: &str) -> Result<Self, curl::Error> {
@@ -245,8 +260,8 @@ impl <'a> Request<'a> {
     /// directly.
     ///
     /// ```
-    /// # use crimp::{Request, Method};
-    /// let response = Request::new(Method::Get, "https://httpbin.org/get")
+    /// # use crimp::Request;
+    /// let response = Request::get("https://httpbin.org/get")
     ///     .with_handle(|mut handle| handle.referer("Example-Referer")).unwrap()
     ///     .send().unwrap();
     /// #
@@ -280,7 +295,7 @@ impl <'a> Request<'a> {
     ///     .contents("some-data".as_bytes())
     ///     .add().unwrap();
     ///
-    /// let response = Request::new(Method::Post, "https://httpbin.org/post")
+    /// let response = Request::post("https://httpbin.org/post")
     ///     .user_agent("crimp test suite").unwrap()
     ///     .form(form)
     ///     .send().unwrap();
@@ -432,8 +447,9 @@ impl <T> Response<T> {
         self.status >= 200 && self.status < 300
     }
 
-    /// Check whether a request succeeded and let users provide a
-    /// closure that creates an error from the request if it did not.
+    /// Check whether a request succeeded using `Request::is_success`
+    /// and let users provide a closure that creates a custom error
+    /// from the request if it did not.
     ///
     /// This function exists for convenience to avoid having to write
     /// repetitive `if !response.is_success() { ... }` blocks.
