@@ -12,11 +12,18 @@
 //! [reqwest]: https://docs.rs/reqwest
 
 extern crate curl;
+extern crate serde;
+extern crate serde_json;
 
 use curl::easy::{Easy, List, ReadError};
+use serde::Serialize;
+use serde::de::DeserializeOwned;
 use std::collections::HashMap;
 use std::io::Write;
 use std::string::{FromUtf8Error, ToString};
+
+#[cfg(test)]
+mod tests;
 
 type CurlResult<T> = Result<T, curl::Error>;
 
@@ -25,11 +32,19 @@ pub enum Method {
     Get, Post, Put, Patch, Delete
 }
 
-
 pub struct Request<'a> {
     handle: Easy,
     headers: List,
-    body: Option<&'a [u8]>,
+    body: Body<'a>,
+}
+
+enum Body<'a> {
+    NoBody,
+    Json(Vec<u8>),
+    Bytes {
+        content_type: &'a str,
+        data: &'a [u8],
+    }
 }
 
 #[derive(Debug)]
@@ -56,7 +71,7 @@ impl <'a> Request<'a> {
         Ok(Request {
             handle,
             headers: List::new(),
-            body: None,
+            body: Body::NoBody,
         })
     }
 
@@ -74,11 +89,16 @@ impl <'a> Request<'a> {
 
     /// Add a byte-array body to a request using the specified
     /// Content-Type.
-    pub fn body(&'a mut self, content_type: &str, body: &'a [u8])
-                    -> CurlResult<&mut Self> {
-        self.header("Content-Type", content_type)?;
-        self.body = Some(body);
+    pub fn body(&'a mut self, content_type: &'a str, data: &'a [u8]) -> &mut Self {
+        self.body = Body::Bytes { data, content_type };
+        self
+    }
 
+    /// Add a JSON-encoded body from a serializable type.
+    pub fn json<T: Serialize>(&'a mut self, body: &T)
+                              -> Result<&mut Self, serde_json::Error> {
+        let json = serde_json::to_vec(body)?;
+        self.body = Body::Json(json);
         Ok(self)
     }
 
@@ -89,6 +109,17 @@ impl <'a> Request<'a> {
         let mut headers = HashMap::new();
         let mut body = vec![];
 
+        // Optionally set content type if a body payload is
+        // configured.
+        match self.body {
+            Body::Json(..) => self.header("Content-Type", "application/json"),
+            Body::Bytes { content_type, .. } => self.header("Content-Type", content_type),
+            Body::NoBody => Ok(&mut self),
+        }?;
+
+        // Configure headers on the request:
+        self.handle.http_headers(self.headers)?;
+
         {
             // Take a scoped transfer from the Easy handle. This makes it
             // possible to write data into the above local buffers without
@@ -96,13 +127,22 @@ impl <'a> Request<'a> {
             let mut transfer = self.handle.transfer();
 
             // Write the payload if it exists:
-            if let Some(body) = self.body {
-                transfer.read_function(move |mut into| {
-                    into.write_all(body)
-                        .map(|_| body.len())
+            match self.body {
+                Body::Bytes { data, .. } => transfer.read_function(move |mut into| {
+                    into.write_all(data)
+                        .map(|_| data.len())
                         .map_err(|_| ReadError::Abort)
-                })?;
-            }
+                })?,
+
+                Body::Json(json) => transfer.read_function(move |mut into| {
+                    into.write_all(&json)
+                        .map(|_| json.len())
+                        .map_err(|_| ReadError::Abort)
+                })?,
+
+                // Do nothing if there is no body ...
+                Body::NoBody => {},
+            };
 
             // Read one header per invocation. Request processing is
             // terminated if any header is malformed:
@@ -155,6 +195,17 @@ impl CurlResponse<Vec<u8>> {
 
         Ok(CurlResponse {
             body,
+            status: self.status,
+            headers: self.headers,
+        })
+    }
+
+    /// Attempt to deserialize the HTTP response body from JSON.
+    pub fn as_json<T: DeserializeOwned>(self) -> Result<CurlResponse<T>, serde_json::Error> {
+        let deserialized = serde_json::from_slice(&self.body)?;
+
+        Ok(CurlResponse {
+            body: deserialized,
             status: self.status,
             headers: self.headers,
         })
