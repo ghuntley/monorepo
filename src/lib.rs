@@ -177,21 +177,24 @@ impl <'a> Request<'a> {
         Ok(self)
     }
 
-    /// Configure a TLS client certificate key on the request with an
-    /// optional key passphrase.
+    /// Configure a TLS client certificate key on the request.
     ///
     /// Note that this does **not** need to be called again for
     /// PKCS12-encoded key pairs which are set via `tls_client_cert`.
     ///
     /// Currently only PEM-encoded key files are supported.
-    pub fn tls_client_key<P, S>(mut self, key: P, passphrase: Option<S>)
-                                -> Result<Self, curl::Error>
-    where P: AsRef<Path>, S: AsRef<str> {
+    pub fn tls_client_key<P: AsRef<Path>>(mut self, key: P) -> Result<Self, curl::Error> {
         self.handle.ssl_key(key)?;
-        if let Some(pass) = passphrase {
-            self.handle.key_password(pass.as_ref())?;
-        }
+        Ok(self)
+    }
 
+    /// Configure an encryption password for a TLS client certificate
+    /// key on the request.
+    ///
+    /// This is required in case of an encrypted private key that
+    /// should be used.
+    pub fn tls_key_password(mut self, password: &str) -> Result<Self, curl::Error> {
+        self.handle.key_password(password)?;
         Ok(self)
     }
 
