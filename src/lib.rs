@@ -43,7 +43,7 @@ extern crate curl;
 #[cfg(feature = "json")] extern crate serde;
 #[cfg(feature = "json")] extern crate serde_json;
 
-use curl::easy::{Easy, List, ReadError};
+use curl::easy::{Easy, Form, List, ReadError};
 use std::collections::HashMap;
 use std::io::Write;
 use std::string::{FromUtf8Error, ToString};
@@ -74,12 +74,15 @@ pub struct Request<'a> {
 
 enum Body<'a> {
     NoBody,
-    #[cfg(feature = "json")]
-    Json(Vec<u8>),
+    Form(Form),
+
     Bytes {
         content_type: &'a str,
         data: &'a [u8],
-    }
+    },
+
+    #[cfg(feature = "json")]
+    Json(Vec<u8>),
 }
 
 /// HTTP responses structure containing response data and headers.
@@ -133,6 +136,41 @@ impl <'a> Request<'a> {
         self
     }
 
+    /// Add a form-encoded body to a request using the `curl::Form`
+    /// type.
+    ///
+    /// ```rust
+    /// # extern crate curl;
+    /// # extern crate serde_json;
+    /// # use crimp::*;
+    /// # use serde_json::{Value, json};
+    /// use curl::easy::Form;
+    ///
+    /// let mut form = Form::new();
+    /// form.part("some-name")
+    ///     .contents("some-data".as_bytes())
+    ///     .add().unwrap();
+    ///
+    /// let response = Request::new(Method::Post, "https://httpbin.org/post")
+    ///     .user_agent("crimp test suite").unwrap()
+    ///     .form(form)
+    ///     .send().unwrap();
+    /// #
+    /// # assert_eq!(200, response.status, "form POST should succeed");
+    /// # assert_eq!(
+    /// #     response.as_json::<Value>().unwrap().body.get("form").unwrap(),
+    /// #     &json!({"some-name": "some-data"}),
+    /// #     "posted form data should match",
+    /// # );
+    /// ```
+    ///
+    /// See the documentation of `curl::easy::Form` for details on how
+    /// to construct a form body.
+    pub fn form(mut self, form: Form) -> Self {
+        self.body = Body::Form(form);
+        self
+    }
+
     /// Add a JSON-encoded body from a serializable type.
     #[cfg(feature = "json")]
     pub fn json<T: Serialize>(mut self, body: &T) -> Result<Self, serde_json::Error> {
@@ -159,8 +197,16 @@ impl <'a> Request<'a> {
         let mut headers = HashMap::new();
         let mut body = vec![];
 
+        // Submit a form value to cURL if it is set and proceed
+        // pretending that there is no body, as the handling of this
+        // type of body happens under-the-hood.
+        if let Body::Form(form) = self.body {
+            self.handle.httppost(form)?;
+            self.body = Body::NoBody;
+        }
+
         // Optionally set content type if a body payload is configured
-        // and configure the expected body size.
+        // and configure the expected body size (or form payload).
          match self.body {
             Body::Bytes { content_type, data } => {
                 self.handle.post_field_size(data.len() as u64)?;
@@ -173,7 +219,9 @@ impl <'a> Request<'a> {
                 self.headers.append("Content-Type: application/json")?;
             },
 
-            Body::NoBody => (),
+             // Do not set content-type header at all if there is no
+             // body, or if the form handler was invoked above.
+             _ => (),
         };
 
         // Configure headers on the request:
@@ -200,8 +248,9 @@ impl <'a> Request<'a> {
                         .map_err(|_| ReadError::Abort)
                 })?,
 
-                // Do nothing if there is no body ...
-                Body::NoBody => (),
+                // Do nothing if there is no body or if the body is a
+                // form.
+                _ => (),
             };
 
             // Read one header per invocation. Request processing is
