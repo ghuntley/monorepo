@@ -78,28 +78,27 @@ impl <'a> Request<'a> {
     }
 
     /// Add a header to a request.
-    pub fn header(&mut self, k: &str, v: &str) -> CurlResult<&mut Self> {
+    pub fn header(mut self, k: &str, v: &str) -> CurlResult<Self> {
         self.headers.append(&format!("{}: {}", k, v))?;
         Ok(self)
     }
 
     /// Set the User-Agent for this request.
-    pub fn user_agent(&mut self, agent: &str) -> CurlResult<&mut Self> {
+    pub fn user_agent<'b: 'a>(mut self, agent: &str) -> CurlResult<Self> {
         self.handle.useragent(agent)?;
         Ok(self)
     }
 
     /// Add a byte-array body to a request using the specified
     /// Content-Type.
-    pub fn body(&'a mut self, content_type: &'a str, data: &'a [u8]) -> &mut Self {
+    pub fn body(mut self, content_type: &'a str, data: &'a [u8]) -> Self {
         self.body = Body::Bytes { data, content_type };
         self
     }
 
     /// Add a JSON-encoded body from a serializable type.
     #[cfg(feature = "json")]
-    pub fn json<T: Serialize>(&'a mut self, body: &T)
-                              -> Result<&mut Self, serde_json::Error> {
+    pub fn json<T: Serialize>(mut self, body: &T) -> Result<Self, serde_json::Error> {
         let json = serde_json::to_vec(body)?;
         self.body = Body::Json(json);
         Ok(self)
