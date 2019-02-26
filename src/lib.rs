@@ -59,6 +59,13 @@
 //!   request/response bodies using `serde_json`. This feature adds a
 //!   dependency on the `serde` and `serde_json` crates.
 //!
+//! ## Initialisation
+//!
+//! It is recommended to call the underlying `curl::init` method
+//! (re-exported as `crimp::init`) when launching your application to
+//! initialise the cURL library. This is not required, but will
+//! otherwise occur the first time a request is made.
+//!
 //! [cURL Rust bindings]: https://docs.rs/curl
 //! [reqwest]: https://docs.rs/reqwest
 //! [file an issue]: https://github.com/tazjin/crimp/issues
@@ -67,6 +74,8 @@ extern crate curl;
 
 #[cfg(feature = "json")] extern crate serde;
 #[cfg(feature = "json")] extern crate serde_json;
+
+pub use curl::init;
 
 use curl::easy::{Auth, Easy, Form, List, ReadError};
 use std::collections::HashMap;
