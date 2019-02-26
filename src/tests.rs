@@ -92,6 +92,15 @@ fn test_http_post_json() {
 // Tests for different authentication methods that are supported
 // out-of-the-box:
 
+#[test]
+fn test_bearer_auth() {
+    let response = Request::new(Method::Get, "https://httpbin.org/bearer")
+        .bearer_auth("some-token").expect("failed to set auth header")
+        .send().expect("failed to send request");
+
+    assert!(response.is_success(), "authorized request should succeed");
+}
+
 #[cfg(feature = "basic_auth")] #[test]
 fn test_basic_auth() {
     let request = Request::new(
