@@ -14,7 +14,7 @@
 //! ```rust
 //! use crimp::{Method, Request};
 //!
-//! let response = Request::new(Method::Get, "http://httpbin.org/get").unwrap()
+//! let response = Request::new(Method::Get, "http://httpbin.org/get")
 //!     .user_agent("crimp test suite").unwrap()
 //!     .send().unwrap();
 //!
@@ -65,6 +65,8 @@ pub enum Method {
 /// request its parameters are modified using the various builder
 /// methods until it is consumed by `send()`.
 pub struct Request<'a> {
+    url: &'a str,
+    method: Method,
     handle: Easy,
     headers: List,
     body: Body<'a>,
@@ -101,23 +103,14 @@ pub struct Response<T> {
 
 impl <'a> Request<'a> {
     /// Initiate an HTTP request with the given method and URL.
-    pub fn new(method: Method, url: &str) -> Result<Self, curl::Error> {
-        let mut handle = Easy::new();
-        handle.url(url)?;
-
-        match method {
-            Method::Get    => handle.get(true)?,
-            Method::Post   => handle.post(true)?,
-            Method::Put    => handle.put(true)?,
-            Method::Patch  => handle.custom_request("PATCH")?,
-            Method::Delete => handle.custom_request("DELETE")?,
-        }
-
-        Ok(Request {
-            handle,
+    pub fn new(method: Method, url: &'a str) -> Self {
+        Request {
+            url,
+            method,
+            handle: Easy::new(),
             headers: List::new(),
             body: Body::NoBody,
-        })
+        }
     }
 
     /// Add an HTTP header to a request.
@@ -151,6 +144,17 @@ impl <'a> Request<'a> {
     /// Send the HTTP request and return a response structure
     /// containing the raw body.
     pub fn send(mut self) -> Result<Response<Vec<u8>>, curl::Error> {
+        // Configure request basics:
+        self.handle.url(self.url)?;
+
+        match self.method {
+            Method::Get    => self.handle.get(true)?,
+            Method::Post   => self.handle.post(true)?,
+            Method::Put    => self.handle.put(true)?,
+            Method::Patch  => self.handle.custom_request("PATCH")?,
+            Method::Delete => self.handle.custom_request("DELETE")?,
+        }
+
         // Create structures in which to store the response data:
         let mut headers = HashMap::new();
         let mut body = vec![];

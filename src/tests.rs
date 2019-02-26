@@ -7,9 +7,7 @@ use serde_json::{Value, json};
 #[test]
 fn test_http_get() {
     let resp = Request::new(Method::Get, "https://httpbin.org/get")
-        .expect("failed to create request")
-        .send()
-        .expect("failed to send request");
+        .send().expect("failed to send request");
 
     assert_eq!(200, resp.status, "response status should be 200 OK");
 }
@@ -17,7 +15,6 @@ fn test_http_get() {
 #[test]
 fn test_http_delete() {
     let resp = Request::new(Method::Delete, "https://httpbin.org/delete")
-        .expect("failed to create request")
         .send().expect("failed to send request");
 
     assert_eq!(200, resp.status, "response status should be 200 OK");
@@ -26,7 +23,6 @@ fn test_http_delete() {
 #[test]
 fn test_http_put() {
     let resp = Request::new(Method::Put, "https://httpbin.org/put")
-        .expect("failed to create request")
         .send().expect("failed to send request");
 
     assert_eq!(200, resp.status, "response status should be 200 OK");
@@ -35,17 +31,18 @@ fn test_http_put() {
 #[test]
 fn test_http_patch() {
     let resp = Request::new(Method::Patch, "https://httpbin.org/patch")
-        .expect("failed to create request")
         .send().expect("failed to send request");
 
     assert_eq!(200, resp.status, "response status should be 200 OK");
 }
 
+// These tests perform various requests with different body payloads
+// and verify that those were received correctly by the remote side.
+
 #[test]
 fn test_http_post() {
     let body = "test body";
     let response = Request::new(Method::Post, "https://httpbin.org/post")
-        .expect("failed to create request")
         .user_agent("crimp test suite").expect("failed to set user-agent")
         .body("text/plain", &body.as_bytes())
         .send().expect("failed to send request")
@@ -65,14 +62,13 @@ fn test_http_post() {
     );
 }
 
-#[test]
+#[cfg(feature = "json")] #[test]
 fn test_http_post_json() {
     let body = json!({
         "purpose": "testing!"
     });
 
     let response = Request::new(Method::Post, "https://httpbin.org/post")
-        .expect("failed to create request")
         .user_agent("crimp test suite").expect("failed to set user-agent")
         .json(&body).expect("request serialization failed")
         .send().expect("failed to send request")
