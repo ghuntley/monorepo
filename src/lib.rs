@@ -303,6 +303,14 @@ impl <'a> Request<'a> {
     }
 }
 
+impl <T> Response<T> {
+    /// Check whether the status code of this HTTP response is a
+    /// success (i.e. in the 200-299 range).
+    pub fn is_success(&self) -> bool {
+        self.status >= 200 && self.status < 300
+    }
+}
+
 impl Response<Vec<u8>> {
     /// Attempt to parse the HTTP response body as a UTF-8 encoded
     /// string.

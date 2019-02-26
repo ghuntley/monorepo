@@ -9,7 +9,7 @@ fn test_http_get() {
     let resp = Request::new(Method::Get, "https://httpbin.org/get")
         .send().expect("failed to send request");
 
-    assert_eq!(200, resp.status, "response status should be 200 OK");
+    assert!(resp.is_success(), "request should have succeeded");
 }
 
 #[test]
