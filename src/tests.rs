@@ -44,6 +44,7 @@ fn test_http_post() {
     let body = "test body";
     let response = Request::new(Method::Post, "https://httpbin.org/post")
         .user_agent("crimp test suite").expect("failed to set user-agent")
+        .timeout(Duration::from_secs(5)).expect("failed to set request timeout")
         .body("text/plain", &body.as_bytes())
         .send().expect("failed to send request")
         .as_json::<Value>().expect("failed to deserialize response");
@@ -70,6 +71,7 @@ fn test_http_post_json() {
 
     let response = Request::new(Method::Post, "https://httpbin.org/post")
         .user_agent("crimp test suite").expect("failed to set user-agent")
+        .timeout(Duration::from_secs(5)).expect("failed to set request timeout")
         .json(&body).expect("request serialization failed")
         .send().expect("failed to send request")
         .as_json::<Value>().expect("failed to deserialize response");
