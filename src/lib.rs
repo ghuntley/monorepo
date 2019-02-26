@@ -111,15 +111,22 @@ impl <'a> Request<'a> {
         let mut headers = HashMap::new();
         let mut body = vec![];
 
-        // Optionally set content type if a body payload is
-        // configured.
-        match self.body {
-            Body::Bytes { content_type, .. } => self.header("Content-Type", content_type),
-            Body::NoBody => Ok(&mut self),
+        // Optionally set content type if a body payload is configured
+        // and configure the expected body size.
+         match self.body {
+            Body::Bytes { content_type, data } => {
+                self.handle.post_field_size(data.len() as u64)?;
+                self.headers.append(&format!("Content-Type: {}", content_type))?;
+            },
 
             #[cfg(feature = "json")]
-            Body::Json(..) => self.header("Content-Type", "application/json"),
-        }?;
+            Body::Json(ref data) => {
+                self.handle.post_field_size(data.len() as u64)?;
+                self.headers.append("Content-Type: application/json")?;
+            },
+
+            Body::NoBody => (),
+        };
 
         // Configure headers on the request:
         self.handle.http_headers(self.headers)?;
@@ -146,7 +153,7 @@ impl <'a> Request<'a> {
                 })?,
 
                 // Do nothing if there is no body ...
-                Body::NoBody => {},
+                Body::NoBody => (),
             };
 
             // Read one header per invocation. Request processing is
