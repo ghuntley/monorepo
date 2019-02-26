@@ -42,6 +42,7 @@ extern crate curl;
 
 #[cfg(feature = "json")] extern crate serde;
 #[cfg(feature = "json")] extern crate serde_json;
+#[cfg(feature = "basic_auth")] extern crate base64;
 
 use curl::easy::{Easy, Form, List, ReadError};
 use std::collections::HashMap;
@@ -133,6 +134,15 @@ impl <'a> Request<'a> {
     /// supplied token.
     pub fn bearer_auth(mut self, token: &str) -> Result<Self, curl::Error> {
         self.headers.append(&format!("Authorization: Bearer {}", token))?;
+        Ok(self)
+    }
+
+    #[cfg(feature = "basic_auth")]
+    /// Set the `Authorization` header to a basic authentication value
+    /// from the supplied username and password.
+    pub fn basic_auth(mut self, username: &str, password: &str) -> Result<Self, curl::Error> {
+        let auth = base64::encode(format!("{}:{}", username, password).as_bytes());
+        self.headers.append(&format!("Authorization: Basic {}", auth))?;
         Ok(self)
     }
 

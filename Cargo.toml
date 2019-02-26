@@ -4,10 +4,12 @@ version = "0.1.0"
 authors = ["Vincent Ambo <mail@tazj.in>"]
 
 [features]
-default = [ "json" ]
+default = [ "json", "basic_auth" ]
 json = [ "serde", "serde_json"]
+basic_auth = [ "base64" ]
 
 [dependencies]
 curl = "0.4"
 serde = { version = "1.0", optional = true }
 serde_json = { version = "1.0", optional = true }
+base64 = { version = "0.10", optional = true }

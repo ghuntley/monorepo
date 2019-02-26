@@ -88,3 +88,19 @@ fn test_http_post_json() {
         "Content-Type should be `application/json`",
     );
 }
+
+// Tests for different authentication methods that are supported
+// out-of-the-box:
+
+#[cfg(feature = "basic_auth")] #[test]
+fn test_basic_auth() {
+    let request = Request::new(
+        Method::Get, "https://httpbin.org/basic-auth/alan_watts/oneness"
+    );
+
+    let response = request
+        .basic_auth("alan_watts", "oneness").expect("failed to set auth header")
+        .send().expect("failed to send request");
+
+    assert!(response.is_success(), "authorized request should succeed");
+}
