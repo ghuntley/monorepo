@@ -9,21 +9,20 @@
 //! dependencies or sacrificing too much usability.
 //!
 //! Using `crimp` to make HTTP requests is done using a simple
-//! builder-pattern style API:
+//! builder-pattern style API. For example, to make a `GET`-request
+//! and print the result to `stdout`:
 //!
 //! ```rust
 //! use crimp::{Method, Request};
 //!
 //! let response = Request::new(Method::Get, "http://httpbin.org/get")
 //!     .user_agent("crimp test suite").unwrap()
-//!     .send().unwrap();
+//!     .send().unwrap()
+//!     .as_string().unwrap();
 //!
-//! assert_eq!(response.status, 200);
+//! println!("Status: {}\nBody: {}", response.status, response.body);
+//! # assert_eq!(response.status, 200);
 //! ```
-//!
-//! The `json` feature (enabled by default) adds support for
-//! automatically serialising and deserialising request/response
-//! bodies using `serde_json`.
 //!
 //! If a feature from the underlying cURL library is missing, the
 //! `Request::raw` method can be used as an escape hatch to deal with
@@ -33,6 +32,20 @@
 //! `crimp` does not currently expose functionality for re-using a
 //! cURL Easy handle, meaning that keep-alive of HTTP connections and
 //! the like is not supported.
+//!
+//! ## Cargo features
+//!
+//! `crimp` has several optional features, all of which are enabled by
+//! default:
+//!
+//! * `json`: Adds `Request::json` and `Response::as_json` methods
+//!   which can be used for convenient serialisation of
+//!   request/response bodies using `serde_json`. This feature adds a
+//!   dependency on the `serde` and `serde_json` crates.
+//!
+//! * `basic_auth`: Adds a `Request::basic_auth` utility method to set
+//!   a basic authentication header on the request. This feature adds
+//!   a dependency on the `base64` crate.
 //!
 //! [cURL Rust bindings]: https://docs.rs/curl
 //! [reqwest]: https://docs.rs/reqwest
