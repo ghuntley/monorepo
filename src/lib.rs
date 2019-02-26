@@ -52,17 +52,12 @@
 //!
 //! ## Cargo features
 //!
-//! `crimp` has several optional features, all of which are enabled by
-//! default:
+//! All optional features are enabled by default.
 //!
 //! * `json`: Adds `Request::json` and `Response::as_json` methods
 //!   which can be used for convenient serialisation of
 //!   request/response bodies using `serde_json`. This feature adds a
 //!   dependency on the `serde` and `serde_json` crates.
-//!
-//! * `basic_auth`: Adds a `Request::basic_auth` utility method to set
-//!   a basic authentication header on the request. This feature adds
-//!   a dependency on the `base64` crate.
 //!
 //! [cURL Rust bindings]: https://docs.rs/curl
 //! [reqwest]: https://docs.rs/reqwest
@@ -72,9 +67,8 @@ extern crate curl;
 
 #[cfg(feature = "json")] extern crate serde;
 #[cfg(feature = "json")] extern crate serde_json;
-#[cfg(feature = "basic_auth")] extern crate base64;
 
-use curl::easy::{Easy, Form, List, ReadError};
+use curl::easy::{Auth, Easy, Form, List, ReadError};
 use std::collections::HashMap;
 use std::io::Write;
 use std::path::Path;
@@ -173,6 +167,17 @@ impl <'a> Request<'a> {
         Ok(self)
     }
 
+    /// Set the `Authorization` header to a basic authentication value
+    /// from the supplied username and password.
+    pub fn basic_auth(mut self, username: &str, password: &str) -> Result<Self, curl::Error> {
+        let mut auth = Auth::new();
+        auth.basic(true);
+        self.handle.username(username)?;
+        self.handle.password(password)?;
+        self.handle.http_auth(&auth)?;
+        Ok(self)
+    }
+
     /// Configure a TLS client certificate on the request.
     ///
     /// Depending on whether the certificate file contains the private
@@ -212,15 +217,6 @@ impl <'a> Request<'a> {
     /// should be used.
     pub fn tls_key_password(mut self, password: &str) -> Result<Self, curl::Error> {
         self.handle.key_password(password)?;
-        Ok(self)
-    }
-
-    #[cfg(feature = "basic_auth")]
-    /// Set the `Authorization` header to a basic authentication value
-    /// from the supplied username and password.
-    pub fn basic_auth(mut self, username: &str, password: &str) -> Result<Self, curl::Error> {
-        let auth = base64::encode(format!("{}:{}", username, password).as_bytes());
-        self.headers.append(&format!("Authorization: Basic {}", auth))?;
         Ok(self)
     }
 

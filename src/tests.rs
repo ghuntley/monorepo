@@ -101,7 +101,7 @@ fn test_bearer_auth() {
     assert!(response.is_success(), "authorized request should succeed");
 }
 
-#[cfg(feature = "basic_auth")] #[test]
+#[test]
 fn test_basic_auth() {
     let request = Request::new(
         Method::Get, "https://httpbin.org/basic-auth/alan_watts/oneness"
