@@ -2,6 +2,7 @@
 name = "crimp"
 version = "0.1.0"
 authors = ["Vincent Ambo <mail@tazj.in>"]
+license = "GPL-3.0-or-later"
 
 [features]
 default = [ "json", "basic_auth" ]
