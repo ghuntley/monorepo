@@ -12,12 +12,13 @@
 //! [reqwest]: https://docs.rs/reqwest
 
 extern crate curl;
-extern crate serde;
-extern crate serde_json;
+
+#[cfg(feature = "json")] extern crate serde;
+#[cfg(feature = "json")] extern crate serde_json;
 
 use curl::easy::{Easy, List, ReadError};
-use serde::Serialize;
-use serde::de::DeserializeOwned;
+#[cfg(feature = "json")] use serde::Serialize;
+#[cfg(feature = "json")] use serde::de::DeserializeOwned;
 use std::collections::HashMap;
 use std::io::Write;
 use std::string::{FromUtf8Error, ToString};
@@ -40,6 +41,7 @@ pub struct Request<'a> {
 
 enum Body<'a> {
     NoBody,
+    #[cfg(feature = "json")]
     Json(Vec<u8>),
     Bytes {
         content_type: &'a str,
@@ -95,6 +97,7 @@ impl <'a> Request<'a> {
     }
 
     /// Add a JSON-encoded body from a serializable type.
+    #[cfg(feature = "json")]
     pub fn json<T: Serialize>(&'a mut self, body: &T)
                               -> Result<&mut Self, serde_json::Error> {
         let json = serde_json::to_vec(body)?;
@@ -112,9 +115,11 @@ impl <'a> Request<'a> {
         // Optionally set content type if a body payload is
         // configured.
         match self.body {
-            Body::Json(..) => self.header("Content-Type", "application/json"),
             Body::Bytes { content_type, .. } => self.header("Content-Type", content_type),
             Body::NoBody => Ok(&mut self),
+
+            #[cfg(feature = "json")]
+            Body::Json(..) => self.header("Content-Type", "application/json"),
         }?;
 
         // Configure headers on the request:
@@ -134,6 +139,7 @@ impl <'a> Request<'a> {
                         .map_err(|_| ReadError::Abort)
                 })?,
 
+                #[cfg(feature = "json")]
                 Body::Json(json) => transfer.read_function(move |mut into| {
                     into.write_all(&json)
                         .map(|_| json.len())
@@ -201,6 +207,7 @@ impl CurlResponse<Vec<u8>> {
     }
 
     /// Attempt to deserialize the HTTP response body from JSON.
+    #[cfg(feature = "json")]
     pub fn as_json<T: DeserializeOwned>(self) -> Result<CurlResponse<T>, serde_json::Error> {
         let deserialized = serde_json::from_slice(&self.body)?;
 
