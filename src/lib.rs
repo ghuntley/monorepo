@@ -73,6 +73,7 @@ use std::collections::HashMap;
 use std::io::Write;
 use std::path::Path;
 use std::string::{FromUtf8Error, ToString};
+use std::time::Duration;
 
 #[cfg(feature = "json")] use serde::Serialize;
 #[cfg(feature = "json")] use serde::de::DeserializeOwned;
@@ -217,6 +218,13 @@ impl <'a> Request<'a> {
     /// should be used.
     pub fn tls_key_password(mut self, password: &str) -> Result<Self, curl::Error> {
         self.handle.key_password(password)?;
+        Ok(self)
+    }
+
+    /// Configure a timeout for the request after which the request
+    /// will be aborted.
+    pub fn timeout(mut self, timeout: Duration) -> Result<Self, curl::Error> {
+        self.handle.timeout(timeout)?;
         Ok(self)
     }
 
