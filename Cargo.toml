@@ -1,0 +1,7 @@
+[package]
+name = "crimp"
+version = "0.1.0"
+authors = ["Vincent Ambo <mail@tazj.in>"]
+
+[dependencies]
+curl = "0.4"
