@@ -115,3 +115,15 @@ fn test_basic_auth() {
 
     assert!(response.is_success(), "authorized request should succeed");
 }
+
+// Tests for various other features.
+
+#[test]
+fn test_error_for_status() {
+    let response = Request::new(Method::Get, "https://httpbin.org/patch")
+        .send().expect("failed to send request")
+        .error_for_status(|resp| format!("Response error code: {}", resp.status));
+
+    assert_eq!(Err("Response error code: 405".into()), response,
+               "returned error should be converted into Result::Err");
+}

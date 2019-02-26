@@ -133,7 +133,7 @@ enum Body<'a> {
 /// decoding a string via `Response::as_string` or to a
 /// `serde`-compatible type with `Response::as_json` (if the
 /// `json`-feature is enabled).
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Response<T> {
     /// HTTP status code of the response.
     pub status: u32,
@@ -430,6 +430,20 @@ impl <T> Response<T> {
     /// success (i.e. in the 200-299 range).
     pub fn is_success(&self) -> bool {
         self.status >= 200 && self.status < 300
+    }
+
+    /// Check whether a request succeeded and let users provide a
+    /// closure that creates an error from the request if it did not.
+    ///
+    /// This function exists for convenience to avoid having to write
+    /// repetitive `if !response.is_success() { ... }` blocks.
+    pub fn error_for_status<F, E>(self, closure: F) -> Result<Self, E>
+    where F: FnOnce(Self) -> E {
+        if !self.is_success() {
+            return Err(closure(self))
+        }
+
+        Ok(self)
     }
 }
 
