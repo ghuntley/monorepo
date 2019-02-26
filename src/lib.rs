@@ -228,6 +228,27 @@ impl <'a> Request<'a> {
         Ok(self)
     }
 
+    /// Set custom configuration on the cURL `Easy` handle.
+    ///
+    /// This function can be considered an "escape-hatch" from the
+    /// high-level API which lets users access the internal
+    /// `curl::easy::Easy` handle and configure options on it
+    /// directly.
+    ///
+    /// ```
+    /// # use crimp::{Request, Method};
+    /// let response = Request::new(Method::Get, "https://httpbin.org/get")
+    ///     .with_handle(|mut handle| handle.referer("Example-Referer")).unwrap()
+    ///     .send().unwrap();
+    /// #
+    /// # assert!(response.is_success());
+    /// ```
+    pub fn with_handle<F>(mut self, function: F) -> Result<Self, curl::Error>
+    where F: FnOnce(&mut Easy) -> Result<(), curl::Error> {
+        function(&mut self.handle)?;
+        Ok(self)
+    }
+
     /// Add a byte-array body to a request using the specified
     /// `Content-Type`.
     pub fn body(mut self, content_type: &'a str, data: &'a [u8]) -> Self {
