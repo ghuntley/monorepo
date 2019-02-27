@@ -114,6 +114,24 @@ fn test_basic_auth() {
     assert!(response.is_success(), "authorized request should succeed");
 }
 
+#[test]
+fn test_large_body() {
+    // By default cURL buffers seem to be 2^16 bytes in size. The test
+    // size is therefore 2^16+1.
+    const BODY_SIZE: usize = 65537;
+
+    let resp = Request::post("http://127.0.0.1:4662/post")
+        .body("application/octet-stream", &[0; BODY_SIZE])
+        .send().expect("sending request")
+        .as_json::<Value>().expect("JSON deserialisation");
+
+    // httpbin returns the uploaded data as a string in the `data`
+    // field.
+    let data = resp.body.get("data").unwrap().as_str().unwrap();
+
+    assert_eq!(BODY_SIZE, data.len(), "uploaded data length should be correct");
+}
+
 // Tests for various other features.
 
 #[test]

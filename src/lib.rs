@@ -77,7 +77,7 @@ extern crate curl;
 
 pub use curl::init;
 
-use curl::easy::{Auth, Easy, Form, List, ReadError};
+use curl::easy::{Auth, Easy, Form, List, Transfer, ReadError, WriteError};
 use std::collections::HashMap;
 use std::io::Write;
 use std::path::Path;
@@ -379,18 +379,10 @@ impl <'a> Request<'a> {
 
             // Write the payload if it exists:
             match self.body {
-                Body::Bytes { data, .. } => transfer.read_function(move |mut into| {
-                    into.write_all(data)
-                        .map(|_| data.len())
-                        .map_err(|_| ReadError::Abort)
-                })?,
+                Body::Bytes { data, .. } => chunked_read_function(&mut transfer, data)?,
 
                 #[cfg(feature = "json")]
-                Body::Json(json) => transfer.read_function(move |mut into| {
-                    into.write_all(&json)
-                        .map(|_| json.len())
-                        .map_err(|_| ReadError::Abort)
-                })?,
+                Body::Json(ref json) => chunked_read_function(&mut transfer, json)?,
 
                 // Do nothing if there is no body or if the body is a
                 // form.
@@ -426,7 +418,7 @@ impl <'a> Request<'a> {
                 let len = data.len();
                 body.write_all(data)
                     .map(|_| len)
-                    .map_err(|err| panic!("{:?}", err))
+                    .map_err(|_| WriteError::Pause)
             })?;
 
             transfer.perform()?;
@@ -438,6 +430,26 @@ impl <'a> Request<'a> {
             body
         })
     }
+}
+
+/// Provide a data chunk potentially larger than cURL's initial write
+/// buffer to the data reading callback by tracking the offset off
+/// already written data.
+///
+/// As we manually set the expected upload size, cURL will call the
+/// read callback repeatedly until it has all the data it needs.
+fn chunked_read_function<'easy, 'data>(transfer: &mut Transfer<'easy, 'data>,
+                                       data: &'data [u8]) -> Result<(), curl::Error> {
+    let mut data = data;
+
+    transfer.read_function(move |mut into| {
+        let written = into.write(data)
+            .map_err(|_| ReadError::Abort)?;
+
+        data = &data[written..];
+
+        Ok(written)
+    })
 }
 
 impl <T> Response<T> {
