@@ -1,7 +1,7 @@
 [package]
 name = "crimp"
 description = "Higher-level Rust API for cURL bindings"
-version = "0.2.0"
+version = "0.2.2"
 authors = ["Vincent Ambo <mail@tazj.in>"]
 keywords = [ "http", "curl" ]
 categories = [ "api-bindings" ]
