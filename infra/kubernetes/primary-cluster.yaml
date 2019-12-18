@@ -31,6 +31,7 @@ include:
       repo: ssh://tazjin@gmail.com@source.developers.google.com:2022/p/tazjins-infrastructure/r/depot
       popularity: 'popularity-nixos-unstable-3140fa89c51233397f496f49014f6b23216667c2.json'
   - name: tazblog
+  - name: cgit
   - name: https-lb
   - name: nginx
     values:

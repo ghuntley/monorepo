@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cgit
+  labels:
+    app: cgit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cgit
+  template:
+    metadata:
+      labels:
+        app: cgit
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+      - name: cgit
+        image: nixery.local/shell/third_party.git/third_party.google-cloud-sdk/services.cgit-taz:{{ gitHEAD }}
+        command: [ "cgit-launch" ]
+        env:
+          - name: HOME
+            value: /git
+        volumeMounts:
+          - name: git-volume
+            mountPath: /git
+      volumes:
+        - name: cgit-secrets
+          secret:
+            secretName: cgit-secrets
+            defaultMode: 256
+        - name: git-volume
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cgit
+spec:
+  type: NodePort
+  selector:
+    app: cgit
+  ports:
+    - protocol: TCP
+      port: 8080
