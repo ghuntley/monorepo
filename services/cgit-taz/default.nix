@@ -13,6 +13,7 @@ let
     # Global configuration
     virtual-root=/cgit.cgi/
     enable-http-clone=1
+    readme = README.md
 
     # Repository configuration
     repo.url=depot
