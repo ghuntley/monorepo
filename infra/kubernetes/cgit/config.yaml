@@ -70,4 +70,5 @@ spec:
     app: cgit
   ports:
     - protocol: TCP
-      port: 8080
+      port: 2448 # cgit
+      targetPort: 8080

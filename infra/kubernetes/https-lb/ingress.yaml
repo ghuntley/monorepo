@@ -6,7 +6,7 @@ kind: Ingress
 metadata:
   name: https-ingress
   annotations:
-    networking.gke.io/managed-certificates: tazj-in, www-tazj-in, oslo-pub
+    networking.gke.io/managed-certificates: tazj-in, git-tazj-in, www-tazj-in, oslo-pub
 spec:
   # Default traffic is routed to the blog, in case people go to
   # peculiar hostnames.
@@ -14,6 +14,14 @@ spec:
     serviceName: tazblog
     servicePort: 8000
   rules:
+    # Route git.tazj.in to the cgit pods
+    - host: git.tazj.in
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: cgit
+              servicePort: 2448
     # Route oslo.pub to the nginx instance which serves redirects
     - host: oslo.pub
       http:
