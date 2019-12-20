@@ -13,13 +13,13 @@ let
     # Global configuration
     virtual-root=/
     enable-http-clone=1
-    readme = README.md
+    readme=:README.md
 
     # Repository configuration
     repo.url=depot
     repo.path=/git/depot/.git
     repo.desc=tazjin's personal monorepo
-    repo.owner=tazjin <tazjin@google.com>
+    repo.owner=tazjin <mail@tazj.in>
     repo.clone-url=https://git.tazj.in ssh://source.developers.google.com:2022/p/tazjins-infrastructure/r/depot
   '';
 
