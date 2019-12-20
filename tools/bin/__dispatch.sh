@@ -7,7 +7,7 @@
 set -ueo pipefail
 
 readonly REPO_ROOT=$(dirname $0)/../..
-readonly TARGET_TOOL=$(basename $0)
+TARGET_TOOL=$(basename $0)
 
 case "${TARGET_TOOL}" in
   terraform)
@@ -24,6 +24,7 @@ case "${TARGET_TOOL}" in
     ;;
   kms_pass)
     attr="tools.kms_pass"
+    TARGET_TOOL="pass"
     ;;
   aoc2019)
     attr="tools.aoc2019.${1}"
