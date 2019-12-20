@@ -35,4 +35,4 @@ include:
   - name: https-lb
   - name: nginx
     values:
-      version: 52fabe4423095f12f67be1c7dbf88b801c1bb521
+      version: a349d5e9145ae9a6c89f62ec631f01fb180de546

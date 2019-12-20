@@ -26,20 +26,25 @@ spec:
     spec:
       containers:
         - name: tazblog
-          image: nixery.local/shell/nginx:{{ .version }}
+          image: nixery.local/shell/third_party.nginx:{{ .version }}
           command: ["/bin/bash", "-c"]
           args:
             - |
+              cd /run
               echo 'nogroup:x:30000:nobody' >> /etc/group
               echo 'nobody:x:30000:30000:nobody:/tmp:/bin/bash' >> /etc/passwd
               exec nginx -c /etc/nginx/nginx.conf
           volumeMounts:
             - name: nginx-conf
               mountPath: /etc/nginx
+            - name: nginx-rundir
+              mountPath: /run
       volumes:
         - name: nginx-conf
           configMap:
             name: nginx-conf
+        - name: nginx-rundir
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
