@@ -16,7 +16,7 @@ let
 
     # Repository configuration
     repo.url=depot
-    repo.path=/git/depot
+    repo.path=/git/depot/.git
     repo.desc=tazjin's personal monorepo
     repo.owner=tazjin <tazjin@google.com>
     repo.clone-url=https://git.tazj.in ssh://source.developers.google.com:2022/p/tazjins-infrastructure/r/depot
