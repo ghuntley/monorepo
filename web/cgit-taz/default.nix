@@ -22,6 +22,10 @@ let
     readme=:README.md
     about-filter=${monocgit}/lib/cgit/filters/about-formatting.sh
     source-filter=${monocgit}/lib//cgit/filters/syntax-highlighting.py
+    enable-log-filecount=1
+    enable-log-linecount=1
+    enable-follow-links=1
+    enable-blame=1
 
     # Repository configuration
     repo.url=depot
