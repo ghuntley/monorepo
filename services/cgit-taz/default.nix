@@ -14,6 +14,8 @@ let
     virtual-root=/
     enable-http-clone=1
     readme=:README.md
+    about-filter=${monocgit}/lib/cgit/filters/about-formatting.sh
+    source-filter=${monocgit}/lib//cgit/filters/syntax-highlighting.py
 
     # Repository configuration
     repo.url=depot
