@@ -53,11 +53,12 @@ let
       mdbook
       moreutils
       nano
-      nix
       nginx
+      nix
       notmuch
       openssh
       openssl
+      pkgconfig
       protobuf
       remarshal
       rink
@@ -70,6 +71,7 @@ let
       stdenv
       stern
       symlinkJoin
+      systemd
       tdlib
       terraform_0_12
       thttpd
