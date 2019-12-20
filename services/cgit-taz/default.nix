@@ -11,7 +11,7 @@ with pkgs.third_party;
 let
   cgitConfig = writeText "cgitrc" ''
     # Global configuration
-    virtual-root=/cgit.cgi/
+    virtual-root=/
     enable-http-clone=1
     readme = README.md
 
