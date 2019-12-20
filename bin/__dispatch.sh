@@ -27,7 +27,7 @@ case "${TARGET_TOOL}" in
     TARGET_TOOL="pass"
     ;;
   aoc2019)
-    attr="tools.aoc2019.${1}"
+    attr="fun.aoc2019.${1}"
     ;;
   rink)
     attr="third_party.rink"
