@@ -31,7 +31,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: cgit
-        image: nixery.local/shell/services.cgit-taz:{{ gitHEAD }}
+        image: nixery.local/shell/web.cgit-taz:{{ gitHEAD }}
         command: [ "cgit-launch" ]
         env:
           - name: HOME
@@ -40,7 +40,7 @@ spec:
           - name: git-volume
             mountPath: /git
       - name: sync-gcsr
-        image: nixery.local/shell/services.sync-gcsr:{{ gitHEAD }}
+        image: nixery.local/shell/ops.sync-gcsr:{{ gitHEAD }}
         command: [ "sync-gcsr" ]
         env:
           - name: SYNC_USER
