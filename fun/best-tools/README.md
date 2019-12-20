@@ -32,9 +32,9 @@ best-in-class type of product.
 ## Keyboard
 
 The best keyboard that money will buy you at the moment is the [Kinesis
-Advantage][]. There's a variety of contoured & similarly shaped keyboards on the
-market, but the Kinesis is the only one I've tried that has properly implemented
-the keywell concept.
+Advantage][advantage]. There's a variety of contoured & similarly shaped
+keyboards on the market, but the Kinesis is the only one I've tried that has
+properly implemented the keywell concept.
 
 I struggle with RSI issues and the Kinesis actually makes it possible for me to
 type for longer periods of time, which always leads to extra discomfort on
@@ -77,7 +77,7 @@ optional cable that you can plug into any good old 3.5mm jack.
 
 Actually, to follow up on the above - most of the time I'm not using (over-ear)
 headphones, but (in-ear) earphones - specifically the (**wired!!!**) [Apple
-EarPods][].
+EarPods][earpods].
 
 Apple will probably stop selling these soon because they've gotten into the
 habit of cancelling all of their good products, so I have a stash of these
@@ -120,9 +120,9 @@ LEDs, but I suspect that those can just be ignored.
 
 ## Shavers
 
-The [Philipps SensoTouch 3D][] is excellent. Super-comfortable close face shave
-in no time and leaves absolutely no mess around, as far as I can tell! I've had
-this for ~5 years and it's not showing any signs of aging yet.
+The [Philipps SensoTouch 3D][sensotouch] is excellent. Super-comfortable close
+face shave in no time and leaves absolutely no mess around, as far as I can
+tell! I've had this for ~5 years and it's not showing any signs of aging yet.
 
 Another bonus is that its battery time is effectively infinite. I've never had
 to worry when bringing it on a longer trip!
@@ -138,9 +138,9 @@ To work around this I wanted a good shoulder bag with a vertical format (to save
 space), but it turned out that there's very few of those around that reach any
 kind of quality standard.
 
-The one I settled on is the [Waterfield Muzetto][] leather bag. It's one of
-those things that comes with a bit of a price tag attached, but it's well worth
-it!
+The one I settled on is the [Waterfield Muzetto][muzetto] leather bag. It's one
+of those things that comes with a bit of a price tag attached, but it's well
+worth it!
 
 [muzetto]: https://www.sfbags.com/collections/shoulder-messenger-bags/products/muzetto-leather-bag
 
