@@ -23,6 +23,7 @@ let
   # into a file that can be used to filter them out when processing
   # dependencies.
   stdlibPackages = runCommand "stdlib-pkgs.json" {} ''
+    export HOME=$PWD
     export GOPATH=/dev/null
     ${go}/bin/go list all | \
       ${ripgrep}/bin/rg -v 'vendor' | \
