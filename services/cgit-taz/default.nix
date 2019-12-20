@@ -9,6 +9,12 @@
 with pkgs.third_party;
 
 let
+  # Patched version of cgit that builds repository URLs correctly
+  # (since only one repository is served)
+  monocgit = cgit.overrideAttrs(old: {
+    patches = old.patches ++ [ ./cgit_depot_url.patch ];
+  });
+
   cgitConfig = writeText "cgitrc" ''
     # Global configuration
     virtual-root=/
@@ -23,13 +29,8 @@ let
     repo.desc=tazjin's personal monorepo
     repo.owner=tazjin <mail@tazj.in>
     repo.clone-url=https://git.tazj.in ssh://source.developers.google.com:2022/p/tazjins-infrastructure/r/depot
+    repo.enable-remote-branches=1
   '';
-
-  # Patched version of cgit that builds repository URLs correctly
-  # (since only one repository is served)
-  monocgit = cgit.overrideAttrs(old: {
-    patches = old.patches ++ [ ./cgit_depot_url.patch ];
-  });
 
   thttpdConfig = writeText "thttpd.conf" ''
     port=8080
