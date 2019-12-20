@@ -27,6 +27,7 @@ let
     enable-follow-links=1
     enable-blame=1
     mimetype-file=${mime-types}/etc/mime.types
+    logo=/plain/fun/logo/depot-logo.png
 
     # Repository configuration
     repo.url=depot
