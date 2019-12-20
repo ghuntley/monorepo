@@ -16,7 +16,8 @@ Contribution Guidelines
 This is a loose set of "guidelines" for contributing to my depot. Please note
 that I will not accept any patches that don't follow these guidelines.
 
-Also consider the [code of conduct](CODE_OF_CONDUCT.md). No really, you should.
+Also consider the [code of conduct](/tree/docs/CODE_OF_CONDUCT.md). No really,
+you should.
 
 ## Before making a change
 

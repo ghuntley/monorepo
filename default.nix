@@ -29,9 +29,12 @@ let
   readTree' = import ./read-tree.nix;
 
   localPkgs = readTree: {
-    services    = readTree ./services;
-    tools       = readTree ./tools;
+    fun         = readTree ./ops;
+    nix         = readTree ./nix;
+    ops         = readTree ./ops;
     third_party = readTree ./third_party;
+    tools       = readTree ./tools;
+    web         = readTree ./web;
   };
 in fix(self: {
   config = config self;
@@ -53,30 +56,5 @@ in fix(self: {
 #
 # This can be used to move things from third_party into the top-level, too (such
 # as `lib`).
-// (readTree' self.config) ./overrides
-
-# These packages must be exposed at the top-level for compatibility
-# with Nixery.
-// {
-  inherit (self.third_party)
-    bashInteractive
-    cacert
-    coreutils
-    iana-etc
-    jq
-    moreutils
-    nano
-    openssl
-    runCommand
-    symlinkJoin
-    writeText;
-}
-
-# These packages must be exposed for compatibility with buildGo.
-#
-# Despite buildGo being tracked in this tree, I want it to be possible
-# for external users to import it with the default nixpkgs layout.
-// {
-  inherit (self.third_party) go ripgrep;
-}
+// (readTree' { pkgs = self; }) ./overrides
 )

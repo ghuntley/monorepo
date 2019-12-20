@@ -23,7 +23,7 @@ case "${TARGET_TOOL}" in
     attr="third_party.stern"
     ;;
   kms_pass)
-    attr="tools.kms_pass"
+    attr="ops.kms_pass"
     TARGET_TOOL="pass"
     ;;
   aoc2019)
