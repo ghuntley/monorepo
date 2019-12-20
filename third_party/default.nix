@@ -51,6 +51,7 @@ let
       llvmPackages
       makeWrapper
       mdbook
+      mime-types
       moreutils
       nano
       nginx
