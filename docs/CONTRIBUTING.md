@@ -108,7 +108,7 @@ change.
 
 When making a change, please create an appropriate commit locally and send it to
 me using either `git send-email` or `git format-patch`. The email address to use
-for depot reviews is `reviews@tazj.in`, which is a [public group][].
+for depot reviews is `depot@tazj.in`, which is a [public group][].
 
 I recognise that most people are used to a GitHub-style workflow. If you run
 into issues with the above but would still like to contribute, feel free to
@@ -116,4 +116,4 @@ reach out to me.
 
 [magit]: https://magit.vc/
 [Nix]: https://nixos.org/nix/
-[public group]: https://groups.google.com/a/tazj.in/forum/#!forum/reviews
+[public group]: https://groups.google.com/a/tazj.in/forum/?hl=en#!forum/depot
