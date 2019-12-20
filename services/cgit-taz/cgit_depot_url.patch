@@ -34,7 +34,7 @@ index 63f0ae5..b37b79d 100644
  
  static void blame_fn(void)
 diff --git a/ui-shared.c b/ui-shared.c
-index 739505a..6840c86 100644
+index 739505a..c7c3754 100644
 --- a/ui-shared.c
 +++ b/ui-shared.c
 @@ -95,29 +95,23 @@ const char *cgit_loginurl(void)
@@ -86,3 +86,12 @@ index 739505a..6840c86 100644
  		if (page) {
  			html_url_path(page);
  			html("/");
+@@ -957,8 +948,6 @@ static void print_header(void)
+ 
+ 	html("<td class='main'>");
+ 	if (ctx.repo) {
+-		cgit_index_link("index", NULL, NULL, NULL, NULL, 0, 1);
+-		html(" : ");
+ 		cgit_summary_link(ctx.repo->name, ctx.repo->name, NULL, NULL);
+ 		if (ctx.env.authenticated) {
+ 			html("</td><td class='form'>");
