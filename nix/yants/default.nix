@@ -6,7 +6,7 @@
 #
 # All types (should) compose as expected.
 
-{ lib ?  (import <nixpkgs> {}).lib }:
+{ lib ?  (import <nixpkgs> {}).lib, ... }:
 
 with builtins; let
   prettyPrint = lib.generators.toPretty {};
