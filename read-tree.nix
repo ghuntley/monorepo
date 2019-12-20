@@ -56,6 +56,6 @@ let
         value = importWithMark p (parts ++ [ c ]);
       }) nixFiles;
     in if dir ? "default.nix"
-      then self // (listToAttrs children)
+      then (if isAttrs self then self // (listToAttrs children) else self)
       else listToAttrs (nixChildren ++ children);
 in readTree initPath [ (baseNameOf initPath) ]

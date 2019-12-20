@@ -29,7 +29,7 @@ let
   readTree' = import ./read-tree.nix;
 
   localPkgs = readTree: {
-    fun         = readTree ./ops;
+    fun         = readTree ./fun;
     nix         = readTree ./nix;
     ops         = readTree ./ops;
     third_party = readTree ./third_party;

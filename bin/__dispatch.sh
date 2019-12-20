@@ -6,7 +6,7 @@
 # to the key in nixpkgs which represents the program you want to run.
 set -ueo pipefail
 
-readonly REPO_ROOT=$(dirname $0)/../..
+readonly REPO_ROOT=$(dirname $0)/..
 TARGET_TOOL=$(basename $0)
 
 case "${TARGET_TOOL}" in
