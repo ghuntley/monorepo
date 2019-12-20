@@ -24,6 +24,19 @@ func EnvOr(key, def string) string {
 	return v
 }
 
+func updateRepo(repo *git.Repository, tree *git.Worktree, opts *git.PullOptions) error {
+	err := tree.Pull(opts)
+	if err == git.NoErrAlreadyUpToDate {
+		// nothing to do ...
+		return nil
+	} else if err != nil {
+		return err
+	}
+
+	log.Println("Updated local repository mirror")
+	return nil
+}
+
 func main() {
 	var dest = EnvOr("SYNC_DEST", "/git/depot")
 	var project = EnvOr("SYNC_PROJECT", "tazjins-infrastructure")
@@ -46,7 +59,7 @@ func main() {
 	}
 
 	action := "clone"
-	handle, err := git.PlainClone(dest, true, &cloneOpts)
+	handle, err := git.PlainClone(dest, false, &cloneOpts)
 
 	if err == git.ErrRepositoryAlreadyExists {
 		log.Println("Repository has already been cloned!")
@@ -60,21 +73,20 @@ func main() {
 		log.Println("Initiating update loop")
 	}
 
-	fetchOpts := git.FetchOptions{
-		Auth: cloneOpts.Auth,
+	tree, err := handle.Worktree()
+	if err != nil {
+		log.Fatalln("Failed to open repository worktree:", err)
+	}
+
+	pullOpts := git.PullOptions{
+		Auth:  cloneOpts.Auth,
+		Force: true,
 	}
 
 	for {
-		time.Sleep(30 * time.Second) //  TODO(tazjin): Config option for fetch interval?
-		err = handle.Fetch(&fetchOpts)
-
-		if err == git.NoErrAlreadyUpToDate {
-			// no-op ...
-			err = nil
-		} else if err != nil {
-			log.Fatalf("Failed to fetch updated repository: %s", err)
-		} else {
-			log.Println("Fetched new updates from remote repository")
+		if err = updateRepo(handle, tree, &pullOpts); err != nil {
+			log.Fatalf("Failed to pull updated repository: %s", err)
 		}
+		time.Sleep(30 * time.Second) //  TODO(tazjin): Config option for pull interval?
 	}
 }
