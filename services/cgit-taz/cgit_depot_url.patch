@@ -1,0 +1,43 @@
+diff --git a/ui-shared.c b/ui-shared.c
+index 739505a..5c3e7bc 100644
+--- a/ui-shared.c
++++ b/ui-shared.c
+@@ -95,29 +95,23 @@ const char *cgit_loginurl(void)
+ 
+ char *cgit_repourl(const char *reponame)
+ {
+-	if (ctx.cfg.virtual_root)
+-		return fmtalloc("%s%s/", ctx.cfg.virtual_root, reponame);
+-	else
+-		return fmtalloc("?r=%s", reponame);
++	// my cgit instance *only* serves the depot, hence that's the only value ever
++	// needed.
++	return "/";
+ }
+ 
+ char *cgit_fileurl(const char *reponame, const char *pagename,
+ 		   const char *filename, const char *query)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	char *delim;
+ 
+-	if (ctx.cfg.virtual_root) {
+-		strbuf_addf(&sb, "%s%s/%s/%s", ctx.cfg.virtual_root, reponame,
+-			    pagename, (filename ? filename:""));
+-		delim = "?";
+-	} else {
+-		strbuf_addf(&sb, "?url=%s/%s/%s", reponame, pagename,
+-			    (filename ? filename : ""));
+-		delim = "&amp;";
++	strbuf_addf(&sb, "%s%s/%s", ctx.cfg.virtual_root,
++		pagename, (filename ? filename:""));
++
++	if (query) {
++		strbuf_addf(&sb, "%s%s", "?", query);
+ 	}
+-	if (query)
+-		strbuf_addf(&sb, "%s%s", delim, query);
++
+ 	return strbuf_detach(&sb, NULL);
+ }
+ 

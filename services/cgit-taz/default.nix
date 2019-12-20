@@ -22,9 +22,16 @@ let
     repo.owner=tazjin <tazjin@google.com>
     repo.clone-url=https://git.tazj.in ssh://source.developers.google.com:2022/p/tazjins-infrastructure/r/depot
   '';
+
+  # Patched version of cgit that builds repository URLs correctly
+  # (since only one repository is served)
+  monocgit = cgit.overrideAttrs(old: {
+    patches = old.patches ++ [ ./cgit_depot_url.patch ];
+  });
+
   thttpdConfig = writeText "thttpd.conf" ''
     port=8080
-    dir=${cgit}/cgit
+    dir=${monocgit}/cgit
     nochroot
     novhost
     logfile=/dev/stdout
