@@ -31,7 +31,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: cgit
-        image: nixery.local/shell/third_party.git/third_party.google-cloud-sdk/services.cgit-taz:{{ gitHEAD }}
+        image: nixery.local/shell/services.cgit-taz:{{ gitHEAD }}
         command: [ "cgit-launch" ]
         env:
           - name: HOME
@@ -39,11 +39,24 @@ spec:
         volumeMounts:
           - name: git-volume
             mountPath: /git
+      - name: sync-gcsr
+        image: nixery.local/shell/services.sync-gcsr:{{ gitHEAD }}
+        command: [ "sync-gcsr" ]
+        env:
+          - name: SYNC_USER
+            valueFrom:
+              secretKeyRef:
+                name: gcsr-secrets
+                key: username
+          - name: SYNC_PASS
+            valueFrom:
+              secretKeyRef:
+                name: gcsr-secrets
+                key: password
+        volumeMounts:
+          - name: git-volume
+            mountPath: /git
       volumes:
-        - name: cgit-secrets
-          secret:
-            secretName: cgit-secrets
-            defaultMode: 256
         - name: git-volume
           emptyDir: {}
 ---
