@@ -1,4 +1,0 @@
-language: nix
-nix: 2.2.2
-script:
-  - nix eval --raw '(import ./tests.nix)' --show-trace
