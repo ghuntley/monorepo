@@ -1,8 +1,6 @@
 Kontemplate - A simple Kubernetes templater
 ===========================================
 
-[![Build Status](https://travis-ci.org/tazjin/kontemplate.svg?branch=master)](https://travis-ci.org/tazjin/kontemplate)
-
 [Kontemplate][] is a simple CLI tool that can take sets of Kubernetes resource
 files with placeholders and insert values per environment.
 

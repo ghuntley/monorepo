@@ -10,6 +10,7 @@ in with pkgs; [
   nix.yants.tests
   ops.journaldriver
   ops.kms_pass
+  ops.kontemplate
   ops.sync-gcsr
   tools.blog_cli
   tools.emacs

@@ -10,9 +10,9 @@
 # This file is the Nix derivation used to install Kontemplate on
 # Nix-based systems.
 
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs, ... }:
 
-with pkgs; buildGoPackage rec {
+with pkgs.third_party; buildGoPackage rec {
   name = "kontemplate-${version}";
   version = "master";
   src = ./.;

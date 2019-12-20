@@ -59,6 +59,7 @@ let
       notmuch
       openssh
       openssl
+      parallel
       pkgconfig
       protobuf
       remarshal
