@@ -68,7 +68,7 @@ func main() {
 	}
 
 	if err != nil {
-		log.Fatalln("Failed to %s repository:", action, err)
+		log.Fatalf("Failed to %s repository: %s", action, err)
 	} else {
 		log.Println("Initiating update loop")
 	}
