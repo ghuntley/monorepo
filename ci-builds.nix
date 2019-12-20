@@ -7,12 +7,12 @@
 let
   pkgs = import ./default.nix {};
 in with pkgs; [
+  nix.yants.tests
   ops.journaldriver
   ops.kms_pass
   ops.sync-gcsr
   tools.blog_cli
   tools.emacs
   web.cgit-taz
-
   # web.tazblog #  TODO(tazjin): Happstack build failure in nixos-unstable
 ]

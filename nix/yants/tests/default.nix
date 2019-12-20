@@ -1,5 +1,7 @@
+{ pkgs, ... }:
+
 with builtins;
-with (import ./default.nix {});
+with pkgs.nix.yants;
 
 # Note: Derivations are not included in the tests below as they cause
 # issues with deepSeq.
@@ -89,4 +91,4 @@ deepSeq rec {
     (struct { a = int; b = option string; })
     (sum { a = int; b = option string; })
   ];
-} "All tests passed!\n"
+} (pkgs.writeText "yants-tests" "All tests passed!")
