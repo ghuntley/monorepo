@@ -65,10 +65,9 @@ kind: Service
 metadata:
   name: cgit
 spec:
-  type: NodePort
   selector:
     app: cgit
   ports:
     - protocol: TCP
-      port: 2448 # cgit
+      port: 80
       targetPort: 8080

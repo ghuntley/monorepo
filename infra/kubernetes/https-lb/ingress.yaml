@@ -8,20 +8,23 @@ metadata:
   annotations:
     networking.gke.io/managed-certificates: tazj-in, git-tazj-in, www-tazj-in, oslo-pub
 spec:
-  # Default traffic is routed to the blog, in case people go to
-  # peculiar hostnames.
-  backend:
-    serviceName: tazblog
-    servicePort: 8000
   rules:
+    # Route blog to the blog ...
+    - host: tazj.in
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: tazblog
+              servicePort: 8000
     # Route git.tazj.in to the cgit pods
     - host: git.tazj.in
       http:
         paths:
-          - path: /
+          - path: /*
             backend:
-              serviceName: cgit
-              servicePort: 2448
+              serviceName: nginx
+              servicePort: 6756
     # Route oslo.pub to the nginx instance which serves redirects
     - host: oslo.pub
       http:
