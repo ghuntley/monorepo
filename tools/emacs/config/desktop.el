@@ -69,7 +69,7 @@
   (shell-command "xrandr --output HDMI1 --off")
   (shell-command "xrandr --output DP1-1 --off")
   (exwm-randr-refresh)
-  (restore-default-text-scale))
+  (set-default-text-scale nil))
 
 (defun set-xkb-layout (layout)
   "Set the current X keyboard layout."
