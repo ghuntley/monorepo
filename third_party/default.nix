@@ -54,6 +54,7 @@ let
       moreutils
       nano
       nix
+      nginx
       notmuch
       openssh
       openssl
