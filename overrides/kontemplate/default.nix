@@ -9,6 +9,11 @@ let master = pkgs.third_party.kontemplate.overrideAttrs(_: {
   };
 });
 in pkgs.third_party.writeShellScriptBin "kontemplate" ''
-  export PATH="${pkgs.tools.kms_pass}/bin:$PATH"
-  exec ${master}/bin/kontemplate $@
+  export PATH="${pkgs.ops.kms_pass}/bin:$PATH"
+
+  if [[ -z $1 ]]; then
+    exec ${master}/bin/kontemplate
+  fi
+
+  exec ${master}/bin/kontemplate $1 ${./../..}/ops/infra/kubernetes/primary-cluster.yaml ''${@:2}
 ''
