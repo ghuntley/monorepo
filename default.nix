@@ -26,7 +26,7 @@ let
     };
   };
 
-  readTree' = import ./read-tree.nix;
+  readTree' = import ./nix/readTree {};
 
   localPkgs = readTree: {
     fun           = readTree ./fun;
