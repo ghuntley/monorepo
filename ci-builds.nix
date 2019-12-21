@@ -13,6 +13,7 @@ in with pkgs; [
   ops.kontemplate
   ops.sync-gcsr
   tools.blog_cli
+  tools.cheddar
   tools.emacs
   web.cgit-taz
   # web.tazblog #  TODO(tazjin): Happstack build failure in nixos-unstable
