@@ -24,7 +24,7 @@ let
     virtual-root=/
     enable-http-clone=1
     readme=:README.md
-    about-filter=${cmarkFilter}
+    about-filter=${pkgs.tools.cheddar}/bin/cheddar
     source-filter=${pkgs.tools.cheddar}/bin/cheddar
     enable-log-filecount=1
     enable-log-linecount=1
