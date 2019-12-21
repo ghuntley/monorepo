@@ -29,12 +29,13 @@ let
   readTree' = import ./read-tree.nix;
 
   localPkgs = readTree: {
-    fun         = readTree ./fun;
-    nix         = readTree ./nix;
-    ops         = readTree ./ops;
-    third_party = readTree ./third_party;
-    tools       = readTree ./tools;
-    web         = readTree ./web;
+    fun           = readTree ./fun;
+    nix           = readTree ./nix;
+    ops           = readTree ./ops;
+    presentations = readTree ./presentations;
+    third_party   = readTree ./third_party;
+    tools         = readTree ./tools;
+    web           = readTree ./web;
   };
 in fix(self: {
   config = config self;

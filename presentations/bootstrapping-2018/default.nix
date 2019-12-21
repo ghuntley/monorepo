@@ -1,8 +1,10 @@
 # This derivation builds the LaTeX presentation.
 
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs, ... }:
 
-with pkgs; let tex = texlive.combine {
+with pkgs.third_party;
+
+let tex = texlive.combine {
   inherit (texlive)
     beamer
     beamertheme-metropolis
@@ -13,14 +15,14 @@ with pkgs; let tex = texlive.combine {
     lualibs
     luaotfload
     luatex
-    luatex-def
     minted
     ms
     pgfopts
-    scheme-basic;
+    scheme-basic
+    translator;
 };
 in stdenv.mkDerivation {
-  name = "nuug-reproducible-slides.pdf";
+  name = "nuug-bootstrapping-slides";
   src = ./.;
 
   FONTCONFIG_FILE = makeFontsConf {
@@ -42,6 +44,7 @@ in stdenv.mkDerivation {
   '';
 
   installPhase = ''
-    cp presentation.pdf $out
+    mkdir -p $out
+    cp presentation.pdf $out/
   '';
 }

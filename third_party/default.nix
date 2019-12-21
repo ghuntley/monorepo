@@ -36,6 +36,9 @@ let
       emacsPackagesNgGen
       fetchFromGitHub
       fetchurl
+      fira
+      fira-code
+      fira-mono
       git
       glibc
       gnutar
@@ -49,6 +52,8 @@ let
       lib
       lispPackages
       llvmPackages
+      luatex
+      makeFontsConf
       makeWrapper
       mdbook
       mime-types
@@ -76,6 +81,7 @@ let
       systemd
       tdlib
       terraform_0_12
+      texlive
       thttpd
       tree
       writeShellScriptBin
