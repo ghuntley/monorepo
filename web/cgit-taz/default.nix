@@ -25,7 +25,7 @@ let
     enable-http-clone=1
     readme=:README.md
     about-filter=${cmarkFilter}
-    source-filter=${monocgit}/lib/cgit/filters/syntax-highlighting.py
+    source-filter=${pkgs.tools.cheddar}/bin/cheddar
     enable-log-filecount=1
     enable-log-linecount=1
     enable-follow-links=1
