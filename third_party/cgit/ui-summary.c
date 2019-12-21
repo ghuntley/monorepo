@@ -128,6 +128,18 @@ void cgit_print_repo_readme(const char *path)
 			goto done;
 	}
 
+	/* Determine which file to serve by checking whether the given filename is
+	 * already a valid file and otherwise appending the expected file name of
+	 * the readme.
+	 *
+	 * If neither yield a valid file, the user gets a blank page. Could probably
+	 * do with an error message in between there, but whatever.
+	 */
+	if (path && ref && !cgit_ref_path_exists(filename, ref, 1)) {
+	  filename = fmtalloc("%s/%s", path, ctx.repo->readme.items[0].string);
+	  free_filename = 1;
+	}
+
 	/* Print the calculated readme, either from the git repo or from the
 	 * filesystem, while applying the about-filter.
 	 */
