@@ -128,29 +128,23 @@ const char *cgit_loginurl(void)
 
 char *cgit_repourl(const char *reponame)
 {
-	if (ctx.cfg.virtual_root)
-		return fmtalloc("%s%s/", ctx.cfg.virtual_root, reponame);
-	else
-		return fmtalloc("?r=%s", reponame);
+	// my cgit instance *only* serves the depot, hence that's the only value ever
+	// needed.
+	return fmtalloc("/");
 }
 
 char *cgit_fileurl(const char *reponame, const char *pagename,
 		   const char *filename, const char *query)
 {
 	struct strbuf sb = STRBUF_INIT;
-	char *delim;
 
-	if (ctx.cfg.virtual_root) {
-		strbuf_addf(&sb, "%s%s/%s/%s", ctx.cfg.virtual_root, reponame,
-			    pagename, (filename ? filename:""));
-		delim = "?";
-	} else {
-		strbuf_addf(&sb, "?url=%s/%s/%s", reponame, pagename,
-			    (filename ? filename : ""));
-		delim = "&amp;";
+	strbuf_addf(&sb, "%s%s/%s", ctx.cfg.virtual_root,
+		pagename, (filename ? filename:""));
+
+	if (query) {
+		strbuf_addf(&sb, "%s%s", "?", query);
 	}
-	if (query)
-		strbuf_addf(&sb, "%s%s", delim, query);
+
 	return strbuf_detach(&sb, NULL);
 }
 
@@ -278,9 +272,6 @@ static char *repolink(const char *title, const char *class, const char *page,
 	html(" href='");
 	if (ctx.cfg.virtual_root) {
 		html_url_path(ctx.cfg.virtual_root);
-		html_url_path(ctx.repo->url);
-		if (ctx.repo->url[strlen(ctx.repo->url) - 1] != '/')
-			html("/");
 		if (page) {
 			html_url_path(page);
 			html("/");
@@ -992,8 +983,6 @@ static void print_header(void)
 
 	html("<td class='main'>");
 	if (ctx.repo) {
-		cgit_index_link("index", NULL, NULL, NULL, NULL, 0, 1);
-		html(" : ");
 		cgit_summary_link(ctx.repo->name, ctx.repo->name, NULL, NULL);
 		if (ctx.env.authenticated) {
 			html("</td><td class='form'>");

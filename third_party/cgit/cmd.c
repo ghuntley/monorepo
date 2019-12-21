@@ -39,29 +39,7 @@ static void atom_fn(void)
 
 static void about_fn(void)
 {
-	if (ctx.repo) {
-		size_t path_info_len = ctx.env.path_info ? strlen(ctx.env.path_info) : 0;
-		if (!ctx.qry.path &&
-		    ctx.qry.url[strlen(ctx.qry.url) - 1] != '/' &&
-		    (!path_info_len || ctx.env.path_info[path_info_len - 1] != '/')) {
-			char *currenturl = cgit_currenturl();
-			char *redirect = fmtalloc("%s/", currenturl);
-			cgit_redirect(redirect, true);
-			free(currenturl);
-			free(redirect);
-		} else if (ctx.repo->readme.nr)
-			cgit_print_repo_readme(ctx.qry.path);
-		else if (ctx.repo->homepage)
-			cgit_redirect(ctx.repo->homepage, false);
-		else {
-			char *currenturl = cgit_currenturl();
-			char *redirect = fmtalloc("%s../", currenturl);
-			cgit_redirect(redirect, false);
-			free(currenturl);
-			free(redirect);
-		}
-	} else
-		cgit_print_site_readme();
+	cgit_print_repo_readme(ctx.qry.path);
 }
 
 static void blame_fn(void)
