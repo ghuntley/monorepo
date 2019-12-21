@@ -1,0 +1,6 @@
+[Unit]
+Description=Demonstrate systemd path units
+
+[Path]
+DirectoryNotEmpty=/tmp/hackeriet
+Unit=demo.service
