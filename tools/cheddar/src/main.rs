@@ -1,13 +1,15 @@
+use comrak::{markdown_to_html, ComrakOptions};
+use lazy_static::lazy_static;
 use std::env;
 use std::ffi::OsStr;
 use std::io::BufRead;
+use std::io::Read;
 use std::io;
 use std::path::Path;
-use syntect::easy::HighlightLines;
 use syntect::dumps::from_binary;
+use syntect::easy::HighlightLines;
 use syntect::highlighting::ThemeSet;
 use syntect::parsing::SyntaxSet;
-use lazy_static::lazy_static;
 
 use syntect::html::{
     append_highlighted_html_for_styled_line,
@@ -43,7 +45,26 @@ fn should_continue(res: &io::Result<usize>) -> bool {
 }
 
 fn format_markdown() {
-    unimplemented!("Not able to format Markdown just yet");
+    let mut buffer = String::new();
+    let stdin = io::stdin();
+    let mut stdin = stdin.lock();
+    stdin.read_to_string(&mut buffer).expect("failed to read stdin");
+
+    // Markdown rendering is configurd with most of the bells &
+    // whistles here:
+    let opts = ComrakOptions{
+        ext_strikethrough: true,
+        ext_tagfilter: true,
+        ext_table: true,
+        ext_autolink: true,
+        ext_tasklist: true,
+        ext_header_ids: Some(String::new()), // yyeeesss!
+        ext_footnotes: true,
+        ext_description_lists: true,
+        ..ComrakOptions::default()
+    };
+
+    print!("{}", markdown_to_html(&buffer, &opts));
 }
 
 fn format_code(extension: String) {
@@ -61,12 +82,6 @@ fn format_code(extension: String) {
     let syntax = SYNTAXES.find_syntax_by_extension(&extension)
         .or_else(|| SYNTAXES.find_syntax_by_first_line(&linebuf))
         .unwrap_or_else(|| SYNTAXES.find_syntax_plain_text());
-
-    // We're doing a completely different thing if the file is
-    // Markdown, so lets do that thing.
-    if syntax.name == "markdown" {
-
-    }
 
     let mut hl = HighlightLines::new(syntax, theme);
     let (mut outbuf, bg) = start_highlighted_html_snippet(theme);
