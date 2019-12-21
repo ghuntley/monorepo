@@ -330,6 +330,12 @@ void cgit_tag_link(const char *name, const char *title, const char *class,
 	reporevlink("tag", name, title, class, tag, NULL, NULL);
 }
 
+void cgit_about_link(const char *name, const char *title, const char *class,
+		    const char *head, const char *rev, const char *path)
+{
+	reporevlink("about", name, title, class, head, rev, path);
+}
+
 void cgit_tree_link(const char *name, const char *title, const char *class,
 		    const char *head, const char *rev, const char *path)
 {
@@ -1020,10 +1026,10 @@ void cgit_print_pageheader(void)
 
 	html("<table class='tabs'><tr><td>\n");
 	if (ctx.env.authenticated && ctx.repo) {
-		if (ctx.repo->readme.nr)
-			reporevlink("about", "about", NULL,
-				    hc("about"), ctx.qry.head, NULL,
-				    NULL);
+		if (ctx.repo->readme.nr) {
+			cgit_about_link("about", NULL, hc("about"), ctx.qry.head,
+					 ctx.qry.sha1, ctx.qry.vpath);
+		}
 		cgit_summary_link("summary", NULL, hc("summary"),
 				  ctx.qry.head);
 		cgit_refs_link("refs", NULL, hc("refs"), ctx.qry.head,
