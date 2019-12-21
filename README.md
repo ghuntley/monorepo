@@ -36,7 +36,7 @@ Twitter][].
   library.
 * `tools/emacs-pkgs` contains various Emacs libraries that my Emacs setup uses,
   for example:
-  * `dottime.el` provides [dottime][https://dotti.me] in the Emacs modeline
+  * `dottime.el` provides [dottime][] in the Emacs modeline
   * `nix-util.el` provides editing utilities for Nix files
   * `term-switcher.el` is an ivy-function for switching between vterm buffers
 * `net/alcoholic_jwt` contains an easy-to-use JWT-validation library for Rust
@@ -76,3 +76,4 @@ If you'd like to contribute to any of the tools in here, please check out the
 [tazj.in]: https://tazj.in
 [git.tazj.in]: https://git.tazj.in
 [best-tools]: /about/fun/best-tools/README.md
+[dottime]: https://dotti.me
