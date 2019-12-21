@@ -22,6 +22,7 @@ let
     # of the repo. They become available under `pkgs.third_party.<name>`
     inherit (nixpkgs)
       bashInteractive
+      bat
       buildGoPackage
       cacert
       cachix

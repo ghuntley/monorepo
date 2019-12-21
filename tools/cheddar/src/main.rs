@@ -4,6 +4,7 @@ use std::io::BufRead;
 use std::io;
 use std::path::Path;
 use syntect::easy::HighlightLines;
+use syntect::dumps::from_binary;
 use syntect::highlighting::ThemeSet;
 use syntect::parsing::{SyntaxSet, SyntaxReference};
 
@@ -35,7 +36,7 @@ fn should_continue(res: &io::Result<usize>) -> bool {
 }
 
 fn main() {
-    let syntaxes = SyntaxSet::load_defaults_newlines();
+    let syntaxes = from_binary(include_bytes!(env!("BAT_SYNTAXES")));
 
     let stdin = io::stdin();
     let mut stdin = stdin.lock();
