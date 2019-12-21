@@ -15,13 +15,17 @@ let
     patches = old.patches ++ [ ./cgit_depot_url.patch ];
   });
 
+  cmarkFilter = writeShellScript "pulldown-cmark-filter.sh" ''
+    exec ${pulldown-cmark}/bin/pulldown-cmark -TFSL
+  '';
+
   cgitConfig = writeText "cgitrc" ''
     # Global configuration
     virtual-root=/
     enable-http-clone=1
     readme=:README.md
-    about-filter=${monocgit}/lib/cgit/filters/about-formatting.sh
-    source-filter=${monocgit}/lib//cgit/filters/syntax-highlighting.py
+    about-filter=${cmarkFilter}
+    source-filter=${monocgit}/lib/cgit/filters/syntax-highlighting.py
     enable-log-filecount=1
     enable-log-linecount=1
     enable-follow-links=1

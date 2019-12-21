@@ -84,6 +84,7 @@ let
       texlive
       thttpd
       tree
+      writeShellScript
       writeShellScriptBin
       writeText
       writeTextFile
