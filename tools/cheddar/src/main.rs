@@ -11,11 +11,11 @@ use syntect::dumps::from_binary;
 use syntect::easy::HighlightLines;
 use syntect::highlighting::ThemeSet;
 use syntect::parsing::{SyntaxSet, SyntaxReference};
+use syntect::util::LinesWithEndings;
 
 use syntect::html::{
     IncludeBackground,
     append_highlighted_html_for_styled_line,
-    highlighted_html_for_string,
     start_highlighted_html_snippet,
 };
 
@@ -41,6 +41,10 @@ lazy_static! {
         ..ComrakOptions::default()
     };
 }
+
+// HTML fragment used when rendering inline blocks in Markdown documents.
+// Emulates the GitHub style (subtle background hue and padding).
+const BLOCK_PRE: &str = "<pre style=\"background-color:#f6f8fa;padding:16px;\">\n";
 
 fn args_extension() -> Option<String> {
     // The name of the file to be formatted is usually passed in as
@@ -105,9 +109,23 @@ fn format_markdown() {
                     .unwrap_or_else(|| SYNTAXES.find_syntax_plain_text());
 
                 let code = String::from_utf8_lossy(&code_block.literal);
-                let rendered = highlighted_html_for_string(
-                    &code, &SYNTAXES, syntax, theme,
-                );
+
+                let rendered = {
+                    // Write the block preamble manually to get exactly the
+                    // desired layout:
+                    let mut hl = HighlightLines::new(syntax, theme);
+                    let mut buf = BLOCK_PRE.to_string();
+
+                    for line in LinesWithEndings::from(&code) {
+                        let regions = hl.highlight(line, &SYNTAXES);
+                        append_highlighted_html_for_styled_line(
+                            &regions[..], IncludeBackground::No, &mut buf,
+                        );
+                    }
+
+                    buf.push_str("</pre>");
+                    buf
+                };
 
                 let block = NodeHtmlBlock {
                     block_type: 1, // It's unclear what behaviour is toggled by this
