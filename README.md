@@ -26,6 +26,8 @@ Twitter][].
   in the DNS zone
 * `ops/kms_pass.nix` is a tiny tool that emulates the user-interface of `pass`,
   but actually uses Google Cloud KMS for secret decryption
+* `ops/kontemplate` contains my Kubernetes resource templating tool (with which
+  the services in this repository are deployed!)
 
 ## Packages / Libraries
 
@@ -37,6 +39,8 @@ Twitter][].
   * `dottime.el` provides [dottime][https://dotti.me] in the Emacs modeline
   * `nix-util.el` provides editing utilities for Nix files
   * `term-switcher.el` is an ivy-function for switching between vterm buffers
+* `net/alcoholic_jwt` contains an easy-to-use JWT-validation library for Rust
+* `net/crimp` contains a high-level HTTP client using cURL for Rust
 
 ## Services
 
@@ -49,9 +53,16 @@ using [Nixery]().
 * `ops/sync-gcsr` contains a tiny service that synchronises a Google Cloud
   Source Repository with a local disk path. My `cgit` setup uses this
   under-the-hood.
-* `fun/gemma` contains a no-longer-maintained service that served as an
-  experiment in "household task management" - it's kept in here because I find
-  it interesting
+* `ops/journaldriver` contains a small Rust daemon that can forward logs from
+  journald to Stackdriver Logging
+
+## Miscellaneous
+
+Presentations I've given in the past are in the `presentations` folder, these
+cover a variety of topics and some of them have links to recordings.
+
+There's a few fun things in the `fun/` folder, often with context given in the
+README. Check out my [list of the best tools][best-tools] for example.
 
 # Contributing
 
@@ -64,3 +75,4 @@ If you'd like to contribute to any of the tools in here, please check out the
 [Nixery]: https://github.com/google/nixery
 [tazj.in]: https://tazj.in
 [git.tazj.in]: https://git.tazj.in
+[best-tools]: /about/fun/best-tools/README.md
