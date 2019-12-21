@@ -9,10 +9,13 @@
 with pkgs.third_party;
 
 let
-  # Patched version of cgit that builds repository URLs correctly
-  # (since only one repository is served)
+  # Patched version of cgit that has monorepo-specific features.
   monocgit = cgit.overrideAttrs(old: {
-    patches = old.patches ++ [ ./cgit_depot_url.patch ];
+    patches = old.patches ++ [
+      ./0001-cgit_monorepo_urls.patch
+      ./0002-cgit_subtree_readmes.patch
+      ./0003-cgit_subtree_about_links.patch
+    ];
   });
 
   cgitConfig = writeText "cgitrc" ''
@@ -68,7 +71,10 @@ let
      #ifdef CGI_LD_LIBRARY_PATH
   '';
   thttpdCgit = thttpd.overrideAttrs(old: {
-    patches = [ ./cgit_idx.patch thttpdConfigPatch ];
+    patches = [
+      ./thttpd_cgi_idx.patch
+      thttpdConfigPatch
+    ];
   });
 in writeShellScriptBin "cgit-launch" ''
   exec ${thttpdCgit}/bin/thttpd -D -C ${thttpdConfig}
