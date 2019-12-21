@@ -15,10 +15,6 @@ let
     patches = old.patches ++ [ ./cgit_depot_url.patch ];
   });
 
-  cmarkFilter = writeShellScript "pulldown-cmark-filter.sh" ''
-    exec ${pulldown-cmark}/bin/pulldown-cmark -TFSL
-  '';
-
   cgitConfig = writeText "cgitrc" ''
     # Global configuration
     virtual-root=/
