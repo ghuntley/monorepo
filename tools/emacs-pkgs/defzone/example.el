@@ -1,8 +1,14 @@
 ;;; example.el - usage example for defzone macro
 
 (defzone "tazj.in."
-  (SOA 21600 "ns-cloud-a1.googledomains.com." "cloud-dns-hostmaster.google.com."
-       123 21600 3600 1209600 300)
+  (SOA 21600
+       :mname "ns-cloud-a1.googledomains.com."
+       :rname "cloud-dns-hostmaster.google.com."
+       :serial 123
+       :refresh 21600
+       :retry 3600
+       :expire 1209600
+       :minimum 300)
 
   (NS 21600
       "ns-cloud-a1.googledomains.com."
