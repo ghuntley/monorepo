@@ -142,7 +142,7 @@ fn format_markdown() {
         .expect("Markdown rendering failed");
 }
 
-fn format_code(extension: String) {
+fn format_code(extension: Option<&str>) {
     let stdin = io::stdin();
     let mut stdin = stdin.lock();
     let mut linebuf = String::new();
@@ -153,7 +153,8 @@ fn format_code(extension: String) {
     // Set up the highlighter
     let theme = &THEMES.themes["InspiredGitHub"];
 
-    let syntax = SYNTAXES.find_syntax_by_extension(&extension)
+    let syntax = extension
+        .and_then(|e| SYNTAXES.find_syntax_by_extension(e))
         .or_else(|| SYNTAXES.find_syntax_by_first_line(&linebuf))
         .unwrap_or_else(|| SYNTAXES.find_syntax_plain_text());
 
@@ -189,12 +190,9 @@ fn format_code(extension: String) {
 }
 
 fn main() {
-    let extension = args_extension()
-        .expect("cheddar should be invoked with a filename!");
-
-    if extension == "md" {
-        format_markdown();
-    } else {
-        format_code(extension);
+    let extension = args_extension();
+    match extension.as_ref().map(String::as_str) {
+        Some("md") => format_markdown(),
+        extension => format_code(extension),
     }
 }
