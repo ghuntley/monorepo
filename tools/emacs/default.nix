@@ -35,6 +35,7 @@ let
     dash-functional
     direnv
     dockerfile-mode
+    edwina
     elixir-mode
     elm-mode
     erlang
