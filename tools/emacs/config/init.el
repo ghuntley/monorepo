@@ -67,6 +67,9 @@
 
 (use-package multiple-cursors)
 
+(use-package notmuch
+  :bind (:map global-map ("s-g m" . notmuch))) ;; g m -> gmail
+
 (use-package paredit :hook ((lisp-mode . paredit-mode)
                             (emacs-lisp-mode . paredit-mode)))
 
