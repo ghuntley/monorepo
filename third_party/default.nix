@@ -40,6 +40,7 @@ let
       fira
       fira-code
       fira-mono
+      gettext
       git
       glibc
       gnutar
