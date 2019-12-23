@@ -68,6 +68,7 @@ let
       parallel
       pkgconfig
       protobuf
+      python3Packages
       remarshal
       rink
       ripgrep
