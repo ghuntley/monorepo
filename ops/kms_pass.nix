@@ -14,6 +14,7 @@ in (writeShellScriptBin "pass" ''
 
   CMD="$1"
   readonly SECRET=$2
+  readonly SECRETS_DIR=${./secrets}
   readonly SECRET_PATH="$SECRETS_DIR/$SECRET"
 
   function secret_check {
