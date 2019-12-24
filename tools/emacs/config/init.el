@@ -44,6 +44,27 @@
 (use-package dash)
 (use-package dash-functional)
 (use-package dottime :config (dottime-display-mode t))
+
+(use-package edwina
+  :after (ace-window ivy)
+  :init
+  (setq edwina-keymap-prefix (kbd "s-w"))
+  (defun edwina-split-to-buffer ()
+    (interactive)
+    (ivy-read "Switch to buffer: " #'internal-complete-buffer
+              :keymap ivy-switch-buffer-map
+              :preselect (buffer-name (other-buffer (current-buffer)))
+              :action (lambda (buffer)
+                        (let ((new-window (split-window-below)))
+                          (edwina-arrange)
+                          (with-selected-window new-window
+                            (switch-to-buffer buffer nil 'force-same-window))))
+              :matcher #'ivy--switch-buffer-matcher
+              :caller 'ivy-switch-buffer))
+  :bind (:map edwina-mode-map
+              ("s-w b" . #'edwina-split-to-buffer))
+  :config (edwina-mode 1))
+
 (use-package gruber-darker-theme)
 (use-package ht)
 (use-package hydra)
