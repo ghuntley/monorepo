@@ -55,10 +55,10 @@
               :keymap ivy-switch-buffer-map
               :preselect (buffer-name (other-buffer (current-buffer)))
               :action (lambda (buffer)
-                        (let ((new-window (split-window-below)))
-                          (edwina-arrange)
-                          (with-selected-window new-window
-                            (switch-to-buffer buffer nil 'force-same-window))))
+                        (interactive)
+                        (split-window-below)
+                        (switch-to-buffer buffer nil 'force-same-window)
+                        (edwina-arrange))
               :matcher #'ivy--switch-buffer-matcher
               :caller 'ivy-switch-buffer))
   :bind (:map edwina-mode-map
