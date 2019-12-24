@@ -210,4 +210,7 @@
 (exwm-input-set-key (kbd "s-m h") #'randr-layout-hdmi1-extend)
 (exwm-input-set-key (kbd "s-m s") #'randr-layout-single)
 
+;; Use edwina for window management shortcuts
+(edwina-mode 1)
+
 (provide 'desktop)

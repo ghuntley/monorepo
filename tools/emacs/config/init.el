@@ -61,11 +61,15 @@
                         (edwina-arrange))
               :matcher #'ivy--switch-buffer-matcher
               :caller 'ivy-switch-buffer))
-  :bind (:map edwina-mode-map
-              ("s-w b" . #'edwina-split-to-buffer))
-  :config
-  (advice-add 'split-window-below :after 'edwina-arrange)
-  (edwina-mode 1))
+  ;; Using an advice for this functionality breaks various internal
+  ;; things in split-window, hence a new interactive function.
+  (defun edwina-split-arrange ()
+    (interactive)
+    (split-window-below)
+    (edwina-arrange))
+  :bind (("C-x 2" . edwina-split-arrange)
+         :map edwina-mode-map
+         ("s-w b" . #'edwina-split-to-buffer)))
 
 (use-package gruber-darker-theme)
 (use-package ht)
