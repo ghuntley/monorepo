@@ -48,7 +48,6 @@
 (use-package edwina
   :after (ace-window ivy)
   :init
-  (setq edwina-keymap-prefix (kbd "s-w"))
   (defun edwina-split-to-buffer ()
     (interactive)
     (ivy-read "Switch to buffer: " #'internal-complete-buffer
