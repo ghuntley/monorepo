@@ -18,6 +18,8 @@ python3Packages.buildPythonApplication rec {
     sha256 = "1zzylv8xbcrh34bz0s29dawzcyx39lai8y8wk0bl4x75v1jfynvf";
   };
 
+  patches = [ ./send_scope.patch ];
+
   propagatedBuildInputs = with python3Packages; [
     notmuch
     oauth2client
