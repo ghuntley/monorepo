@@ -138,15 +138,6 @@
             :sort t
             :action #'magit-status))
 
-(defun warmup-gpg-agent (arg &optional exit)
-  "Function used to warm up the GPG agent before use. This is
-   useful in cases where there is no easy way to make pinentry run
-   in the correct context (such as when sending email)."
-  (interactive)
-  (message "Warming up GPG agent")
-  (epg-sign-string (epg-make-context) "dummy")
-  nil)
-
 (defun bottom-right-window-p ()
   "Determines whether the last (i.e. bottom-right) window of the
   active frame is showing the buffer in which this function is
