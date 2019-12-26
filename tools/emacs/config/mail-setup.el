@@ -42,7 +42,6 @@
 
 ;; Store sent mail in the correct folder per account
 (setq notmuch-maildir-use-notmuch-insert nil)
-(setq notmuch-fcc-dirs '(("mail@tazj.in" . "tazjin/Sent")))
 
 ;; I don't use drafts but I instinctively hit C-x C-s constantly, lets
 ;; handle that gracefully.
