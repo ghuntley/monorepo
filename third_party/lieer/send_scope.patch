@@ -7,7 +7,7 @@ index 6e3973a..ade1082 100644
  
  class Remote:
 -  SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/gmail.modify'
-+  SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.send'
++  SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/gmail.modify https://mail.google.com/'
    APPLICATION_NAME   = 'Lieer'
    CLIENT_SECRET_FILE = None
    authorized         = False
