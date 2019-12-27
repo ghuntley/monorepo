@@ -45,6 +45,7 @@
 (use-package dash-functional)
 
 (use-package dottime
+  :demand
   :after (notmuch telega)
   :config (dottime-display-mode t))
 

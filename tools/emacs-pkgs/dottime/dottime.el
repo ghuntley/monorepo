@@ -60,40 +60,42 @@
   (if (or (eq arg 0) (eq arg nil))
       (advice-remove 'display-time-update #'dottime--display-time-update-advice)
     (advice-add 'display-time-update :around #'dottime--display-time-update-advice))
-  (display-time-update))
+  (display-time-update)
 
-;; Amend the time display in telega.el to use dottime.
-;;
-;; This will never display offsets in the chat window, as those are
-;; always visible in the modeline anyways.
-(when (featurep 'telega)
-  (defun telega-ins--dottime-advice (orig timestamp)
-    (let* ((dtime (decode-time timestamp t))
-           (current-ts (time-to-seconds (current-time)))
-           (ctime (decode-time current-ts))
-           (today00 (telega--time-at00 current-ts ctime)))
-      (if (> timestamp today00)
-          (telega-ins-fmt "%02d·%02d" (nth 2 dtime) (nth 1 dtime))
-        (funcall orig timestamp))))
+  ;; Amend the time display in telega.el to use dottime.
+  ;;
+  ;; This will never display offsets in the chat window, as those are
+  ;; always visible in the modeline anyways.
+  (when (featurep 'telega)
+    (require 'telega)
+    (defun telega-ins--dottime-advice (orig timestamp)
+      (let* ((dtime (decode-time timestamp t))
+             (current-ts (time-to-seconds (current-time)))
+             (ctime (decode-time current-ts))
+             (today00 (telega--time-at00 current-ts ctime)))
+        (if (> timestamp today00)
+            (telega-ins-fmt "%02d·%02d" (nth 2 dtime) (nth 1 dtime))
+          (funcall orig timestamp))))
 
-  (advice-add 'telega-ins--date :around #'telega-ins--dottime-advice))
+    (advice-add 'telega-ins--date :around #'telega-ins--dottime-advice))
 
-;; Amend the time display in notmuch to use dottime.
-(when (featurep 'notmuch)
-  (defun notmuch-show--dottime-date-advice (orig header header-value)
-    (if (equal "Date" header)
-        ;; Unfortunately the header insertion functions do not have access
-        ;; to the message object, which means that the only information we
-        ;; have about the timestamp is its string rendering.
-        (-let* (((sec min hour day mon year dow dst tz)
-                 (parse-time-string header-value)))
-          (insert header ": "
-                  (dottime-format (encode-time sec min hour day mon year tz)
-                                  tz "%a, %Y-")
-                  "\n"))
+  ;; Amend the time display in notmuch to use dottime.
+  (when (featurep 'notmuch)
+    (require 'notmuch)
+    (defun notmuch-show--dottime-date-advice (orig header header-value)
+      (if (equal "Date" header)
+          ;; Unfortunately the header insertion functions do not have access
+          ;; to the message object, which means that the only information we
+          ;; have about the timestamp is its string rendering.
+          (-let* (((sec min hour day mon year dow dst tz)
+                   (parse-time-string header-value)))
+            (insert header ": "
+                    (dottime-format (encode-time sec min hour day mon year tz)
+                                    tz "%a, %Y-")
+                    "\n"))
 
-      (funcall orig header header-value)))
+        (funcall orig header header-value)))
 
-  (advice-add 'notmuch-show-insert-header :around #'notmuch-show--dottime-date-advice))
+    (advice-add 'notmuch-show-insert-header :around #'notmuch-show--dottime-date-advice)))
 
 (provide 'dottime)
