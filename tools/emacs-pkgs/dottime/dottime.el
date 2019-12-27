@@ -19,15 +19,16 @@
 (require 'cl-lib)
 (require 'time)
 
-(defun dottime--format-string ()
+(defun dottime--format-string (&optional offset prefix)
   "Creates the dottime format string for `format-time-string'
   based on the local timezone."
 
-  (let* ((offset-sec (car (current-time-zone)))
-         (offset-hours (/ offset-sec 60 60)))
+  (let* ((offset-sec (or offset (car (current-time-zone))))
+         (offset-hours (/ offset-sec 60 60))
+         (base (concat prefix "%m-%dT%H·%M")))
     (if (/= offset-hours 0)
-        (concat "%m-%dT%H·%M" (format "%0+3d" offset-hours))
-      "%m-%dT%H·%M")))
+        (concat base (format "%0+3d" offset-hours))
+      base)))
 
 (defun dottime--display-time-update-advice (orig)
   "Function used as advice to `display-time-update' with a
@@ -40,11 +41,16 @@
                 (funcall format-orig (dottime--format-string) nil t))))
     (funcall orig)))
 
-(defun dottime-format (&optional time)
-  "Format the given TIME in dottime. If TIME is nil, the current
-  time will be used."
+(defun dottime-format (&optional time offset prefix)
+  "Format the given TIME in dottime at OFFSET. If TIME is nil,
+  the current time will be used. PREFIX is prefixed to the format
+  string verbatim.
 
-  (format-time-string (dottime--format-string) time t))
+  OFFSET can be an integer representing an offset in seconds, or
+  the argument can be elided in which case the system time zone
+  is used."
+
+  (format-time-string (dottime--format-string offset prefix) time t))
 
 (defun dottime-display-mode (arg)
   "Enable time display as dottime. Disables dottime if called
