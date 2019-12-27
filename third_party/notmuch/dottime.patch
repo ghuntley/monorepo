@@ -33,3 +33,31 @@ index 2734b36a..b1ec4bdc 100644
  		return result;
  	    }
  	}
+diff --git a/util/gmime-extra.c b/util/gmime-extra.c
+index d1bb1d47..9df5a454 100644
+--- a/util/gmime-extra.c
++++ b/util/gmime-extra.c
+@@ -124,7 +124,10 @@ g_mime_message_get_date_string (void *ctx, GMimeMessage *message)
+ {
+     GDateTime* parsed_date = g_mime_message_get_date (message);
+     if (parsed_date) {
+-	char *date = g_mime_utils_header_format_date (parsed_date);
++	char *date = g_date_time_format(
++		parsed_date,
++		"%a, %d %b %Y %H·%M%z"
++	);
+ 	return g_string_talloc_strdup (ctx, date);
+     } else {
+ 	return talloc_strdup(ctx, "Thu, 01 Jan 1970 00:00:00 +0000");
+diff --git a/util/gmime-extra.h b/util/gmime-extra.h
+index b0c8d3d8..40f748f8 100644
+--- a/util/gmime-extra.h
++++ b/util/gmime-extra.h
+@@ -1,5 +1,7 @@
+ #ifndef _GMIME_EXTRA_H
+ #define _GMIME_EXTRA_H
++#include <glib.h>
++#include <glib/gprintf.h>
+ #include <gmime/gmime.h>
+ #include <talloc.h>
+ 
