@@ -66,7 +66,7 @@
 ;;
 ;; This will never display offsets in the chat window, as those are
 ;; always visible in the modeline anyways.
-(when (-contains? features 'telega)
+(when (featurep 'telega)
   (defun telega-ins--dottime-advice (orig timestamp)
     (let* ((dtime (decode-time timestamp t))
            (current-ts (time-to-seconds (current-time)))
@@ -77,5 +77,23 @@
         (funcall orig timestamp))))
 
   (advice-add 'telega-ins--date :around #'telega-ins--dottime-advice))
+
+;; Amend the time display in notmuch to use dottime.
+(when (featurep 'notmuch)
+  (defun notmuch-show--dottime-date-advice (orig header header-value)
+    (if (equal "Date" header)
+        ;; Unfortunately the header insertion functions do not have access
+        ;; to the message object, which means that the only information we
+        ;; have about the timestamp is its string rendering.
+        (-let* (((sec min hour day mon year dow dst tz)
+                 (parse-time-string header-value)))
+          (insert header ": "
+                  (dottime-format (encode-time sec min hour day mon year tz)
+                                  tz "%a, %Y-")
+                  "\n"))
+
+      (funcall orig header header-value)))
+
+  (advice-add 'notmuch-show-insert-header :around #'notmuch-show--dottime-date-advice))
 
 (provide 'dottime)
