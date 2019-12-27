@@ -43,7 +43,10 @@
 
 (use-package dash)
 (use-package dash-functional)
-(use-package dottime :config (dottime-display-mode t))
+
+(use-package dottime
+  :after (notmuch telega)
+  :config (dottime-display-mode t))
 
 (use-package edwina
   :after (ace-window ivy)
