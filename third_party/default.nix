@@ -63,7 +63,6 @@ let
       nano
       nginx
       nix
-      notmuch
       openssh
       openssl
       parallel
@@ -97,7 +96,13 @@ let
 
 in exposed // {
   callPackage = nixpkgs.lib.callPackageWith exposed;
+
   # Provide the source code of nixpkgs, but do not provide an imported
   # version of it.
   nixpkgsSrc = stableSrc;
+
+  # Packages to be overridden
+  originals = {
+    inherit (nixpkgs) notmuch;
+  };
 }
