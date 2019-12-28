@@ -41,7 +41,6 @@ let
       fira-code
       fira-mono
       gettext
-      git
       glibc
       gnutar
       go
@@ -103,6 +102,6 @@ in exposed // {
 
   # Packages to be overridden
   originals = {
-    inherit (nixpkgs) notmuch;
+    inherit (nixpkgs) git notmuch;
   };
 }
