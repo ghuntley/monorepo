@@ -37,38 +37,43 @@ func updateRepo(repo *git.Repository, tree *git.Worktree, opts *git.PullOptions)
 	return nil
 }
 
+func cloneRepo(dest, project, repo string, auth *http.BasicAuth) (*git.Repository, error) {
+	var cloneOpts = git.CloneOptions{
+		Auth: auth,
+		URL:  fmt.Sprintf("https://source.developers.google.com/p/%s/r/%s", project, repo),
+	}
+
+	handle, err := git.PlainClone(dest, false, &cloneOpts)
+
+	if err == git.ErrRepositoryAlreadyExists {
+		handle, err = git.PlainOpen(dest)
+	}
+
+	return handle, err
+}
+
 func main() {
-	var dest = EnvOr("SYNC_DEST", "/git/depot")
-	var project = EnvOr("SYNC_PROJECT", "tazjins-infrastructure")
-	var repo = EnvOr("SYNC_REPO", "depot")
-	var user = os.Getenv("SYNC_USER")
-	var pass = os.Getenv("SYNC_PASS")
+	dest := EnvOr("SYNC_DEST", "/git/depot")
+	project := EnvOr("SYNC_PROJECT", "tazjins-infrastructure")
+	repo := EnvOr("SYNC_REPO", "depot")
+	user := os.Getenv("SYNC_USER")
+	pass := os.Getenv("SYNC_PASS")
 
 	log.Printf("Syncing repository '%s/%s' to destination '%s'", project, repo, dest)
 
-	var cloneOpts = git.CloneOptions{
-		URL: fmt.Sprintf("https://source.developers.google.com/p/%s/r/%s", project, repo),
-	}
-
+	var auth *http.BasicAuth
 	if user != "" && pass != "" {
-		cloneOpts.Auth = &http.BasicAuth{
+		auth = &http.BasicAuth{
 			Username: user,
 			Password: pass,
 		}
 		log.Println("Enabling basic authentication as user", user)
 	}
 
-	action := "clone"
-	handle, err := git.PlainClone(dest, false, &cloneOpts)
-
-	if err == git.ErrRepositoryAlreadyExists {
-		log.Println("Repository has already been cloned!")
-		handle, err = git.PlainOpen(dest)
-		action = "open"
-	}
+	handle, err := cloneRepo(dest, project, repo, auth)
 
 	if err != nil {
-		log.Fatalf("Failed to %s repository: %s", action, err)
+		log.Fatalf("Failed to clone repository: %s", err)
 	} else {
 		log.Println("Initiating update loop")
 	}
@@ -79,7 +84,7 @@ func main() {
 	}
 
 	pullOpts := git.PullOptions{
-		Auth:  cloneOpts.Auth,
+		Auth:  auth,
 		Force: true,
 	}
 
