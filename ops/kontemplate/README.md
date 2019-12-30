@@ -99,15 +99,6 @@ to only update the `api` resource sets and the `frontend/user-page` resource set
 It is recommended to install Kontemplate from the signed binary releases available on the
 [releases page][]. Release binaries are available for Linux, OS X, FreeBSD and Windows.
 
-### Homebrew
-
-OS X users with Homebrew installed can "tap" Kontemplate like such:
-
-```sh
-brew tap tazjin/kontemplate https://github.com/tazjin/kontemplate
-brew install kontemplate
-```
-
 ### NixOS
 
 Kontemplate has been included in [NixOS](https://nixos.org/) since version 17.09.
@@ -120,7 +111,16 @@ An [AUR package][] is available for Arch Linux and other `pacman`-based distribu
 
 ### Building from source
 
-Assuming you have Go configured correctly, you can simply `go get github.com/tazjin/kontemplate/...`.
+You can clone Kontemplate either by cloning the full
+[depot][https://git.tazj.in/] or by just cloning the kontemplate
+subtree like so:
+
+    git clone -b kontemplate https://git.tazj.in kontemplate
+
+The `go` tooling can be used as normal with this cloned repository. In
+a full clone of the dpeot, Nix can be used to build Kontemplate:
+
+    nix-build -A ops.kontemplate
 
 ## Usage
 
@@ -185,4 +185,3 @@ Please follow the [code of conduct](CODE_OF_CONDUCT.md).
 [Helm]: https://helm.sh/
 [releases page]: https://github.com/tazjin/kontemplate/releases
 [AUR package]: https://aur.archlinux.org/packages/kontemplate-git/
-[Repeatr]: http://repeatr.io/
