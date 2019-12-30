@@ -31,6 +31,7 @@
       (lambda () (format "Emacs %s; notmuch.el %s" emacs-version notmuch-emacs-version)))
 (setq mail-host-address (system-name))
 (setq notmuch-mua-cite-function #'message-cite-original-without-signature)
+(setq notmuch-fcc-dirs nil) ;; Gmail does this server-side
 
 ;; Close mail buffers after sending mail
 (setq message-kill-buffer-on-exit t)
