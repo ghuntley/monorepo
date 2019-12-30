@@ -34,11 +34,10 @@ let
 
     # Repository configuration
     repo.url=depot
-    repo.path=/git/depot/.git
+    repo.path=/git/depot/
     repo.desc=tazjin's personal monorepo
     repo.owner=tazjin <mail@tazj.in>
     repo.clone-url=https://git.tazj.in ssh://source.developers.google.com:2022/p/tazjins-infrastructure/r/depot
-    repo.enable-remote-branches=1
   '';
 
   thttpdConfig = writeText "thttpd.conf" ''
