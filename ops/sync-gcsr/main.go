@@ -12,6 +12,7 @@ import (
 	"time"
 
 	git "gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/plumbing"
 	"gopkg.in/src-d/go-git.v4/plumbing/transport/http"
 )
 
@@ -24,8 +25,43 @@ func EnvOr(key, def string) string {
 	return v
 }
 
-func updateRepo(repo *git.Repository, tree *git.Worktree, opts *git.PullOptions) error {
-	err := tree.Pull(opts)
+// ensure that all remote branches exist locally & are up to date.
+func updateBranches(auth *http.BasicAuth, repo *git.Repository) error {
+	origin, err := repo.Remote("origin")
+	if err != nil {
+		return err
+	}
+
+	refs, err := origin.List(&git.ListOptions{
+		Auth: auth,
+	})
+	if err != nil {
+		return err
+	}
+
+	for _, ref := range refs {
+		if !ref.Name().IsBranch() || ref.Type() != plumbing.HashReference {
+			continue
+		}
+
+		branch := plumbing.NewHashReference(
+			plumbing.NewBranchReferenceName(ref.Name().Short()),
+			ref.Hash(),
+		)
+
+		err := repo.Storer.SetReference(branch)
+		if err != nil {
+			return err
+		}
+		log.Println("Updated branch", ref.Name().String())
+	}
+
+	return nil
+}
+
+func updateRepo(auth *http.BasicAuth, repo *git.Repository, opts *git.FetchOptions) error {
+	err := repo.Fetch(opts)
+
 	if err == git.NoErrAlreadyUpToDate {
 		// nothing to do ...
 		return nil
@@ -33,8 +69,8 @@ func updateRepo(repo *git.Repository, tree *git.Worktree, opts *git.PullOptions)
 		return err
 	}
 
-	log.Println("Updated local repository mirror")
-	return nil
+	log.Println("Fetched updates from remote, updating local branches")
+	return updateBranches(auth, repo)
 }
 
 func cloneRepo(dest, project, repo string, auth *http.BasicAuth) (*git.Repository, error) {
@@ -43,13 +79,13 @@ func cloneRepo(dest, project, repo string, auth *http.BasicAuth) (*git.Repositor
 		URL:  fmt.Sprintf("https://source.developers.google.com/p/%s/r/%s", project, repo),
 	}
 
-	handle, err := git.PlainClone(dest, false, &cloneOpts)
+	handle, err := git.PlainClone(dest, true, &cloneOpts)
 
 	if err == git.ErrRepositoryAlreadyExists {
 		handle, err = git.PlainOpen(dest)
 	}
 
-	return handle, err
+	return handle, updateBranches(auth, handle)
 }
 
 func main() {
@@ -78,20 +114,16 @@ func main() {
 		log.Println("Initiating update loop")
 	}
 
-	tree, err := handle.Worktree()
-	if err != nil {
-		log.Fatalln("Failed to open repository worktree:", err)
-	}
-
-	pullOpts := git.PullOptions{
+	fetchOpts := git.FetchOptions{
 		Auth:  auth,
 		Force: true,
 	}
 
 	for {
-		if err = updateRepo(handle, tree, &pullOpts); err != nil {
+		if err = updateRepo(auth, handle, &fetchOpts); err != nil {
 			log.Fatalf("Failed to pull updated repository: %s", err)
 		}
-		time.Sleep(30 * time.Second) //  TODO(tazjin): Config option for pull interval?
+
+		time.Sleep(10 * time.Second)
 	}
 }
