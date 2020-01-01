@@ -5,14 +5,12 @@
 
 { pkgs, ... }:
 let
-  # The pinned commit here is identical to the public nixery.dev
-  # version, since popularity data has been generated for that.
-  stableCommit = "3140fa89c51233397f496f49014f6b23216667c2";
-  stableSrc = fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs-channels/archive/${stableCommit}.tar.gz";
-    sha256 = "18p0d5lnfvzsyfah02mf6bi249990pfwnylwhqdh8qi70ncrk3f8";
+  commit = "62ef779f2a5050549772722665bedf52f01268d2";
+  nixpkgsSrc = fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs-channels/archive/${commit}.tar.gz";
+    sha256 = "1k97l4kr2vchvjd5j11hdwlsx1q01fmrhbs1v8b5v5iz35y0fv7s";
   };
-  nixpkgs = import stableSrc {
+  nixpkgs = import nixpkgsSrc {
     config.allowUnfree = true;
     config.allowBroken = true;
   };
@@ -98,7 +96,7 @@ in exposed // {
 
   # Provide the source code of nixpkgs, but do not provide an imported
   # version of it.
-  nixpkgsSrc = stableSrc;
+  inherit nixpkgsSrc;
 
   # Packages to be overridden
   originals = {
