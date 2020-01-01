@@ -19,6 +19,7 @@ let
     # Inherit the packages from nixpkgs that should be available inside
     # of the repo. They become available under `pkgs.third_party.<name>`
     inherit (nixpkgs)
+      age
       bashInteractive
       bat
       buildGoPackage

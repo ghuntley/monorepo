@@ -32,6 +32,12 @@ case "${TARGET_TOOL}" in
   rink)
     attr="third_party.rink"
     ;;
+  age)
+    attr="third_party.age"
+    ;;
+  age-keygen)
+    attr="third_party.age"
+    ;;
   *)
     echo "The tool '${TARGET_TOOL}' is currently not installed in this repository."
     exit 1
