@@ -32,6 +32,7 @@
 (setq mail-host-address (system-name))
 (setq notmuch-mua-cite-function #'message-cite-original-without-signature)
 (setq notmuch-fcc-dirs nil) ;; Gmail does this server-side
+(setq message-signature nil) ;; Insert message signature manually with C-c C-w
 
 ;; Close mail buffers after sending mail
 (setq message-kill-buffer-on-exit t)
