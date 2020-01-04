@@ -144,7 +144,7 @@
 
 (use-package vterm
   :config (progn
-            (setq vterm-shell "/usr/bin/fish")
+            (setq vterm-shell "fish")
             (setq vterm-exit-functions
                   (lambda (&rest _) (kill-buffer (current-buffer))))
             (setq vterm-set-title-functions
