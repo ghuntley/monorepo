@@ -38,6 +38,9 @@ case "${TARGET_TOOL}" in
   age-keygen)
     attr="third_party.age"
     ;;
+  rebuilder)
+    attr="ops.nixos.rebuilder"
+    ;;
   *)
     echo "The tool '${TARGET_TOOL}' is currently not installed in this repository."
     exit 1

@@ -9,9 +9,9 @@ System configuration lives in folders for each machine and a custom
 fixed point evaluation (similar to standard NixOS module
 configuration) is used to combine configuration together.
 
-Building `ops.nixos.depot-switcher` yields a script that will
-automatically build and activate the newest configuration based on the
-current hostname.
+Building `ops.nixos.rebuilder` yields a script that will automatically
+build and activate the newest configuration based on the current
+hostname.
 
 ## Configured hosts:
 
