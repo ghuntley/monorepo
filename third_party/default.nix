@@ -103,4 +103,7 @@ in exposed // {
   originals = {
     inherit (nixpkgs) git notmuch;
   };
+
+  # Make NixOS available
+  nixos = import "${nixpkgsSrc}/nixos";
 }
