@@ -88,8 +88,11 @@ in pkgs.lib.fix(self: {
       fd
       gnupg
       go
+      google-cloud-sdk
       htop
+      imagemagick
       jq
+      kubectl
       notmuch
       openssh
       openssl
@@ -100,6 +103,7 @@ in pkgs.lib.fix(self: {
       pwgen
       ripgrep
       rustup
+      scrot
       spotify
       tokei
       tree
