@@ -1,0 +1,2326 @@
+[
+  {
+    "address": "Sumatrakade 577, 1019 PS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87026792-sumatrakade-577/?navigateSource=toppositie",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.5 km",
+        "value": 20475
+      },
+      "duration": {
+        "value": 2467,
+        "text": "41m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.2 km",
+        "value": 3187
+      },
+      "duration": {
+        "value": 727,
+        "text": "12m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Spuistraat 253, 1012 VR Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-86705763-spuistraat-253-hs/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.2 km",
+        "value": 14151
+      },
+      "duration": {
+        "value": 1901,
+        "text": "31m41s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.5 km",
+        "value": 1459
+      },
+      "duration": {
+        "value": 522,
+        "text": "8m42s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Melis Stokehof 84, 1064 JE Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87036254-melis-stokehof-84/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "16.1 km",
+        "value": 16086
+      },
+      "duration": {
+        "value": 2166,
+        "text": "36m6s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "7.3 km",
+        "value": 7317
+      },
+      "duration": {
+        "value": 1772,
+        "text": "29m32s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Churchill-laan 91D, 1078 DK Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41533400-churchill-laan-91-d/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "11.6 km",
+        "value": 11590
+      },
+      "duration": {
+        "value": 1921,
+        "text": "32m1s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.7 km",
+        "value": 5749
+      },
+      "duration": {
+        "value": 1609,
+        "text": "26m49s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "De Boelelaan 745, 1082 RS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41687804-de-boelelaan-745/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "9.5 km",
+        "value": 9466
+      },
+      "duration": {
+        "value": 907,
+        "text": "15m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.7 km",
+        "value": 6659
+      },
+      "duration": {
+        "value": 1147,
+        "text": "19m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Leeuwendalersweg 15G, 1055 JE Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41679332-leeuwendalersweg-15-g/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "11.4 km",
+        "value": 11359
+      },
+      "duration": {
+        "value": 1596,
+        "text": "26m36s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.5 km",
+        "value": 6526
+      },
+      "duration": {
+        "value": 1364,
+        "text": "22m44s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Singel 449, 1012 XG Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87899154-singel-449-1/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.2 km",
+        "value": 14169
+      },
+      "duration": {
+        "value": 1911,
+        "text": "31m51s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.9 km",
+        "value": 1945
+      },
+      "duration": {
+        "value": 568,
+        "text": "9m28s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Jan van Zutphenstraat 211, 1069 RR Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41671501-jan-van-zutphenstraat-211/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "10.2 km",
+        "value": 10160
+      },
+      "duration": {
+        "value": 1647,
+        "text": "27m27s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "9.1 km",
+        "value": 9145
+      },
+      "duration": {
+        "value": 2311,
+        "text": "38m31s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Parnassusweg 977, Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41670908-parnassusweg-977/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "9.6 km",
+        "value": 9578
+      },
+      "duration": {
+        "value": 996,
+        "text": "16m36s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.8 km",
+        "value": 6780
+      },
+      "duration": {
+        "value": 1236,
+        "text": "20m36s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Esplanade de Meer 179, 1098 WJ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87995311-esplanade-de-meer-179/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "17.4 km",
+        "value": 17441
+      },
+      "duration": {
+        "value": 2107,
+        "text": "35m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "7.0 km",
+        "value": 6989
+      },
+      "duration": {
+        "value": 1600,
+        "text": "26m40s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Hoofdweg 538, 1055 AB Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41521204-hoofdweg-538/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.1 km",
+        "value": 14073
+      },
+      "duration": {
+        "value": 1892,
+        "text": "31m32s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.5 km",
+        "value": 6468
+      },
+      "duration": {
+        "value": 1320,
+        "text": "22m0s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Hoofdweg 538, 1055 AB Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41521204-hoofdweg-538/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.1 km",
+        "value": 14073
+      },
+      "duration": {
+        "value": 1892,
+        "text": "31m32s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.5 km",
+        "value": 6468
+      },
+      "duration": {
+        "value": 1320,
+        "text": "22m0s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Hoofdweg 538, 1055 AB Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41521204-hoofdweg-538/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.1 km",
+        "value": 14073
+      },
+      "duration": {
+        "value": 1892,
+        "text": "31m32s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.5 km",
+        "value": 6468
+      },
+      "duration": {
+        "value": 1320,
+        "text": "22m0s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Annie Romeinplein 18, 1103 JL Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87985710-annie-romeinplein-18/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "17.4 km",
+        "value": 17402
+      },
+      "duration": {
+        "value": 1869,
+        "text": "31m9s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "10.1 km",
+        "value": 10129
+      },
+      "duration": {
+        "value": 1308,
+        "text": "21m48s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Vechtstraat 185, 1079 JJ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41512041-vechtstraat-185-ii/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "11.9 km",
+        "value": 11877
+      },
+      "duration": {
+        "value": 1876,
+        "text": "31m16s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "7.0 km",
+        "value": 6992
+      },
+      "duration": {
+        "value": 2142,
+        "text": "35m42s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Westerdok 240, 1013 BH Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41553306-westerdok-240/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "18.3 km",
+        "value": 18332
+      },
+      "duration": {
+        "value": 1816,
+        "text": "30m16s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.7 km",
+        "value": 1748
+      },
+      "duration": {
+        "value": 715,
+        "text": "11m55s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "IJburglaan 701, 1087 BS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87898167-ijburglaan-701/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "24.5 km",
+        "value": 24471
+      },
+      "duration": {
+        "value": 2556,
+        "text": "42m36s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "7.1 km",
+        "value": 7097
+      },
+      "duration": {
+        "value": 935,
+        "text": "15m35s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "IJdoornlaan 1497, 1034 Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87041092-ijdoornlaan-1497-a/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.5 km",
+        "value": 19524
+      },
+      "duration": {
+        "value": 2620,
+        "text": "43m40s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.7 km",
+        "value": 4704
+      },
+      "duration": {
+        "value": 1139,
+        "text": "18m59s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Sumatrakade 577, 1019 PS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87026792-sumatrakade-577/?navigateSource=toppositie",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.5 km",
+        "value": 20475
+      },
+      "duration": {
+        "value": 2467,
+        "text": "41m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.2 km",
+        "value": 3187
+      },
+      "duration": {
+        "value": 727,
+        "text": "12m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "George Sliekerkade 18, 1087 KK Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87030790-george-sliekerkade-18/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "24.8 km",
+        "value": 24761
+      },
+      "duration": {
+        "value": 2843,
+        "text": "47m23s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "8.0 km",
+        "value": 7958
+      },
+      "duration": {
+        "value": 1183,
+        "text": "19m43s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Sumatrakade 265, 1019 PK Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41662773-sumatrakade-265/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.6 km",
+        "value": 20638
+      },
+      "duration": {
+        "value": 2587,
+        "text": "43m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.4 km",
+        "value": 3350
+      },
+      "duration": {
+        "value": 847,
+        "text": "14m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Koggestraat 5, 1012 TA Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41531104-koggestraat-5-2/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "17.9 km",
+        "value": 17938
+      },
+      "duration": {
+        "value": 1748,
+        "text": "29m8s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.0 km",
+        "value": 981
+      },
+      "duration": {
+        "value": 393,
+        "text": "6m33s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Warmoesstraat 139B, 1012 JB Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41524099-warmoesstraat-139-b/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "18.1 km",
+        "value": 18072
+      },
+      "duration": {
+        "value": 1835,
+        "text": "30m35s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.0 km",
+        "value": 964
+      },
+      "duration": {
+        "value": 315,
+        "text": "5m15s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Parnassusweg 35, 1077 Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41579167-parnassusweg-35-i/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "10.0 km",
+        "value": 9986
+      },
+      "duration": {
+        "value": 1329,
+        "text": "22m9s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.8 km",
+        "value": 5754
+      },
+      "duration": {
+        "value": 1568,
+        "text": "26m8s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "De Boelelaan 389, 1082 RH Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87890510-de-boelelaan-389/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "9.6 km",
+        "value": 9650
+      },
+      "duration": {
+        "value": 1048,
+        "text": "17m28s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.9 km",
+        "value": 6852
+      },
+      "duration": {
+        "value": 1288,
+        "text": "21m28s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Theo Frenkelhof 96, 1087 JA Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87995272-theo-frenkelhof-96/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "24.9 km",
+        "value": 24874
+      },
+      "duration": {
+        "value": 2928,
+        "text": "48m48s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "8.1 km",
+        "value": 8101
+      },
+      "duration": {
+        "value": 1268,
+        "text": "21m8s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Veembroederhof 207, 1019 HD Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41539826-veembroederhof-207/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.7 km",
+        "value": 19731
+      },
+      "duration": {
+        "value": 2402,
+        "text": "40m2s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.8 km",
+        "value": 1845
+      },
+      "duration": {
+        "value": 501,
+        "text": "8m21s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Nieuwe Passeerdersstraat 174, 1016 XP Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41537370-nieuwe-passeerdersstraat-174/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "12.3 km",
+        "value": 12345
+      },
+      "duration": {
+        "value": 1885,
+        "text": "31m25s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.9 km",
+        "value": 2937
+      },
+      "duration": {
+        "value": 978,
+        "text": "16m18s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Jan van Galenstraat 1K, 1051 KE Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41513735-jan-van-galenstraat-1-k/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.0 km",
+        "value": 14042
+      },
+      "duration": {
+        "value": 2071,
+        "text": "34m31s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.1 km",
+        "value": 4104
+      },
+      "duration": {
+        "value": 859,
+        "text": "14m19s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Joan Melchior Kemperstraat 128, 1051 TX Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87924023-joan-melchior-kemperstraat-128-3/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "15.6 km",
+        "value": 15558
+      },
+      "duration": {
+        "value": 2675,
+        "text": "44m35s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.2 km",
+        "value": 4220
+      },
+      "duration": {
+        "value": 1015,
+        "text": "16m55s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Javakade 560, 1019 SE Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41438193-javakade-560/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.2 km",
+        "value": 20218
+      },
+      "duration": {
+        "value": 2508,
+        "text": "41m48s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.1 km",
+        "value": 2114
+      },
+      "duration": {
+        "value": 718,
+        "text": "11m58s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Saxen Weimarlaan 32, 1075 BZ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41427768-saxen-weimarlaan-32-ii/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "13.7 km",
+        "value": 13707
+      },
+      "duration": {
+        "value": 1836,
+        "text": "30m36s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.5 km",
+        "value": 5516
+      },
+      "duration": {
+        "value": 1557,
+        "text": "25m57s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Zeedijk 125C, 1012 AW Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87892979-zeedijk-125-c/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "18.1 km",
+        "value": 18074
+      },
+      "duration": {
+        "value": 1845,
+        "text": "30m45s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.0 km",
+        "value": 1031
+      },
+      "duration": {
+        "value": 269,
+        "text": "4m29s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Sumatrakade 577, 1019 PS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87026792-sumatrakade-577/?navigateSource=toppositie",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.5 km",
+        "value": 20475
+      },
+      "duration": {
+        "value": 2467,
+        "text": "41m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.2 km",
+        "value": 3187
+      },
+      "duration": {
+        "value": 727,
+        "text": "12m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Revaleiland 89, 1013 AX Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41685704-revaleiland-89/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.0 km",
+        "value": 20043
+      },
+      "duration": {
+        "value": 2208,
+        "text": "36m48s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.2 km",
+        "value": 3244
+      },
+      "duration": {
+        "value": 941,
+        "text": "15m41s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Rozengracht 42A, 1016 ND Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41685113-rozengracht-42-a/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "13.2 km",
+        "value": 13195
+      },
+      "duration": {
+        "value": 1977,
+        "text": "32m57s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.8 km",
+        "value": 1826
+      },
+      "duration": {
+        "value": 621,
+        "text": "10m21s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Rembrandtplein 7, 1017 CV Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87903367-rembrandtplein-7-1/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.3 km",
+        "value": 14276
+      },
+      "duration": {
+        "value": 1998,
+        "text": "33m18s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.0 km",
+        "value": 2033
+      },
+      "duration": {
+        "value": 574,
+        "text": "9m34s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Leenhofstraat 69, 1067 LA Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41576354-leenhofstraat-69-4/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.1 km",
+        "value": 14143
+      },
+      "duration": {
+        "value": 2126,
+        "text": "35m26s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "10.4 km",
+        "value": 10374
+      },
+      "duration": {
+        "value": 1974,
+        "text": "32m54s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Bolestein 300, 1081 ED Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41575228-bolestein-300/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "12.1 km",
+        "value": 12120
+      },
+      "duration": {
+        "value": 1939,
+        "text": "32m19s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "12.2 km",
+        "value": 12165
+      },
+      "duration": {
+        "value": 1692,
+        "text": "28m12s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Westerdoksdijk 263b, 1013 AD Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41562746-westerdoksdijk-263-b-pp/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "18.2 km",
+        "value": 18157
+      },
+      "duration": {
+        "value": 1687,
+        "text": "28m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.4 km",
+        "value": 1358
+      },
+      "duration": {
+        "value": 420,
+        "text": "7m0s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Brederodestraat 89, 1054 VC Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87916974-brederodestraat-89-hs/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "10.4 km",
+        "value": 10450
+      },
+      "duration": {
+        "value": 1677,
+        "text": "27m57s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.4 km",
+        "value": 4382
+      },
+      "duration": {
+        "value": 1384,
+        "text": "23m4s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Kon. Wilhelminaplein 222, 1062 KT Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41427806-koningin-wilhelminaplein-222/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "9.1 km",
+        "value": 9070
+      },
+      "duration": {
+        "value": 987,
+        "text": "16m27s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "14.1 km",
+        "value": 14135
+      },
+      "duration": {
+        "value": 1734,
+        "text": "28m54s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Tweede Hugo de Grootstraat 45, 1052 LE Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-40342170-tweede-hugo-de-grootstraat-45-c/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.8 km",
+        "value": 20802
+      },
+      "duration": {
+        "value": 2309,
+        "text": "38m29s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.8 km",
+        "value": 3825
+      },
+      "duration": {
+        "value": 826,
+        "text": "13m46s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Eerste Constantijn Huygensstraat 102, 1054 BZ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41687869-eerste-constantijn-huygensstraat-102-3/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "11.2 km",
+        "value": 11214
+      },
+      "duration": {
+        "value": 1758,
+        "text": "29m18s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.0 km",
+        "value": 3035
+      },
+      "duration": {
+        "value": 1210,
+        "text": "20m10s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Gustav Mahlerlaan 483, 1082 LS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41685852-gustav-mahlerlaan-483/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "9.3 km",
+        "value": 9292
+      },
+      "duration": {
+        "value": 776,
+        "text": "12m56s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.5 km",
+        "value": 6485
+      },
+      "duration": {
+        "value": 1016,
+        "text": "16m56s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Gustav Mahlerlaan 439, 1082 LS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41685850-gustav-mahlerlaan-439/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "9.3 km",
+        "value": 9255
+      },
+      "duration": {
+        "value": 748,
+        "text": "12m28s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "6.4 km",
+        "value": 6448
+      },
+      "duration": {
+        "value": 988,
+        "text": "16m28s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Kruitberghof 94, 1104 CA Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87033407-kruitberghof-94/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.2 km",
+        "value": 19210
+      },
+      "duration": {
+        "value": 2214,
+        "text": "36m54s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "10.9 km",
+        "value": 10911
+      },
+      "duration": {
+        "value": 1273,
+        "text": "21m13s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Kerkstraat 322, 1017 HC Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87900649-kerkstraat-322-c/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "13.3 km",
+        "value": 13310
+      },
+      "duration": {
+        "value": 1928,
+        "text": "32m8s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.4 km",
+        "value": 2441
+      },
+      "duration": {
+        "value": 884,
+        "text": "14m44s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Boerhaaveplein 12, 1091 AS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87928778-boerhaaveplein-12-1/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.7 km",
+        "value": 19690
+      },
+      "duration": {
+        "value": 2090,
+        "text": "34m50s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.7 km",
+        "value": 2710
+      },
+      "duration": {
+        "value": 652,
+        "text": "10m52s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Sumatrakade 577, 1019 PS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87026792-sumatrakade-577/?navigateSource=toppositie",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.5 km",
+        "value": 20475
+      },
+      "duration": {
+        "value": 2467,
+        "text": "41m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.2 km",
+        "value": 3187
+      },
+      "duration": {
+        "value": 727,
+        "text": "12m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Boylestraat 12I, 1098 PC Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87924456-boylestraat-12-i/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "21.1 km",
+        "value": 21067
+      },
+      "duration": {
+        "value": 2701,
+        "text": "45m1s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.4 km",
+        "value": 5436
+      },
+      "duration": {
+        "value": 1594,
+        "text": "26m34s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Kanaalstraat 88C, 1054 XL Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41557413-kanaalstraat-88-c/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "11.3 km",
+        "value": 11336
+      },
+      "duration": {
+        "value": 1664,
+        "text": "27m44s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.1 km",
+        "value": 4135
+      },
+      "duration": {
+        "value": 1201,
+        "text": "20m1s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Borneokade 285, 1019 XG Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huis-40216702-borneokade-285/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "22.9 km",
+        "value": 22862
+      },
+      "duration": {
+        "value": 2931,
+        "text": "48m51s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.6 km",
+        "value": 5573
+      },
+      "duration": {
+        "value": 1191,
+        "text": "19m51s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Spadinalaan, 1031 Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41426177-spadinalaan-240/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.1 km",
+        "value": 19133
+      },
+      "duration": {
+        "value": 2325,
+        "text": "38m45s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.4 km",
+        "value": 1372
+      },
+      "duration": {
+        "value": 1000,
+        "text": "16m40s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Pontsteiger 295, 1013 AH Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41532923-pontsteiger-295/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.6 km",
+        "value": 19557
+      },
+      "duration": {
+        "value": 2137,
+        "text": "35m37s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.8 km",
+        "value": 2758
+      },
+      "duration": {
+        "value": 870,
+        "text": "14m30s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Wielingenstraat 30, 1078 KL Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41660066-wielingenstraat-30-g/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "11.3 km",
+        "value": 11329
+      },
+      "duration": {
+        "value": 1469,
+        "text": "24m29s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.9 km",
+        "value": 4865
+      },
+      "duration": {
+        "value": 908,
+        "text": "15m8s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Karspeldreef 1443, 1104 SE Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87901941-karspeldreef-1443/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.1 km",
+        "value": 19138
+      },
+      "duration": {
+        "value": 2162,
+        "text": "36m2s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "10.8 km",
+        "value": 10839
+      },
+      "duration": {
+        "value": 1221,
+        "text": "20m21s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Joan Muyskenweg 4, 1096 CJ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41412597-joan-muyskenweg-4-h4/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "17.1 km",
+        "value": 17067
+      },
+      "duration": {
+        "value": 2267,
+        "text": "37m47s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.8 km",
+        "value": 5777
+      },
+      "duration": {
+        "value": 1332,
+        "text": "22m12s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Wibautstraat 70, 1091 GN Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41686330-wibautstraat-70-y/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "15.5 km",
+        "value": 15460
+      },
+      "duration": {
+        "value": 1524,
+        "text": "25m24s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.1 km",
+        "value": 3108
+      },
+      "duration": {
+        "value": 415,
+        "text": "6m55s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Balistraat 16D, 1094 JL Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-41675497-balistraat-16-d/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "21.0 km",
+        "value": 21009
+      },
+      "duration": {
+        "value": 2349,
+        "text": "39m9s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.2 km",
+        "value": 4210
+      },
+      "duration": {
+        "value": 860,
+        "text": "14m20s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Wamelplein 32, 1106 DP Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87035710-wamelplein-32/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.4 km",
+        "value": 19383
+      },
+      "duration": {
+        "value": 1694,
+        "text": "28m14s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "12.7 km",
+        "value": 12699
+      },
+      "duration": {
+        "value": 1585,
+        "text": "26m25s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Osdorperweg 664, 1067 SZ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huis-87858446-osdorperweg-664/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "13.7 km",
+        "value": 13735
+      },
+      "duration": {
+        "value": 2914,
+        "text": "48m34s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "12.5 km",
+        "value": 12469
+      },
+      "duration": {
+        "value": 3245,
+        "text": "54m5s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Utrechtsestraat 106, 1017 VS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87031649-utrechtsestraat-106-2/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "13.3 km",
+        "value": 13300
+      },
+      "duration": {
+        "value": 2112,
+        "text": "35m12s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.9 km",
+        "value": 2944
+      },
+      "duration": {
+        "value": 811,
+        "text": "13m31s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Vossiusstraat 17, 1054 ES Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87026796-vossiusstraat-17-1/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "16.2 km",
+        "value": 16171
+      },
+      "duration": {
+        "value": 2115,
+        "text": "35m15s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.3 km",
+        "value": 3285
+      },
+      "duration": {
+        "value": 1087,
+        "text": "18m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Sumatrakade 577, 1019 PS Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87026792-sumatrakade-577/?navigateSource=toppositie",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.5 km",
+        "value": 20475
+      },
+      "duration": {
+        "value": 2467,
+        "text": "41m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.2 km",
+        "value": 3187
+      },
+      "duration": {
+        "value": 727,
+        "text": "12m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Singel 449A, 1012 WP Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-86774627-singel-449-a/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "14.2 km",
+        "value": 14172
+      },
+      "duration": {
+        "value": 1914,
+        "text": "31m54s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.9 km",
+        "value": 1948
+      },
+      "duration": {
+        "value": 571,
+        "text": "9m31s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Gordijnensteeg 1, 1012 BT Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87925802-gordijnensteeg-1/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "21.6 km",
+        "value": 21578
+      },
+      "duration": {
+        "value": 2076,
+        "text": "34m36s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.0 km",
+        "value": 1046
+      },
+      "duration": {
+        "value": 285,
+        "text": "4m45s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Reguliersdwarsstraat 125, 1017 BL Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-87804538-reguliersdwarsstraat-125-2/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "21.3 km",
+        "value": 21342
+      },
+      "duration": {
+        "value": 2235,
+        "text": "37m15s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.2 km",
+        "value": 2168
+      },
+      "duration": {
+        "value": 651,
+        "text": "10m51s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Saxen Weimarlaan 32, 1075 BZ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/appartement-86783378-saxen-weimarlaan-32-2/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "13.7 km",
+        "value": 13707
+      },
+      "duration": {
+        "value": 1836,
+        "text": "30m36s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.5 km",
+        "value": 5516
+      },
+      "duration": {
+        "value": 1557,
+        "text": "25m57s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Joan Muyskenweg 4, 1096 CJ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-40896531-joan-muyskenweg-4a-t-m-4h/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "17.1 km",
+        "value": 17067
+      },
+      "duration": {
+        "value": 2267,
+        "text": "37m47s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.8 km",
+        "value": 5777
+      },
+      "duration": {
+        "value": 1332,
+        "text": "22m12s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Volkerakstraat & Krammerstraat, 1078 AV Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-40405375-wielingenstraat-volkerakstraat-krammerstraat-eendrachtstraat/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "11.4 km",
+        "value": 11405
+      },
+      "duration": {
+        "value": 1518,
+        "text": "25m18s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.9 km",
+        "value": 4941
+      },
+      "duration": {
+        "value": 957,
+        "text": "15m57s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Pontsteiger, 1013 AH Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-40133931-pontsteiger/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "19.4 km",
+        "value": 19399
+      },
+      "duration": {
+        "value": 2020,
+        "text": "33m40s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.6 km",
+        "value": 2600
+      },
+      "duration": {
+        "value": 753,
+        "text": "12m33s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "153 S Pearl St, Albany, NY 12202, USA",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-41409333-de-halve-maen/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "ZERO_RESULTS",
+      "distance": {
+        "text": "",
+        "value": 0
+      },
+      "duration": {
+        "value": 0,
+        "text": ""
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "ZERO_RESULTS",
+      "distance": {
+        "text": "",
+        "value": 0
+      },
+      "duration": {
+        "value": 0,
+        "text": ""
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Stokerkade 2, 1019 XA Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-48914398-borneokade-255-313-stuurmankade-146-264-stokerkade-2-60-patio-woningen/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "22.7 km",
+        "value": 22749
+      },
+      "duration": {
+        "value": 2848,
+        "text": "47m28s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "5.5 km",
+        "value": 5460
+      },
+      "duration": {
+        "value": 1108,
+        "text": "18m28s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Tweede Hugo de Grootstraat, Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-49624585-tweede-hugo-de-grootstraat/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "21.0 km",
+        "value": 20980
+      },
+      "duration": {
+        "value": 2473,
+        "text": "41m13s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "4.0 km",
+        "value": 4003
+      },
+      "duration": {
+        "value": 990,
+        "text": "16m30s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Westerdoksdijk 243, 1013 AD Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-48925492-westerdoksdijk-243-t-m-271-d/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "18.2 km",
+        "value": 18168
+      },
+      "duration": {
+        "value": 1694,
+        "text": "28m14s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "1.4 km",
+        "value": 1369
+      },
+      "duration": {
+        "value": 427,
+        "text": "7m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Javakade 440, 1019 SC Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-48914339-javakade-440-618-imogirituin-6-8/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "20.6 km",
+        "value": 20578
+      },
+      "duration": {
+        "value": 2544,
+        "text": "42m24s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.2 km",
+        "value": 2211
+      },
+      "duration": {
+        "value": 786,
+        "text": "13m6s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Nieuwe Passeerdersstraat, 1016 XJ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-40176801-nieuwe-passeerdersstraat/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "12.4 km",
+        "value": 12361
+      },
+      "duration": {
+        "value": 1897,
+        "text": "31m37s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.9 km",
+        "value": 2922
+      },
+      "duration": {
+        "value": 967,
+        "text": "16m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Nieuwe Passeerdersstraat, 1016 XJ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-40176801-nieuwe-passeerdersstraat/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "12.4 km",
+        "value": 12361
+      },
+      "duration": {
+        "value": 1897,
+        "text": "31m37s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "2.9 km",
+        "value": 2922
+      },
+      "duration": {
+        "value": 967,
+        "text": "16m7s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Sumatrakade 13, 1019 BJ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-48925472-sumatrakade-13-1295/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "21.2 km",
+        "value": 21157
+      },
+      "duration": {
+        "value": 2599,
+        "text": "43m19s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.9 km",
+        "value": 3868
+      },
+      "duration": {
+        "value": 859,
+        "text": "14m19s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Sumatrakade 13, 1019 BJ Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-48925472-sumatrakade-13-1295/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "21.2 km",
+        "value": 21157
+      },
+      "duration": {
+        "value": 2599,
+        "text": "43m19s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "3.9 km",
+        "value": 3868
+      },
+      "duration": {
+        "value": 859,
+        "text": "14m19s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Westerdoksdijk 4, 1013 AA Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-40544531-westerdok-en-westerdoksdijk-4-6-106-t-m-270-en-35-t-m-49-89-t-m-101/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "17.9 km",
+        "value": 17924
+      },
+      "duration": {
+        "value": 1687,
+        "text": "28m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "0.9 km",
+        "value": 919
+      },
+      "duration": {
+        "value": 693,
+        "text": "11m33s"
+      },
+      "duration_in_traffic": null
+    }
+  },
+  {
+    "address": "Westerdoksdijk 4, 1013 AA Amsterdam, Netherlands",
+    "url": "https://www.funda.nl/en/huur/amsterdam/huurcomplex-40544531-westerdok-en-westerdoksdijk-4-6-106-t-m-270-en-35-t-m-49-89-t-m-101/?navigateSource=resultlist",
+    "schiphol": {
+      "status": "OK",
+      "distance": {
+        "text": "17.9 km",
+        "value": 17924
+      },
+      "duration": {
+        "value": 1687,
+        "text": "28m7s"
+      },
+      "duration_in_traffic": null
+    },
+    "centraal": {
+      "status": "OK",
+      "distance": {
+        "text": "0.9 km",
+        "value": 919
+      },
+      "duration": {
+        "value": 693,
+        "text": "11m33s"
+      },
+      "duration_in_traffic": null
+    }
+  }
+]
