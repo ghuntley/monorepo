@@ -8,8 +8,12 @@ with third_party.emacsPackagesNg;
 with third_party.emacs;
 
 let
+  emacsWithImagemagick = third_party.emacs26.override {
+    # See https://github.com/NixOS/nixpkgs/issues/70631
+    imagemagick = third_party.imagemagickBig;
+  };
   localPackages = pkgs.tools.emacs-pkgs;
-  emacsWithPackages = (third_party.emacsPackagesNgGen third_party.emacs26).emacsWithPackages;
+  emacsWithPackages = (third_party.emacsPackagesNgGen emacsWithImagemagick).emacsWithPackages;
 
   # $PATH for binaries that need to be available to Emacs
   emacsBinPath = lib.makeBinPath [ third_party.telega ];

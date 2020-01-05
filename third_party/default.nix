@@ -47,6 +47,7 @@ let
       gzip
       haskell
       iana-etc
+      imagemagickBig
       jq
       kontemplate
       lib
