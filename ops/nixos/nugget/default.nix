@@ -8,6 +8,8 @@ config: let
   nixpkgs = import pkgs.third_party.nixpkgsSrc {
     config.allowUnfree = true;
   };
+
+  lieer = (pkgs.third_party.lieer {});
 in pkgs.lib.fix(self: {
   hardware = {
     pulseaudio.enable = true;
@@ -70,7 +72,7 @@ in pkgs.lib.fix(self: {
   environment.systemPackages =
     # programs from the depot
     (with pkgs; [
-      (third_party.lieer {})
+      lieer
       ops.kontemplate
       third_party.git
       tools.emacs
@@ -93,6 +95,7 @@ in pkgs.lib.fix(self: {
       imagemagick
       jq
       kubectl
+      msmtp
       notmuch
       openssh
       openssl
@@ -173,6 +176,26 @@ in pkgs.lib.fix(self: {
 
     # Do not restart the display manager automatically
     systemd.services.display-manager.restartIfChanged = lib.mkForce false;
+
+    # Configure email setup
+    systemd.user.services.lieer-tazjin = {
+      description = "Synchronise mail@tazj.in via lieer";
+      script = "${lieer}/bin/gmi sync";
+
+      serviceConfig = {
+        WorkingDirectory = "%h/mail/account.tazjin";
+        Type = "oneshot";
+      };
+    };
+
+    systemd.user.timers.lieer-tazjin = {
+      wantedBy = [ "timers.target" ];
+
+      timerConfig = {
+        OnActiveSec = "1";
+        OnUnitActiveSec = "180";
+      };
+    };
 
     # ... and other nonsense.
     system.stateVersion = "19.09";
