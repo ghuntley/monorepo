@@ -49,31 +49,6 @@
   :after (notmuch telega)
   :config (dottime-display-mode t))
 
-(use-package edwina
-  :after (ace-window ivy)
-  :init
-  (defun edwina-split-to-buffer ()
-    (interactive)
-    (ivy-read "Switch to buffer: " #'internal-complete-buffer
-              :keymap ivy-switch-buffer-map
-              :preselect (buffer-name (other-buffer (current-buffer)))
-              :action (lambda (buffer)
-                        (interactive)
-                        (split-window-below)
-                        (switch-to-buffer buffer nil 'force-same-window)
-                        (edwina-arrange))
-              :matcher #'ivy--switch-buffer-matcher
-              :caller 'ivy-switch-buffer))
-  ;; Using an advice for this functionality breaks various internal
-  ;; things in split-window, hence a new interactive function.
-  (defun edwina-split-arrange ()
-    (interactive)
-    (split-window-below)
-    (edwina-arrange))
-  :bind (("C-x 2" . edwina-split-arrange)
-         :map edwina-mode-map
-         ("s-w b" . #'edwina-split-to-buffer)))
-
 (use-package gruber-darker-theme)
 (use-package ht)
 (use-package hydra)

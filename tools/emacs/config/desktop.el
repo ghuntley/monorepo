@@ -210,11 +210,4 @@
 (exwm-input-set-key (kbd "s-m h") #'randr-layout-hdmi1-extend)
 (exwm-input-set-key (kbd "s-m s") #'randr-layout-single)
 
-;; Use edwina for window management shortcuts
-;;
-;; Its initialisation process is oddly stateful, hence configuration
-;; happens here before toggling its minor mode.
-(setq edwina-keymap-prefix (kbd "s-w"))
-(edwina-mode 1)
-
 (provide 'desktop)
