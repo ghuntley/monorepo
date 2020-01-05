@@ -5,10 +5,10 @@
 
 { pkgs, ... }:
 let
-  commit = "62ef779f2a5050549772722665bedf52f01268d2";
+  commit = "e0470e11c7a02f9e6e70f5ec5e1d9470c742b396";
   nixpkgsSrc = fetchTarball {
     url = "https://github.com/NixOS/nixpkgs-channels/archive/${commit}.tar.gz";
-    sha256 = "1k97l4kr2vchvjd5j11hdwlsx1q01fmrhbs1v8b5v5iz35y0fv7s";
+    sha256 = "1amczhr8m7lvxnxzwhfamz4ga78sgnyzdfr759iq26azkh6fa03a";
   };
   nixpkgs = import nixpkgsSrc {
     config.allowUnfree = true;
