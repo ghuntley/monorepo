@@ -1,13 +1,18 @@
-From 37628ffd977d8233ad02d482c5d70a0cf9719dce Mon Sep 17 00:00:00 2001
+From 2179e70febda8fdfcaf214a125805f6ce5ee393a Mon Sep 17 00:00:00 2001
 From: Vincent Ambo <tazjin@google.com>
-Date: Sat, 28 Dec 2019 01:20:00 +0100
+Date: Mon, 6 Jan 2020 16:00:52 +0000
 Subject: [PATCH] date: add "dottime" format
 
 Adds dottime (as defined on https://dotti.me) as a timestamp format.
 
 This format is designed to simplify working with timestamps across
 many different timezones by keeping the timestamp format itself in
-UTC (and indicating this with a dot), but appending the local offset.
+UTC (and indicating this with a dot character), but appending the
+local offset.
+
+This is implemented as a new format because the timestamp needs to be
+rendered both as UTC and including the offset, an implementation using
+a strftime formatting string is not sufficient.
 ---
  Documentation/rev-list-options.txt |  3 +++
  builtin/blame.c                    |  3 +++
@@ -17,10 +22,10 @@ UTC (and indicating this with a dot), but appending the local offset.
  5 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index bb1251c036..fa4e70f511 100644
+index bfd02ade99..0d49eb448f 100644
 --- a/Documentation/rev-list-options.txt
 +++ b/Documentation/rev-list-options.txt
-@@ -866,6 +866,9 @@ omitted.
+@@ -890,6 +890,9 @@ omitted.
  1970).  As with `--raw`, this is always in UTC and therefore `-local`
  has no effect.
  
@@ -31,10 +36,10 @@ index bb1251c036..fa4e70f511 100644
  except for %z and %Z, which are handled internally.
  Use `--date=format:%c` to show the date in your system locale's
 diff --git a/builtin/blame.c b/builtin/blame.c
-index b6534d4dea..7ebd51ae4d 100644
+index bf1cecdf3f..edd4bf7e3b 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -989,6 +989,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+@@ -981,6 +981,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
  	case DATE_STRFTIME:
  		blame_date_width = strlen(show_date(0, 0, &blame_date_mode)) + 1; /* add the null */
  		break;
@@ -45,24 +50,24 @@ index b6534d4dea..7ebd51ae4d 100644
  	blame_date_width -= 1; /* strip the null */
  
 diff --git a/cache.h b/cache.h
-index b1da1ab08f..5695ec6439 100644
+index 1554488d66..2b7b3387cf 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1498,7 +1498,8 @@ enum date_mode_type {
+@@ -1580,7 +1580,8 @@ enum date_mode_type {
  	DATE_RFC2822,
  	DATE_STRFTIME,
  	DATE_RAW,
 -	DATE_UNIX
 +	DATE_UNIX,
-+        DATE_DOTTIME
++	DATE_DOTTIME
  };
  
  struct date_mode {
 diff --git a/date.c b/date.c
-index 8126146c50..6b7e18a75b 100644
+index b0d9a8421d..0355c0676b 100644
 --- a/date.c
 +++ b/date.c
-@@ -350,6 +350,21 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+@@ -347,6 +347,21 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
  				tm->tm_mday,
  				tm->tm_hour, tm->tm_min, tm->tm_sec,
  				sign, tz / 100, tz % 100);
@@ -70,11 +75,11 @@ index 8126146c50..6b7e18a75b 100644
 +		char sign = (tz >= 0) ? '+' : '-';
 +		tz = abs(tz);
 +
-+                // Time is converted again without the timezone as the
-+                // dottime format includes the zone only in offset
-+                // position.
-+                time_t t = gm_time_t(time, 0);
-+                tm = gmtime(&t);
++		// Time is converted again without the timezone as the
++		// dottime format includes the zone only in offset
++		// position.
++		time_t t = gm_time_t(time, 0);
++		tm = gmtime(&t);
 +		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d·%02d%c%02d%02d",
 +				tm->tm_year + 1900,
 +				tm->tm_mon + 1,
@@ -84,7 +89,7 @@ index 8126146c50..6b7e18a75b 100644
  	} else if (mode->type == DATE_RFC2822)
  		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
  			weekday_names[tm->tm_wday], tm->tm_mday,
-@@ -921,6 +936,8 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
+@@ -918,6 +933,8 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
  		return DATE_UNIX;
  	if (skip_prefix(format, "format", end))
  		return DATE_STRFTIME;
