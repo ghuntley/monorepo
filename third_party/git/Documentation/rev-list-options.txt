@@ -866,6 +866,9 @@ omitted.
 1970).  As with `--raw`, this is always in UTC and therefore `-local`
 has no effect.
 
+`--date=dottime` shows the date in dottime format (rendered as UTC,
+but suffixed with the local timezone offset if given)
+
 `--date=format:...` feeds the format `...` to your system `strftime`,
 except for %z and %Z, which are handled internally.
 Use `--date=format:%c` to show the date in your system locale's

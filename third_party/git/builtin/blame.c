@@ -989,6 +989,9 @@ parse_done:
 	case DATE_STRFTIME:
 		blame_date_width = strlen(show_date(0, 0, &blame_date_mode)) + 1; /* add the null */
 		break;
+	case DATE_DOTTIME:
+		blame_date_width = sizeof("2006-10-19T15·00-0700");
+		break;
 	}
 	blame_date_width -= 1; /* strip the null */
 

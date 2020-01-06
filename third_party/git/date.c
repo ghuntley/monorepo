@@ -350,6 +350,21 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
 				tm->tm_mday,
 				tm->tm_hour, tm->tm_min, tm->tm_sec,
 				sign, tz / 100, tz % 100);
+	} else if (mode->type == DATE_DOTTIME) {
+		char sign = (tz >= 0) ? '+' : '-';
+		tz = abs(tz);
+
+		// Time is converted again without the timezone as the
+		// dottime format includes the zone only in offset
+		// position.
+		time_t t = gm_time_t(time, 0);
+		tm = gmtime(&t);
+		strbuf_addf(&timebuf, "%04d-%02d-%02dT%02d·%02d%c%02d%02d",
+				tm->tm_year + 1900,
+				tm->tm_mon + 1,
+				tm->tm_mday,
+				tm->tm_hour, tm->tm_min,
+				sign, tz / 100, tz % 100);
 	} else if (mode->type == DATE_RFC2822)
 		strbuf_addf(&timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
 			weekday_names[tm->tm_wday], tm->tm_mday,
@@ -921,6 +936,8 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
 		return DATE_UNIX;
 	if (skip_prefix(format, "format", end))
 		return DATE_STRFTIME;
+	if (skip_prefix(format, "dottime", end))
+		return DATE_DOTTIME;
 	/*
 	 * Please update $__git_log_date_formats in
 	 * git-completion.bash when you add new formats.

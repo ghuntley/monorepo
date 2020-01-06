@@ -1498,7 +1498,8 @@ enum date_mode_type {
 	DATE_RFC2822,
 	DATE_STRFTIME,
 	DATE_RAW,
-	DATE_UNIX
+	DATE_UNIX,
+	DATE_DOTTIME
 };
 
 struct date_mode {
