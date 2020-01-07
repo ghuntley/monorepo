@@ -1,6 +1,12 @@
 # This file builds an Emacs pre-configured with the packages I need
 # and my personal Emacs configuration.
-
+#
+# On NixOS machines, this Emacs currently does not support
+# Imagemagick, see https://github.com/NixOS/nixpkgs/issues/70631.
+#
+# Forcing Emacs to link against Imagemagick currently causes libvterm
+# to segfault, which is a lot less desirable than not having telega
+# render images correctly.
 { pkgs, ... }:
 
 with pkgs;
@@ -8,12 +14,7 @@ with third_party.emacsPackagesNg;
 with third_party.emacs;
 
 let
-  emacsWithImagemagick = third_party.emacs26.override {
-    # See https://github.com/NixOS/nixpkgs/issues/70631
-    imagemagick = third_party.imagemagickBig;
-  };
-  localPackages = pkgs.tools.emacs-pkgs;
-  emacsWithPackages = (third_party.emacsPackagesNgGen emacsWithImagemagick).emacsWithPackages;
+  emacsWithPackages = (third_party.emacsPackagesNgGen third_party.emacs26).emacsWithPackages;
 
   # $PATH for binaries that need to be available to Emacs
   emacsBinPath = lib.makeBinPath [ third_party.telega ];
@@ -91,7 +92,7 @@ let
   ]) ++
 
   # Custom packages
-  (with localPackages; [
+  (with localpkgs.tools.emacs-pkgs; [
     carp-mode
     dottime
     nix-util
