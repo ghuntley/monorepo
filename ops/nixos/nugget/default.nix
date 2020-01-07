@@ -96,6 +96,7 @@ in pkgs.lib.fix(self: {
       jq
       kubectl
       msmtp
+      nix-prefetch-github
       notmuch
       openssh
       openssl
@@ -106,6 +107,7 @@ in pkgs.lib.fix(self: {
       pwgen
       ripgrep
       rustup
+      sbcl
       scrot
       spotify
       tokei
