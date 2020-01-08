@@ -9,7 +9,7 @@
 
 let
   inherit (builtins) map elemAt match;
-  inherit (pkgs.third_party) lib runCommand writeText sbcl;
+  inherit (pkgs.third_party) lib runCommandNoCC writeText sbcl;
 
   #
   # Internal helper definitions
@@ -44,6 +44,18 @@ let
       )
     '';
 
+  # 'allDeps' flattens the list of dependencies (and their
+  # dependencies) into one list of unique deps.
+  allDeps = deps: lib.unique (lib.flatten (deps ++ (map (d: d.lispDeps) deps)));
+
+  # 'genLoadLisp' generates a Lisp file that instructs a Lisp to load
+  # all the provided Lisp libraries.
+  genLoadLisp = deps: writeText "load.lisp" (
+    lib.concatStringsSep "\n" (map (lib: "(load \"${lib}/${lib.lispName}.fasl\")") (allDeps deps))
+  );
+
+  insertLibraryLoads = deps: if deps == [] then "" else "--load ${genLoadLisp deps}";
+
   #
   # Public API functions
   #
@@ -57,13 +69,13 @@ let
 
   # 'library' builds a list of Common Lisp files into a single FASL
   # which can then be loaded into SBCL.
-  library = { name, srcs, deps ? [] }: runCommand "${name}-cllib" {} ''
-    ${sbcl}/bin/sbcl --script ${genCompileLisp srcs}
+  library = { name, srcs, deps ? [] }: runCommandNoCC "${name}-cllib" {} ''
+    ${sbcl}/bin/sbcl ${insertLibraryLoads deps} --script ${genCompileLisp srcs}
 
     # FASL files can be combined by simply concatenating them together:
     mkdir $out
     cat ./*.fasl > $out/${name}.fasl
-  '';
+  '' // { lispName = name; lispDeps = deps; };
 
   # 'program' creates an executable containing a dumped image of the
   # specified sources and dependencies.

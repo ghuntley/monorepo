@@ -73,6 +73,7 @@ let
       ripgrep
       rsync
       runCommand
+      runCommandNoCC
       rustPlatform
       rustc
       sbcl
