@@ -9,7 +9,7 @@
 
 let
   inherit (builtins) map elemAt match;
-  inherit (pkgs.third_party) lib runCommandNoCC writeText sbcl;
+  inherit (pkgs.third_party) lib runCommandNoCC writeText writeShellScriptBin sbcl;
 
   #
   # Internal helper definitions
@@ -83,7 +83,9 @@ let
 
   # 'sbclWith' creates an image with the specified libraries /
   # programs loaded.
-  sbclWith = {};
+  sbclWith = deps: writeShellScriptBin "sbcl" ''
+    exec ${sbcl}/bin/sbcl ${insertLibraryLoads deps} $@
+  '';
 in {
   library = makeOverridable library;
   program = makeOverridable program;
