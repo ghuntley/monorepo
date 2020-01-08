@@ -61,10 +61,25 @@ let
     lib.unique (lib.flatten (deps ++ (map (d: d.lispDeps) deps)))
   );
 
+  # 'genDumpLisp' generates a Lisp file that instructs SBCL to dump
+  # the currently loaded image as an executable to $out/bin/$name.
+  #
+  # TODO(tazjin): Compression is currently unsupported because the
+  # SBCL in nixpkgs is, by default, not compiled with zlib support.
+  genDumpLisp = name: main: deps: writeText "dump.lisp" ''
+    (require 'sb-posix)
 
-  #
-  # Public API functions
-  #
+    ${genLoadLisp deps}
+
+    (let* ((bindir (concatenate 'string (sb-posix:getenv "out") "/bin"))
+           (outpath (make-pathname :name "${name}"
+                                   :directory bindir)))
+      (save-lisp-and-die outpath
+                         :executable t
+                         :toplevel (function ${main})
+                         :purify t))
+    ;;
+  '';
 
   # Add an `overrideLisp` attribute to a function result that works
   # similar to `overrideAttrs`, but is used specifically for the
@@ -72,6 +87,10 @@ let
   makeOverridable = f: orig: (f orig) // {
     overrideLisp = new: makeOverridable f (orig // (new orig));
   };
+
+  #
+  # Public API functions
+  #
 
   # 'library' builds a list of Common Lisp files into a single FASL
   # which can then be loaded into SBCL.
@@ -85,7 +104,14 @@ let
 
   # 'program' creates an executable containing a dumped image of the
   # specified sources and dependencies.
-  program = {};
+  program = { name, main ? "${name}:main", srcs, deps ? [] }: runCommandNoCC "${name}" {} ''
+    mkdir -p $out/bin
+    ${sbcl}/bin/sbcl --script ${
+      genDumpLisp name main (lib.singleton (library {
+        inherit name srcs deps;
+      }))
+    }
+  '';
 
   # 'sbclWith' creates an image with the specified libraries /
   # programs loaded.
