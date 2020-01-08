@@ -100,7 +100,7 @@ let
   ]) ++
 
   # Custom packages
-  (with localpkgs.tools.emacs-pkgs; [
+  (with pkgs.tools.emacs-pkgs; [
     carp-mode
     dottime
     nix-util
