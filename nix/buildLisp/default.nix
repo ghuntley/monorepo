@@ -27,7 +27,10 @@ let
                                       :directory (or (sb-posix:getenv "NIX_BUILD_TOP")
                                                      (error "not running in a Nix build"))
                                       :defaults srcfile)))
-          (compile-file srcfile :output-file outfile)))
+          (multiple-value-bind (_outfile _warnings-p failure-p)
+              (compile-file srcfile :output-file outfile)
+            (when failure-p
+              (sb-posix:exit 1)))))
 
       (let ((*compile-verbose* t)
             ;; FASL files are compiled into the working directory of the
