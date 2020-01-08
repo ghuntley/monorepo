@@ -29,26 +29,36 @@ let
 
     ${genLoadLisp deps}
 
-    (defun nix-compile-lisp (srcfile)
+    (defun nix-compile-lisp (file srcfile)
       (let ((outfile (make-pathname :type "fasl"
                                     :directory (or (sb-posix:getenv "NIX_BUILD_TOP")
                                                    (error "not running in a Nix build"))
                                     :defaults srcfile)))
         (multiple-value-bind (_outfile _warnings-p failure-p)
             (compile-file srcfile :output-file outfile)
-          (when failure-p
-            (sb-posix:exit 1)))))
+          (if failure-p (sb-posix:exit 1)
+              (progn
+                ;; For the case of multiple files belonging to the same
+                ;; library being compiled, load them in order:
+                (load outfile)
+
+                ;; Write them to the FASL list in the same order:
+                (format file "cat ~a~%" (namestring outfile)))))))
 
     (let ((*compile-verbose* t)
           ;; FASL files are compiled into the working directory of the
           ;; build and *then* moved to the correct out location.
           (pwd (sb-posix:getcwd)))
 
-      ;; These forms were inserted by the Nix build:
-      ${
-        lib.concatStringsSep "\n" (map (src: "(nix-compile-lisp \"${src}\")") srcs)
-      }
-    )
+      (with-open-file (file "cat_fasls"
+                            :direction :output
+                            :if-does-not-exist :create)
+
+        ;; These forms were inserted by the Nix build:
+        ${
+          lib.concatStringsSep "\n" (map (src: "(nix-compile-lisp file \"${src}\")") srcs)
+        }
+        ))
   '';
 
   # 'allDeps' flattens the list of dependencies (and their
@@ -97,9 +107,12 @@ let
   library = { name, srcs, deps ? [] }: runCommandNoCC "${name}-cllib" {} ''
     ${sbcl}/bin/sbcl --script ${genCompileLisp srcs deps}
 
-    # FASL files can be combined by simply concatenating them together:
+    # FASL files can be combined by simply concatenating them
+    # together, but it needs to be in the compilation order.
     mkdir $out
-    cat ./*.fasl > $out/${name}.fasl
+
+    chmod +x cat_fasls
+    ./cat_fasls > $out/${name}.fasl
   '' // { lispName = name; lispDeps = deps; };
 
   # 'program' creates an executable containing a dumped image of the
