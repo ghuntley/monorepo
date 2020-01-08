@@ -15,46 +15,52 @@ let
   # Internal helper definitions
   #
 
+  # 'genLoadLisp' generates Lisp code that instructs SBCL to load all
+  # the provided Lisp libraries.
+  genLoadLisp = deps: lib.concatStringsSep "\n"
+    (map (lib: "(load \"${lib}/${lib.lispName}.fasl\")") (allDeps deps));
+
   # 'genCompileLisp' generates a Lisp file that instructs SBCL to
   # compile the provided list of Lisp source files to $out.
-  genCompileLisp = srcs: writeText "compile.lisp" ''
-      ;; This file compiles the specified sources into the Nix build
-      ;; directory, creating one FASL file for each source.
-      (require 'sb-posix)
+  genCompileLisp = srcs: deps: writeText "compile.lisp" ''
+    ;; This file compiles the specified sources into the Nix build
+    ;; directory, creating one FASL file for each source.
+    (require 'sb-posix)
 
-      (defun nix-compile-lisp (srcfile)
-        (let ((outfile (make-pathname :type "fasl"
-                                      :directory (or (sb-posix:getenv "NIX_BUILD_TOP")
-                                                     (error "not running in a Nix build"))
-                                      :defaults srcfile)))
-          (multiple-value-bind (_outfile _warnings-p failure-p)
-              (compile-file srcfile :output-file outfile)
-            (when failure-p
-              (sb-posix:exit 1)))))
+    ${genLoadLisp deps}
 
-      (let ((*compile-verbose* t)
-            ;; FASL files are compiled into the working directory of the
-            ;; build and *then* moved to the correct out location.
-            (pwd (sb-posix:getcwd)))
+    (defun nix-compile-lisp (srcfile)
+      (let ((outfile (make-pathname :type "fasl"
+                                    :directory (or (sb-posix:getenv "NIX_BUILD_TOP")
+                                                   (error "not running in a Nix build"))
+                                    :defaults srcfile)))
+        (multiple-value-bind (_outfile _warnings-p failure-p)
+            (compile-file srcfile :output-file outfile)
+          (when failure-p
+            (sb-posix:exit 1)))))
 
-        ;; These forms were inserted by the Nix build:
-        ${
-          lib.concatStringsSep "\n" (map (src: "(nix-compile-lisp \"${src}\")") srcs)
-        }
-      )
-    '';
+    (let ((*compile-verbose* t)
+          ;; FASL files are compiled into the working directory of the
+          ;; build and *then* moved to the correct out location.
+          (pwd (sb-posix:getcwd)))
+
+      ;; These forms were inserted by the Nix build:
+      ${
+        lib.concatStringsSep "\n" (map (src: "(nix-compile-lisp \"${src}\")") srcs)
+      }
+    )
+  '';
 
   # 'allDeps' flattens the list of dependencies (and their
   # dependencies) into one list of unique deps.
-  allDeps = deps: lib.unique (lib.flatten (deps ++ (map (d: d.lispDeps) deps)));
-
-  # 'genLoadLisp' generates a Lisp file that instructs a Lisp to load
-  # all the provided Lisp libraries.
-  genLoadLisp = deps: writeText "load.lisp" (
-    lib.concatStringsSep "\n" (map (lib: "(load \"${lib}/${lib.lispName}.fasl\")") (allDeps deps))
+  #
+  # TODO(tazjin): Ordering needs to be stable (first occurences from
+  # innermost to outer), I don't know if this works accidentally or is
+  # guaranteed by these lib functions.
+  allDeps = deps: lib.reverseList (
+    lib.unique (lib.flatten (deps ++ (map (d: d.lispDeps) deps)))
   );
 
-  insertLibraryLoads = deps: if deps == [] then "" else "--load ${genLoadLisp deps}";
 
   #
   # Public API functions
@@ -70,7 +76,7 @@ let
   # 'library' builds a list of Common Lisp files into a single FASL
   # which can then be loaded into SBCL.
   library = { name, srcs, deps ? [] }: runCommandNoCC "${name}-cllib" {} ''
-    ${sbcl}/bin/sbcl ${insertLibraryLoads deps} --script ${genCompileLisp srcs}
+    ${sbcl}/bin/sbcl --script ${genCompileLisp srcs deps}
 
     # FASL files can be combined by simply concatenating them together:
     mkdir $out
@@ -84,7 +90,10 @@ let
   # 'sbclWith' creates an image with the specified libraries /
   # programs loaded.
   sbclWith = deps: writeShellScriptBin "sbcl" ''
-    exec ${sbcl}/bin/sbcl ${insertLibraryLoads deps} $@
+    exec ${sbcl}/bin/sbcl ${
+      if deps == [] then ""
+      else "--load ${writeText "load.lisp" (genLoadLisp deps)}"
+    } $@
   '';
 in {
   library = makeOverridable library;
