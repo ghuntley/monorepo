@@ -61,15 +61,14 @@ let
         ))
   '';
 
+  # 'dependsOn' determines whether Lisp library 'b' depends on 'a'.
+  dependsOn = a: b: builtins.elem a b.lispDeps;
+
   # 'allDeps' flattens the list of dependencies (and their
-  # dependencies) into one list of unique deps.
-  #
-  # TODO(tazjin): Ordering needs to be stable (first occurences from
-  # innermost to outer), I don't know if this works accidentally or is
-  # guaranteed by these lib functions.
-  allDeps = deps: lib.reverseList (
-    lib.unique (lib.flatten (deps ++ (map (d: d.lispDeps) deps)))
-  );
+  # dependencies) into one ordered list of unique deps.
+  allDeps = deps: (lib.toposort dependsOn (lib.unique (
+    lib.flatten (deps ++ (map (d: d.lispDeps) deps))
+  ))).result;
 
   # 'genDumpLisp' generates a Lisp file that instructs SBCL to dump
   # the currently loaded image as an executable to $out/bin/$name.
