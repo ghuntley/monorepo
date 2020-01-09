@@ -70,6 +70,22 @@ let
     lib.flatten (deps ++ (map (d: d.lispDeps) deps))
   ))).result;
 
+  # 'allNative' extracts all native dependencies of a dependency list
+  # to ensure that library load paths are set correctly during all
+  # compilations and program assembly.
+  allNative = native: deps: lib.unique (
+    lib.flatten (native ++ (map (d: d.lispNativeDeps) deps))
+  );
+
+  # 'pushLibDirs' generates forms that push all native library paths
+  # onto the variable `CFFI:*FOREIGN-LIBRARY-DIRECTORIES*` which is
+  # required for any runtime loading of libraries via CFFI.
+  pushLibDirs = deps: lib.concatStringsSep "\n" (
+    map (l: "(push \"${
+      lib.getLib l
+    }/lib\" cffi:*foreign-library-directories*)") (allNative [] deps)
+  );
+
   # 'genDumpLisp' generates a Lisp file that instructs SBCL to dump
   # the currently loaded image as an executable to $out/bin/$name.
   #
@@ -79,6 +95,10 @@ let
     (require 'sb-posix)
 
     ${genLoadLisp deps}
+
+    ;; Push library directories if CFFI is in use.
+    (when (boundp 'cffi:*foreign-library-directories*)
+      ${pushLibDirs deps})
 
     (let* ((bindir (concatenate 'string (sb-posix:getenv "out") "/bin"))
            (outpath (make-pathname :name "${name}"
@@ -103,8 +123,16 @@ let
 
   # 'library' builds a list of Common Lisp files into a single FASL
   # which can then be loaded into SBCL.
-  library = { name, srcs, deps ? [] }: runCommandNoCC "${name}-cllib" {} ''
-    ${sbcl}/bin/sbcl --script ${genCompileLisp srcs deps}
+  library = { name, srcs, deps ? [], native ? [] }:
+  let
+    lispNativeDeps = (allNative native deps);
+    lispDeps = allDeps deps;
+  in runCommandNoCC "${name}-cllib" {
+    LD_LIBRARY_PATH = lib.makeLibraryPath lispNativeDeps;
+  } ''
+    ${sbcl}/bin/sbcl --script ${genCompileLisp srcs lispDeps}
+
+    echo "Compilation finished, assembling FASL files"
 
     # FASL files can be combined by simply concatenating them
     # together, but it needs to be in the compilation order.
@@ -112,25 +140,34 @@ let
 
     chmod +x cat_fasls
     ./cat_fasls > $out/${name}.fasl
-  '' // { lispName = name; lispDeps = deps; };
+  '' // {
+    inherit lispNativeDeps lispDeps;
+    lispName = name;
+  };
 
   # 'program' creates an executable containing a dumped image of the
   # specified sources and dependencies.
-  program = { name, main ? "${name}:main", srcs, deps ? [] }: runCommandNoCC "${name}" {} ''
+  program = { name, main ? "${name}:main", srcs, deps ? [], native ? [] }:
+  let
+    lispDeps = allDeps deps;
+    selfLib = library {
+      inherit name srcs native;
+      deps = lispDeps;
+    };
+  in runCommandNoCC "${name}" {} ''
     mkdir -p $out/bin
     ${sbcl}/bin/sbcl --script ${
-      genDumpLisp name main (lib.singleton (library {
-        inherit name srcs deps;
-      }))
+      genDumpLisp name main ([ selfLib ] ++ lispDeps)
     }
   '';
 
   # 'sbclWith' creates an image with the specified libraries /
   # programs loaded.
-  sbclWith = deps: writeShellScriptBin "sbcl" ''
+  sbclWith = deps: let lispDeps = allDeps deps; in writeShellScriptBin "sbcl" ''
+    export LD_LIBRARY_PATH=${lib.makeLibraryPath (allNative [] lispDeps)};
     exec ${sbcl}/bin/sbcl ${
       if deps == [] then ""
-      else "--load ${writeText "load.lisp" (genLoadLisp deps)}"
+      else "--load ${writeText "load.lisp" (genLoadLisp lispDeps)}"
     } $@
   '';
 in {
