@@ -9,7 +9,7 @@
 
 let
   inherit (builtins) map elemAt match;
-  inherit (pkgs.third_party) lib runCommandNoCC writeText writeShellScriptBin sbcl;
+  inherit (pkgs.third_party) lib runCommandNoCC makeWrapper writeText writeShellScriptBin sbcl;
 
   #
   # Internal helper definitions
@@ -77,15 +77,6 @@ let
     lib.flatten (native ++ (map (d: d.lispNativeDeps) deps))
   );
 
-  # 'pushLibDirs' generates forms that push all native library paths
-  # onto the variable `CFFI:*FOREIGN-LIBRARY-DIRECTORIES*` which is
-  # required for any runtime loading of libraries via CFFI.
-  pushLibDirs = deps: lib.concatStringsSep "\n" (
-    map (l: "(push \"${
-      lib.getLib l
-    }/lib\" cffi:*foreign-library-directories*)") (allNative [] deps)
-  );
-
   # 'genDumpLisp' generates a Lisp file that instructs SBCL to dump
   # the currently loaded image as an executable to $out/bin/$name.
   #
@@ -95,10 +86,6 @@ let
     (require 'sb-posix)
 
     ${genLoadLisp deps}
-
-    ;; Push library directories if CFFI is in use.
-    (when (boundp 'cffi:*foreign-library-directories*)
-      ${pushLibDirs deps})
 
     (let* ((bindir (concatenate 'string (sb-posix:getenv "out") "/bin"))
            (outpath (make-pathname :name "${name}"
@@ -150,15 +137,22 @@ let
   program = { name, main ? "${name}:main", srcs, deps ? [], native ? [] }:
   let
     lispDeps = allDeps deps;
+    libPath = lib.makeLibraryPath (allNative native lispDeps);
     selfLib = library {
       inherit name srcs native;
       deps = lispDeps;
     };
-  in runCommandNoCC "${name}" {} ''
+  in runCommandNoCC "${name}" {
+    nativeBuildInputs = [ makeWrapper ];
+    LD_LIBRARY_PATH = libPath;
+  } ''
     mkdir -p $out/bin
+
     ${sbcl}/bin/sbcl --script ${
       genDumpLisp name main ([ selfLib ] ++ lispDeps)
     }
+
+    wrapProgram $out/bin/${name} --prefix LD_LIBRARY_PATH : "${libPath}"
   '';
 
   # 'sbclWith' creates an image with the specified libraries /

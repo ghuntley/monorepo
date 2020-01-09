@@ -4,4 +4,4 @@
 (in-package :example)
 
 (defun main ()
-  (format t "i <3 ~S" (who)))
+  (format t "i <3 ~A~%" (who)))
