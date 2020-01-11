@@ -51,7 +51,7 @@ in fix(self: {
 }
 
 # Add local packages as structured by readTree
-// (localPkgs (readTree' self.config))
+// (localPkgs (readTree' (self.config // { inherit (self) lib; })))
 
 # Load overrides into the top-level.
 #
