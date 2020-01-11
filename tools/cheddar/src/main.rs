@@ -1,4 +1,4 @@
-use comrak::nodes::{AstNode, NodeValue, NodeHtmlBlock};
+use comrak::nodes::{Ast, AstNode, NodeValue, NodeCodeBlock, NodeHtmlBlock};
 use comrak::{Arena, parse_document, format_html, ComrakOptions};
 use lazy_static::lazy_static;
 use std::env;
@@ -80,7 +80,46 @@ fn iter_nodes<'a, F>(node: &'a AstNode<'a>, f: &F) where F : Fn(&'a AstNode<'a>)
 // Instead, try finding a syntax match by comparing case insensitively (for
 // ASCII characters, anyways).
 fn find_syntax_case_insensitive(info: &str) -> Option<&'static SyntaxReference> {
+    // TODO(tazjin): memoize this lookup
     SYNTAXES.syntaxes().iter().rev().find(|&s| info.eq_ignore_ascii_case(&s.name))
+}
+
+// Replaces code-block inside of a Markdown AST with HTML blocks rendered by
+// syntect. This enables static (i.e. no JavaScript) syntax highlighting, even
+// of complex languages.
+fn highlight_code_block(code_block: &NodeCodeBlock) -> NodeValue {
+    let theme = &THEMES.themes["InspiredGitHub"];
+    let info = String::from_utf8_lossy(&code_block.info);
+
+    let syntax = find_syntax_case_insensitive(&info)
+        .or_else(|| SYNTAXES.find_syntax_by_extension(&info))
+        .unwrap_or_else(|| SYNTAXES.find_syntax_plain_text());
+
+    let code = String::from_utf8_lossy(&code_block.literal);
+
+    let rendered = {
+        // Write the block preamble manually to get exactly the
+        // desired layout:
+        let mut hl = HighlightLines::new(syntax, theme);
+        let mut buf = BLOCK_PRE.to_string();
+
+        for line in LinesWithEndings::from(&code) {
+            let regions = hl.highlight(line, &SYNTAXES);
+            append_highlighted_html_for_styled_line(
+                &regions[..], IncludeBackground::No, &mut buf,
+            );
+        }
+
+        buf.push_str("</pre>");
+        buf
+    };
+
+    let block = NodeHtmlBlock {
+        block_type: 1, // It's unclear what behaviour is toggled by this
+        literal: rendered.into_bytes(),
+    };
+
+    NodeValue::HtmlBlock(block)
 }
 
 fn format_markdown() {
@@ -99,43 +138,14 @@ fn format_markdown() {
     // replacing all code blocks with HTML blocks rendered by syntect.
     iter_nodes(root, &|node| {
         let mut ast = node.data.borrow_mut();
-        match &ast.value {
-            NodeValue::CodeBlock(code_block) => {
-                let theme = &THEMES.themes["InspiredGitHub"];
-                let info = String::from_utf8_lossy(&code_block.info);
-
-                let syntax = find_syntax_case_insensitive(&info)
-                    .or_else(|| SYNTAXES.find_syntax_by_extension(&info))
-                    .unwrap_or_else(|| SYNTAXES.find_syntax_plain_text());
-
-                let code = String::from_utf8_lossy(&code_block.literal);
-
-                let rendered = {
-                    // Write the block preamble manually to get exactly the
-                    // desired layout:
-                    let mut hl = HighlightLines::new(syntax, theme);
-                    let mut buf = BLOCK_PRE.to_string();
-
-                    for line in LinesWithEndings::from(&code) {
-                        let regions = hl.highlight(line, &SYNTAXES);
-                        append_highlighted_html_for_styled_line(
-                            &regions[..], IncludeBackground::No, &mut buf,
-                        );
-                    }
-
-                    buf.push_str("</pre>");
-                    buf
-                };
-
-                let block = NodeHtmlBlock {
-                    block_type: 1, // It's unclear what behaviour is toggled by this
-                    literal: rendered.into_bytes(),
-                };
-
-                ast.value = NodeValue::HtmlBlock(block);
-            },
-            _ => (),
+        let new = match &ast.value {
+            NodeValue::CodeBlock(code) => Some(highlight_code_block(code)),
+            _ => None,
         };
+
+        if let Some(new_value) = new {
+            ast.value = new_value
+        }
     });
 
     format_html(root, &MD_OPTS, &mut io::stdout())
