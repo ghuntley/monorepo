@@ -22,6 +22,9 @@ Twitter][].
   challenges, before I ran out of interest
 * `tools/blog_cli` contains my tool for writing new blog posts and storing them
   in the DNS zone
+* `tools/cheddar` contains a source code and Markdown rendering tool
+  that is integrated with my cgit instance to render files in various
+  views
 * `ops/kms_pass.nix` is a tiny tool that emulates the user-interface of `pass`,
   but actually uses Google Cloud KMS for secret decryption
 * `ops/kontemplate` contains my Kubernetes resource templating tool (with which
@@ -32,6 +35,9 @@ Twitter][].
 * `nix/buildGo` implements a Nix library that can build Go software in the style
   of Bazel's `rules_go`. Go programs in this repository are built using this
   library.
+* `nix/buildLisp` implements a Nix library that can build Common Lisp
+  software. Currently only SBCL is supported. Lisp programs in this
+  repository are built using this library.
 * `tools/emacs-pkgs` contains various Emacs libraries that my Emacs setup uses,
   for example:
   * `dottime.el` provides [dottime][] in the Emacs modeline
