@@ -203,7 +203,7 @@
   (save-excursion
     (move-end-of-line nil)
     (insert (format " %s TODO(%s): %s"
-                    comment-start
+                    (s-trim-right comment-start)
                     (if prefix (read-string "Who needs to do this? ")
                       (getenv "USER"))
                     todo))))
