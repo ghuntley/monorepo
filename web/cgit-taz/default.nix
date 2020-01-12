@@ -9,15 +9,6 @@
 with pkgs.third_party;
 
 let
-  # Patched version of cgit that has monorepo-specific features.
-  monocgit = cgit.overrideAttrs(old: {
-    patches = old.patches ++ [
-      ./0001-cgit_monorepo_urls.patch
-      ./0002-cgit_subtree_readmes.patch
-      ./0003-cgit_subtree_about_links.patch
-    ];
-  });
-
   cgitConfig = writeText "cgitrc" ''
     # Global configuration
     virtual-root=/
@@ -42,7 +33,7 @@ let
 
   thttpdConfig = writeText "thttpd.conf" ''
     port=8080
-    dir=${monocgit}/cgit
+    dir=${cgit}/cgit
     nochroot
     novhost
     logfile=/dev/stdout
@@ -77,4 +68,4 @@ let
   });
 in writeShellScriptBin "cgit-launch" ''
   exec ${thttpdCgit}/bin/thttpd -D -C ${thttpdConfig}
-# ''
+''
