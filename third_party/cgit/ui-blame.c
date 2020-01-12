@@ -26,14 +26,14 @@ static char *emit_suspect_detail(struct blame_origin *suspect)
 		strbuf_addf(&detail, " %s", info->author_email);
 	strbuf_addf(&detail, "  %s\n",
 		    show_date(info->author_date, info->author_tz,
-				    cgit_date_mode(DATE_ISO8601)));
+				    cgit_date_mode(DATE_DOTTIME)));
 
 	strbuf_addf(&detail, "committer  %s", info->committer);
 	if (!ctx.cfg.noplainemail)
 		strbuf_addf(&detail, " %s", info->committer_email);
 	strbuf_addf(&detail, "  %s\n\n",
 		    show_date(info->committer_date, info->committer_tz,
-				    cgit_date_mode(DATE_ISO8601)));
+				    cgit_date_mode(DATE_DOTTIME)));
 
 	strbuf_addstr(&detail, info->subject);
 
