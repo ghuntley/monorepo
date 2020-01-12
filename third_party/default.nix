@@ -20,6 +20,7 @@ let
     # of the repo. They become available under `pkgs.third_party.<name>`
     inherit (nixpkgs)
       age
+      autoconf
       bashInteractive
       bat
       buildGoPackage
