@@ -24,6 +24,7 @@ let
       bashInteractive
       bat
       buildGoPackage
+      bzip2
       cacert
       cachix
       cargo
@@ -54,6 +55,7 @@ let
       lib
       lispPackages
       llvmPackages
+      luajit
       luatex
       makeFontsConf
       makeWrapper
@@ -91,6 +93,7 @@ let
       writeShellScriptBin
       writeText
       writeTextFile
+      xz
       zlib
       zstd;
   };
