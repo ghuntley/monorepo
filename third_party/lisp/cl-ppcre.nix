@@ -6,7 +6,7 @@ let src = builtins.fetchGit {
   rev = "1ca0cd9ca0d161acd49c463d6cb5fff897596e2f";
 };
 in pkgs.nix.buildLisp.library {
-  name = "prove";
+  name = "cl-ppcre";
 
   srcs = map (f: src + ("/" + f)) [
     "packages.lisp"
