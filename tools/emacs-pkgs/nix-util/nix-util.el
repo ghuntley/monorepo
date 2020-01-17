@@ -75,29 +75,29 @@
   thrown on build failures."
 
   (interactive "sAttribute: ")
-  (let* ((outbuf (get-buffer-create (format "*depot-out/%s*" attribute)))
+  (lexical-let* ((outbuf (get-buffer-create (format "*depot-out/%s*" attribute)))
          (errbuf (get-buffer-create (format "*depot-errors/%s*" attribute)))
          (expression (format "let depot = import <depot> {}; in depot.nix.buildLisp.sbclWith [ depot.%s ]" attribute))
-         (command (list "nix-build" "-I" (format "depot=%s" nix-depot-path) "-E" expression))
-         (build-handler
-          (lambda (process event)
-            (unwind-protect
-                (pcase event
-                  ("finished\n"
-                   (let* ((outpath (s-trim (with-current-buffer outbuf (buffer-string))))
-                          (lisp-path (s-concat outpath "/bin/sbcl")))
-                     (message "Acquired Lisp for <depot>.%s at %s" attribute lisp-path)
-                     (sly lisp-path)))
-                  (_ (with-current-buffer errbuf
-                       (error "Failed to build '%s':\n%s" attribute (buffer-string)))))
-              (kill-buffer outbuf)
-              (kill-buffer errbuf)))))
+         ;; TODO(tazjin): use <depot>
+         (command (list "nix-build" "-I" (format "depot=%s" nix-depot-path) "-E" expression)))
 
     (message "Acquiring Lisp for <depot>.%s" attribute)
     (make-process :name (format "depot-nix-build/%s" attribute)
                   :buffer outbuf
                   :stderr errbuf
-                  :sentinel build-handler
-                  :command command))) ; TODO(tazjin): use <depot>
+                  :command command
+                  :sentinel
+                  (lambda (process event)
+                    (unwind-protect
+                        (pcase event
+                          ("finished\n"
+                           (let* ((outpath (s-trim (with-current-buffer outbuf (buffer-string))))
+                                  (lisp-path (s-concat outpath "/bin/sbcl")))
+                             (message "Acquired Lisp for <depot>.%s at %s" attribute lisp-path)
+                             (sly lisp-path)))
+                          (_ (with-current-buffer errbuf
+                               (error "Failed to build '%s':\n%s" attribute (buffer-string)))))
+                      (kill-buffer outbuf)
+                      (kill-buffer errbuf))))))
 
 (provide 'nix-util)
