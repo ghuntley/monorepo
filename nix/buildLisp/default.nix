@@ -8,7 +8,7 @@
 , ... }:
 
 let
-  inherit (builtins) map elemAt match;
+  inherit (builtins) map elemAt match filter;
   inherit (pkgs.third_party) lib runCommandNoCC makeWrapper writeText writeShellScriptBin sbcl;
 
   #
@@ -130,6 +130,7 @@ let
   '' // {
     inherit lispNativeDeps lispDeps;
     lispName = name;
+    lispBinary = false;
   };
 
   # 'program' creates an executable containing a dumped image of the
@@ -153,11 +154,18 @@ let
     }
 
     wrapProgram $out/bin/${name} --prefix LD_LIBRARY_PATH : "${libPath}"
-  '' // { lispName = name; lispDeps = [ selfLib ]; lispNativeDeps = []; };
+  '' // {
+    lispName = name;
+    lispDeps = [ selfLib ];
+    lispNativeDeps = native;
+    lispBinary = true;
+  };
 
   # 'sbclWith' creates an image with the specified libraries /
   # programs loaded.
-  sbclWith = deps: let lispDeps = allDeps deps; in writeShellScriptBin "sbcl" ''
+  sbclWith = deps:
+  let lispDeps = filter (d: !d.lispBinary) (allDeps deps);
+  in writeShellScriptBin "sbcl" ''
     export LD_LIBRARY_PATH=${lib.makeLibraryPath (allNative [] lispDeps)};
     exec ${sbcl}/bin/sbcl ${
       if deps == [] then ""
