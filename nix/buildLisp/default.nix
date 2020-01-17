@@ -153,7 +153,7 @@ let
     }
 
     wrapProgram $out/bin/${name} --prefix LD_LIBRARY_PATH : "${libPath}"
-  '';
+  '' // { lispName = name; lispDeps = [ selfLib ]; lispNativeDeps = []; };
 
   # 'sbclWith' creates an image with the specified libraries /
   # programs loaded.
