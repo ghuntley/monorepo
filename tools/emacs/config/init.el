@@ -157,6 +157,12 @@
 
 (use-package haskell-mode)
 
+(use-package ielm
+  :hook ((inferior-emacs-lisp-mode . (lambda ()
+                                       (paredit-mode)
+                                       (rainbow-delimiters-mode-enable)
+                                       (company-mode)))))
+
 (use-package jq-mode
   :config (add-to-list 'auto-mode-alist '("\\.jq\\'" . jq-mode)))
 
