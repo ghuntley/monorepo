@@ -56,6 +56,7 @@ let
     ivy-prescient
     jq-mode
     kotlin-mode
+    lispy
     lsp-mode
     magit
     markdown-toc
@@ -71,8 +72,8 @@ let
     racket-mode
     rainbow-delimiters
     refine
-    restclient
     request
+    restclient
     sly
     string-edit
     swiper
