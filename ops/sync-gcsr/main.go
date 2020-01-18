@@ -44,15 +44,23 @@ func updateBranches(auth *http.BasicAuth, repo *git.Repository) error {
 			continue
 		}
 
-		branch := plumbing.NewHashReference(
-			plumbing.NewBranchReferenceName(ref.Name().Short()),
-			ref.Hash(),
-		)
+		name := plumbing.NewBranchReferenceName(ref.Name().Short())
+
+		if current, err := repo.Storer.Reference(name); err == nil {
+			// Determine whether the reference has changed to skip
+			// unnecessary modifications.
+			if current.Hash() == ref.Hash() {
+				continue
+			}
+		}
+
+		branch := plumbing.NewHashReference(name, ref.Hash())
 
 		err := repo.Storer.SetReference(branch)
 		if err != nil {
 			return err
 		}
+
 		log.Println("Updated branch", ref.Name().String())
 	}
 
