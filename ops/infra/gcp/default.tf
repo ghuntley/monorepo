@@ -3,6 +3,7 @@
 provider "google" {
   project = "tazjins-infrastructure"
   region  = "europe-north1"
+  version = "~> 2.20"
 }
 
 # Configure a storage bucket in which to keep Terraform state and
@@ -26,6 +27,7 @@ resource "google_project_services" "primary" {
     "bigquery-json.googleapis.com",
     "bigquerystorage.googleapis.com",
     "cloudapis.googleapis.com",
+    "cloudbuild.googleapis.com",
     "clouddebugger.googleapis.com",
     "cloudfunctions.googleapis.com",
     "cloudkms.googleapis.com",
@@ -34,7 +36,9 @@ resource "google_project_services" "primary" {
     "container.googleapis.com",
     "containerregistry.googleapis.com",
     "datastore.googleapis.com",
+    "distance-matrix-backend.googleapis.com",
     "dns.googleapis.com",
+    "gmail.googleapis.com",
     "iam.googleapis.com",
     "iamcredentials.googleapis.com",
     "logging.googleapis.com",
@@ -42,6 +46,7 @@ resource "google_project_services" "primary" {
     "oslogin.googleapis.com",
     "pubsub.googleapis.com",
     "run.googleapis.com",
+    "secretmanager.googleapis.com",
     "servicemanagement.googleapis.com",
     "serviceusage.googleapis.com",
     "sourcerepo.googleapis.com",
