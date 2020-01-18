@@ -1,6 +1,8 @@
 depot
 =====
 
+[![builds.sr.ht status](https://builds.sr.ht/~tazjin/tazjins-depot/master.svg)](https://builds.sr.ht/~tazjin/tazjins-depot/master?)
+
 This repository is the [monorepo][] for my personal tools and infrastructure.
 Everything in here is built using [Nix][] with an automatic attribute-set layout
 that mirrors the filesystem layout of the repository (this might feel familiar
