@@ -82,6 +82,7 @@ in pkgs.lib.fix(self: {
     (with nixpkgs; [
       age
       bat
+      cachix
       chromium
       curl
       direnv
