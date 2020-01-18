@@ -8,6 +8,8 @@ data:
   username: "Z2l0LXRhemppbi5nbWFpbC5jb20="
   # This credential is a GCSR 'gitcookie' token.
   password: '{{ passLookup "gcsr-tazjin-password" | b64enc }}'
+  # This credential is an OAuth token for builds.sr.ht
+  sourcehut: '{{ passLookup "sr.ht-token" | b64enc }}'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -16,7 +18,7 @@ metadata:
   labels:
     app: cgit
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cgit
@@ -53,6 +55,11 @@ spec:
               secretKeyRef:
                 name: gcsr-secrets
                 key: password
+          - name: SRHT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: gcsr-secrets
+                key: sourcehut
         volumeMounts:
           - name: git-volume
             mountPath: /git
