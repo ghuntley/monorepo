@@ -96,18 +96,18 @@ to only update the `api` resource sets and the `frontend/user-page` resource set
 
 ## Installation
 
-It is recommended to install Kontemplate from the signed binary releases available on the
-[releases page][]. Release binaries are available for Linux, OS X, FreeBSD and Windows.
+It is recommended to install Kontemplate from the [Nix](https://nixos.org/) package set,
+where it is available since NixOS 17.09 as `kontemplate`.
 
-### NixOS
+If using Nix is not an option for you, several other methods of installation are
+available:
 
-Kontemplate has been included in [NixOS](https://nixos.org/) since version 17.09.
+### Binary releases
 
-It is available as `kontemplate` from the default Nix package set.
+Signed binary releases are available on the [releases page][] for Linux, OS X, FreeBSD and
+Windows.
 
-### Arch Linux
-
-An [AUR package][] is available for Arch Linux and other `pacman`-based distributions.
+Releases are signed with the GPG key `DCF34CFAC1AC44B87E26333136EE34814F6D294A`.
 
 ### Building from source
 
@@ -184,4 +184,3 @@ Please follow the [code of conduct](CODE_OF_CONDUCT.md).
 [Kontemplate]: http://kontemplate.works
 [Helm]: https://helm.sh/
 [releases page]: https://github.com/tazjin/kontemplate/releases
-[AUR package]: https://aur.archlinux.org/packages/kontemplate-git/
