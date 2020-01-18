@@ -81,6 +81,8 @@ func triggerBuild(commit string) {
 	if resp.StatusCode != 200 {
 		respBody, err := ioutil.ReadAll(resp.Body)
 		log.Printf("received non-success response from builds.sr.ht: %s (%v)[%s]", respBody, resp.Status, err)
+	} else {
+		log.Println("triggered builds.sr.ht job for commit", commit)
 	}
 }
 
