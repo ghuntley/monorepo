@@ -1,0 +1,21 @@
+image: nixos/latest
+sources:
+  - https://git.tazj.in/
+secrets:
+  # cachix/tazjin
+  - 3cea9995-9a90-4bb5-9b50-5d00c3694757
+tasks:
+  - setup: |
+      echo "export CACHIX_SIGNING_KEY=$(cat ~/.cachix-tazjin)" >> ~/.buildenv
+      nix-env -iA third_party.cachix -f git.tazj.in
+      cachix use tazjin
+  - build: |
+      cd git.tazj.in
+      nix-build ci-builds.nix > built-paths
+  - cache: |
+      cd git.tazj.in
+      cat built-paths | cachix push tazjin
+triggers:
+  - action: email
+    condition: failure
+    to: mail@tazj.in

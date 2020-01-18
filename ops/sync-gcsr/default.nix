@@ -7,4 +7,8 @@ pkgs.buildGo.program {
   deps = with pkgs.third_party; map (p: p.gopkg) [
     gopkgs."gopkg.in".src-d.go-git
   ];
+
+  x_defs = {
+    "main.BuildManifest" = "${./manifest.yaml}";
+  };
 }
