@@ -9,6 +9,7 @@ tasks:
       # sourcehut does not censor secrets in builds, hence this hack:
       echo -n 'export CACHIX_SIGNING_KEY=' > cachix-preamble
       cat cachix-preamble ~/.cachix-tazjin >> ~/.buildenv
+      nix-env -iA third_party.cachix -f git.tazj.in
       cachix use tazjin
   - build: |
       cd git.tazj.in
