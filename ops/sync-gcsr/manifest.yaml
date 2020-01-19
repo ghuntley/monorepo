@@ -3,7 +3,7 @@ sources:
   - https://git.tazj.in/
 secrets:
   # cachix/tazjin
-  - 3cea9995-9a90-4bb5-9b50-5d00c3694757
+  - f7f02546-4d95-44f7-a98e-d61fdded8b5b
 tasks:
   - setup: |
       # sourcehut does not censor secrets in builds, hence this hack:
