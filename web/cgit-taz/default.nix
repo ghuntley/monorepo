@@ -9,12 +9,15 @@
 with pkgs.third_party;
 
 let
+  sourceFilter = writeShellScriptBin "cheddar-about" ''
+    exec ${pkgs.tools.cheddar}/bin/cheddar --about-filter $@
+  '';
   cgitConfig = writeText "cgitrc" ''
     # Global configuration
     virtual-root=/
     enable-http-clone=1
     readme=:README.md
-    about-filter=${pkgs.tools.cheddar}/bin/cheddar
+    about-filter=${sourceFilter}/bin/cheddar-about
     source-filter=${pkgs.tools.cheddar}/bin/cheddar
     enable-log-filecount=1
     enable-log-linecount=1
