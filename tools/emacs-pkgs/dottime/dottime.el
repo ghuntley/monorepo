@@ -67,14 +67,13 @@
   ;; This will never display offsets in the chat window, as those are
   ;; always visible in the modeline anyways.
   (when (featurep 'telega)
-    (require 'telega)
     (defun telega-ins--dottime-advice (orig timestamp)
       (let* ((dtime (decode-time timestamp t))
              (current-ts (time-to-seconds (current-time)))
              (ctime (decode-time current-ts))
              (today00 (telega--time-at00 current-ts ctime)))
         (if (> timestamp today00)
-            (telega-ins-fmt "%02d·%02d" (nth 2 dtime) (nth 1 dtime))
+            (telega-ins (format "%02d·%02d" (nth 2 dtime) (nth 1 dtime)))
           (funcall orig timestamp))))
 
     (advice-add 'telega-ins--date :around #'telega-ins--dottime-advice)))
