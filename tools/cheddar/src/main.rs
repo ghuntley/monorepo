@@ -46,17 +46,41 @@ lazy_static! {
 // Emulates the GitHub style (subtle background hue and padding).
 const BLOCK_PRE: &str = "<pre style=\"background-color:#f6f8fa;padding:16px;\">\n";
 
-fn args_extension() -> Option<String> {
-    // The name of the file to be formatted is usually passed in as
-    // the first argument and can be used to determine a syntax set.
-    let args = env::args().collect::<Vec<String>>();
-    if args.len() != 2 {
-        return None
+struct Args {
+    /// Should Cheddar run as an about filter? (i.e. give special
+    /// rendering treatment to Markdown documents)
+    about_filter: bool,
+
+    /// What file extension has been supplied (if any)?
+    extension: Option<String>,
+}
+
+/// Parse the command-line flags passed to cheddar to determine
+/// whether it is running in about-filter mode (`--about-filter`) and
+/// what file extension has been supplied.
+fn parse_args() -> Args {
+    let mut args = Args {
+        about_filter: false,
+        extension: None,
+    };
+
+    for (i, arg) in env::args().enumerate() {
+        if i == 0 {
+            continue;
+        }
+
+        if arg == "--about-filter" {
+            args.about_filter = true;
+            continue;
+        }
+
+        args.extension = Path::new(&arg)
+            .extension()
+            .and_then(OsStr::to_str)
+            .map(|s| s.to_string());
     }
 
-    Path::new(&args[1]).extension()
-        .and_then(OsStr::to_str)
-        .map(|s| s.to_string())
+    return args
 }
 
 fn should_continue(res: &io::Result<usize>) -> bool {
@@ -190,9 +214,10 @@ fn format_code(extension: Option<&str>) {
 }
 
 fn main() {
-    let extension = args_extension();
-    match extension.as_ref().map(String::as_str) {
-        Some("md") => format_markdown(),
-        extension => format_code(extension),
+    let args = parse_args();
+
+    match args.extension.as_ref().map(String::as_str) {
+        Some("md") if args.about_filter => format_markdown(),
+        extension  => format_code(extension),
     }
 }
