@@ -106,6 +106,7 @@ in pkgs.lib.fix(self: {
       imagemagick
       jq
       kubectl
+      miller
       msmtp
       nix-prefetch-github
       notmuch
