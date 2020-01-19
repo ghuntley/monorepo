@@ -21,8 +21,15 @@
   (mouse-wheel-mode t)
   (blink-cursor-mode -1))
 
-;; Configure editor fonts
-(let ((font (format "Input Mono-%d" 12)))
+;; Configure Emacs fonts.
+;;
+;; On nugget, due to some font rendering issues that I haven't managed
+;; to debug yet a light version of the Input font needs to be used.
+;; Otherwise all text appears in bold, which makes it seem like the
+;; weights are somehow messed up.
+(let ((font (if (equal "nugget" (s-trim (shell-command-to-string "hostname")))
+                (format "Input Mono Light-%d" 12)
+              (format "Input Mono-%d" 12))))
   (setq default-frame-alist `((font-backend . "xft")
                               (font . ,font)))
   (set-frame-font font t t))
