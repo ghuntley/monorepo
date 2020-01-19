@@ -84,6 +84,7 @@ in pkgs.lib.fix(self: {
       lieer
       ops.kontemplate
       third_party.git
+      third_party.guile
       tools.emacs
     ]) ++
 

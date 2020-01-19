@@ -108,7 +108,7 @@ in exposed // {
 
   # Packages to be overridden
   originals = {
-    inherit (nixpkgs) git notmuch;
+    inherit (nixpkgs) git guile notmuch;
   };
 
   # Make NixOS available
