@@ -44,6 +44,7 @@ let
     elm-mode
     erlang
     exwm
+    geiser
     go-mode
     gruber-darker-theme
     haskell-mode

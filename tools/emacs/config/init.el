@@ -147,6 +147,7 @@
                           (local-set-key ">" 'self-insert-command)))))
 
 (use-package f)
+(use-package geiser)
 
 (use-package go-mode
   :bind (:map go-mode-map ("C-c C-r" . recompile))
