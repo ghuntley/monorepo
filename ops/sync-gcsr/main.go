@@ -54,7 +54,7 @@ func triggerBuild(commit string) {
 		Manifest: string(manifest),
 		Note:     fmt.Sprintf("Build of 'master' at '%s'", commit),
 		Tags: []string{
-			"tazjins-depot", "master",
+			"depot", "master",
 		},
 	}
 
