@@ -55,7 +55,16 @@ in pkgs.lib.fix(self: {
     ];
 
     # Open Chromecast-related ports & servedir
+    firewall.enable = false;
     firewall.allowedTCPPorts = [ 4242 5556 5558 ];
+
+    # Connect to the WiFi to let the Chromecast work.
+    wireless.enable = true;
+    wireless.networks = {
+      "How do I computer?" = {
+        psk = "washyourface";
+      };
+    };
   };
 
   # Generate an immutable /etc/resolv.conf from the nameserver settings
@@ -91,6 +100,7 @@ in pkgs.lib.fix(self: {
       fd
       gnupg
       go
+      google-chrome
       google-cloud-sdk
       htop
       imagemagick
