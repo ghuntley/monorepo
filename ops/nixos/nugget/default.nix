@@ -149,10 +149,21 @@ in pkgs.lib.fix(self: {
     fonts = {
       fonts = with nixpkgs; [
         corefonts
+        dejavu_fonts
         input-fonts
+        jetbrains-mono
         noto-fonts-cjk
         noto-fonts-emoji
       ];
+
+      fontconfig = {
+        hinting.enable = true;
+        subpixel.lcdfilter = "light";
+
+        defaultFonts = {
+          monospace = [ "JetBrains Mono" ];
+        };
+      };
     };
 
     # Configure location (Vauxhall, London) for services that need it.
