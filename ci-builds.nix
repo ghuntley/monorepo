@@ -8,11 +8,12 @@ let
   pkgs = import ./default.nix {};
 in with pkgs; [
   nix.yants.tests
+  ops."posix_mq.rs"
   ops.journaldriver
   ops.kms_pass
   ops.kontemplate
+  ops.mq_cli
   ops.sync-gcsr
-  ops."posix_mq.rs"
   tools.blog_cli
   tools.cheddar
   tools.emacs

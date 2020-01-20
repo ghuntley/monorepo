@@ -1,10 +1,10 @@
 [package]
 name = "mq"
 version = "1.0.0"
-authors = ["Vincent Ambo <vincent@aprila.no>"]
+authors = ["Vincent Ambo <mail@tazj.in>"]
 
 [dependencies]
-clap = "2.31"
+clap = "2.33"
 libc = "0.2"
-nix = "0.10"
-posix_mq = "0.1.2"
+nix = "0.16"
+posix_mq = "0.9"
