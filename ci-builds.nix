@@ -12,6 +12,7 @@ in with pkgs; [
   ops.kms_pass
   ops.kontemplate
   ops.sync-gcsr
+  ops."posix_mq.rs"
   tools.blog_cli
   tools.cheddar
   tools.emacs
