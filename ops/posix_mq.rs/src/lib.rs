@@ -16,14 +16,6 @@ pub mod error;
 #[cfg(test)]
 mod tests;
 
-/*
-TODO:
-
-* what happens if permissions change after FD was opened?
-* drop dependency on nix crate?
-
-*/
-
 /// Wrapper type for queue names that performs basic validation of queue names before calling
 /// out to C code.
 #[derive(Debug, Clone, PartialEq)]
@@ -97,11 +89,11 @@ impl Queue {
         let oflags = {
             let mut flags = mqueue::MQ_OFlag::empty();
             // Put queue in r/w mode
-            flags.toggle(mqueue::O_RDWR);
+            flags.toggle(mqueue::MQ_OFlag::O_RDWR);
             // Enable queue creation
-            flags.toggle(mqueue::O_CREAT);
+            flags.toggle(mqueue::MQ_OFlag::O_CREAT);
             // Fail if queue exists already
-            flags.toggle(mqueue::O_EXCL);
+            flags.toggle(mqueue::MQ_OFlag::O_EXCL);
             flags
         };
 
@@ -128,7 +120,7 @@ impl Queue {
     pub fn open(name: Name) -> Result<Queue, Error> {
         // No extra flags need to be constructed as the default is to open and fail if the
         // queue does not exist yet - which is what we want here.
-        let oflags = mqueue::O_RDWR;
+        let oflags = mqueue::MQ_OFlag::O_RDWR;
         let queue_descriptor = mqueue::mq_open(
             &name.0,
             oflags,
@@ -151,9 +143,9 @@ impl Queue {
         let oflags = {
             let mut flags = mqueue::MQ_OFlag::empty();
             // Put queue in r/w mode
-            flags.toggle(mqueue::O_RDWR);
+            flags.toggle(mqueue::MQ_OFlag::O_RDWR);
             // Enable queue creation
-            flags.toggle(mqueue::O_CREAT);
+            flags.toggle(mqueue::MQ_OFlag::O_CREAT);
             flags
         };
 
@@ -239,8 +231,8 @@ impl Drop for Queue {
 // Creates the default queue mode (0600).
 fn default_mode() -> stat::Mode {
     let mut mode = stat::Mode::empty();
-    mode.toggle(stat::S_IRUSR);
-    mode.toggle(stat::S_IWUSR);
+    mode.toggle(stat::Mode::S_IRUSR);
+    mode.toggle(stat::Mode::S_IWUSR);
     mode
 }
 
@@ -271,7 +263,7 @@ fn mq_getattr(mqd: mqd_t) -> Result<libc::mq_attr, Error> {
     use std::mem;
     let mut attr = unsafe { mem::uninitialized::<libc::mq_attr>() };
     let res = unsafe { libc::mq_getattr(mqd, &mut attr) };
-    nix::Errno::result(res)
+    nix::errno::Errno::result(res)
         .map(|_| attr)
         .map_err(|e| e.into())
 }

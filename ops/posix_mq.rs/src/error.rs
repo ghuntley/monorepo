@@ -43,7 +43,7 @@ pub enum Error {
 
     // If an unhandled / unknown / unexpected error occurs this error will be used.
     // In those cases bug reports would be welcome!
-    UnknownForeignError(nix::Errno),
+    UnknownForeignError(nix::errno::Errno),
 
     // Some other unexpected / unknown error occured. This is probably an error from
     // the nix crate. Bug reports also welcome for this!
@@ -112,8 +112,8 @@ impl From<num::ParseIntError> for Error {
 }
 
 
-fn match_errno(err: nix::Errno) -> Error {
-    use nix::errno::*;
+fn match_errno(err: nix::errno::Errno) -> Error {
+    use nix::errno::Errno::*;
 
     match err {
         EACCES => Error::PermissionDenied(),

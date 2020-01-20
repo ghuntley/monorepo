@@ -18,5 +18,5 @@ fn test_open_delete() {
 
     assert_eq!(message, result);
 
-    queue.delete();
+    queue.delete().expect("deleting queue failed");
 }
