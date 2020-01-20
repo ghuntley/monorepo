@@ -106,6 +106,7 @@ in pkgs.lib.fix(self: {
       htop
       imagemagick
       jq
+      keybase-gui
       kubectl
       miller
       msmtp
@@ -178,6 +179,7 @@ in pkgs.lib.fix(self: {
 
     services.redshift.enable = true;
     services.openssh.enable = true;
+    services.keybase.enable = true;
 
     services.xserver = {
       enable = true;
