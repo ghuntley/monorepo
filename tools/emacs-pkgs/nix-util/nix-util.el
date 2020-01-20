@@ -40,7 +40,7 @@
                   ("finished\n"
                    (let* ((json-string (with-current-buffer outbuf
                                          (buffer-string)))
-                          (result (json-parse-string json-string)))
+                          (result (json-read-from-string json-string)))
                      (with-current-buffer buffer
                        (goto-char point)
                        (map-let (("rev" rev) ("sha256" sha256)) result
