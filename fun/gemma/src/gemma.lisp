@@ -29,6 +29,9 @@
 (defvar *gemma-port* 4242
   "Port on which the Gemma web server listens.")
 
+(defvar *gemma-acceptor* nil
+  "Hunchentoot acceptor for Gemma's web server.")
+
 (defvar *static-file-location* "frontend/"
   "Folder from which to serve static assets. If built inside of Nix,
   the path is injected during the build.")
@@ -134,10 +137,10 @@ maximum interval."
                       "/etc/gemma/config.lisp")))
 
   ;; Set up web server
-  (hunchentoot:start
-   (make-instance 'hunchentoot:easy-acceptor
-                  :port *gemma-port*
-                  :document-root *static-file-location*))
+  (setq *gemma-acceptor* (make-instance 'hunchentoot:easy-acceptor
+                                        :port *gemma-port*
+                                        :document-root *static-file-location*))
+  (hunchentoot:start *gemma-acceptor*)
 
   ;; Task listing handler
   (hunchentoot:define-easy-handler
