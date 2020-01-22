@@ -19,6 +19,7 @@ in with pkgs; [
   tools.cheddar
   tools.emacs
   web.cgit-taz
+  lisp.dns
   third_party.cgit
   third_party.git
   third_party.guile
