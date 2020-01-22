@@ -32,6 +32,7 @@ let
     fun           = readTree ./fun;
     nix           = readTree ./nix;
     ops           = readTree ./ops;
+    lisp          = readTree ./lisp;
     presentations = readTree ./presentations;
     third_party   = readTree ./third_party;
     tools         = readTree ./tools;
