@@ -14,7 +14,6 @@ in pkgs.nix.buildLisp.library {
     "pkgdcl.lisp"
     "bordeaux-threads.lisp"
     "impl-sbcl.lisp"
-    "condition-variables.lisp"
     "default-implementations.lisp"
   ];
 }
