@@ -54,6 +54,7 @@ let
       jq
       kontemplate
       lib
+      libredirect
       lispPackages
       llvmPackages
       luajit

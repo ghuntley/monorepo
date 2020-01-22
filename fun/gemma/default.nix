@@ -1,61 +1,50 @@
 { pkgs, ... }:
 
 let
-  inherit (pkgs) elmPackages lispPackages;
-  inherit (pkgs.third_party) stdenv sbcl makeWrapper openssl;
+  inherit (pkgs) elmPackages;
+  inherit (pkgs.third_party) cacert iana-etc libredirect stdenv runCommandNoCC;
 
   frontend = stdenv.mkDerivation {
-    name = "gemma-frontend";
+    name = "gemma-frontend.html";
     src = ./frontend;
-    buildInputs = [ elmPackages.elm ];
+    buildInputs = [ cacert iana-etc elmPackages.elm ];
+
+    # The individual Elm packages this requires are not packaged and I
+    # can't be bothered to do that now, so lets open the escape hatch:
+    outputHashAlgo = "sha256";
+    outputHash = "000xhds5bsig3kbi7dhgbv9h7myacf34bqvw7avvz7m5mwnqlqg7";
 
     phases = [ "unpackPhase" "buildPhase" ];
     buildPhase = ''
+      export NIX_REDIRECTS=/etc/protocols=${iana-etc}/etc/protocols \
+        LD_PRELOAD=${libredirect}/lib/libredirect.so
+
+      export SYSTEM_CERTIFICATE_PATH=${cacert}/etc/ssl/certs
+
       mkdir .home && export HOME="$PWD/.home"
-      mkdir -p $out
-      elm-make --yes Main.elm --output $out/index.html
+      elm-make --yes Main.elm --output $out
     '';
   };
-in stdenv.mkDerivation rec {
-  name = "gemma";
-  src = ./.;
 
-  nativeBuildInputs = with lispPackages; [
-    sbcl
-    hunchentoot
+  injectFrontend = pkgs.writeText "gemma-frontend.lisp" ''
+    (in-package :gemma)
+    (setq *static-file-location* "${runCommandNoCC "frontend" {} ''
+      mkdir -p $out
+      cp ${frontend} $out/index.html
+    ''}}")
+  '';
+in pkgs.nix.buildLisp.program {
+  name = "gemma";
+
+  deps = with pkgs.third_party.lisp; [
     cl-json
-    cffi
     cl-prevalence
+    hunchentoot
     local-time
-    makeWrapper
   ];
 
-  buildPhase = ''
-    mkdir -p $out/share/gemma $out/bin
-
-    # Build Lisp using the Nix-provided wrapper which sets the load
-    # paths correctly.
-    cd $src
-    env GEMMA_BIN_TARGET=$out/bin/gemma common-lisp.sh --load build.lisp
-
-    # Wrap gemma to find OpenSSL at runtime:
-    wrapProgram $out/bin/gemma --prefix LD_LIBRARY_PATH : "${openssl.out}/lib"
-
-    # and finally copy the frontend to the appropriate spot
-    cp ${frontend}/index.html $out/share/gemma/index.html
-  '';
-
-  installPhase = "true";
-
-  # Stripping an SBCL executable removes the application, which is unfortunate.
-  dontStrip = true;
-
-  meta = with stdenv.lib; {
-    description = "Tool for tracking recurring tasks";
-    homepage    = "https://github.com/tazjin/gemma";
-    license     = licenses.gpl3;
-
-    # Lisp builds are broken for some reason (2019-09-22)
-    broken = true;
-  };
+  srcs = [
+    ./src/gemma.lisp
+    injectFrontend
+  ];
 }

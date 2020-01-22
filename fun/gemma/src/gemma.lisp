@@ -1,4 +1,4 @@
-;; Copyright (C) 2016-2017  Vincent Ambo <mail@tazj.in>
+;; Copyright (C) 2016-2020  Vincent Ambo <mail@tazj.in>
 ;;
 ;; This file is part of Gemma.
 ;;
@@ -13,7 +13,7 @@
         :cl-json)
   (:import-from :sb-posix :getenv)
   (:shadowing-import-from :sb-posix :getcwd)
-  (:export :start-gemma :config :entrypoint))
+  (:export :start-gemma :config :main))
 (in-package :gemma)
 
 ;; TODO: Store an average of how many days it was between task
@@ -29,18 +29,15 @@
 (defvar *gemma-port* 4242
   "Port on which the Gemma web server listens.")
 
-(defvar *static-file-location*
-  (or (in-case-of (sb-posix:getenv "out")
-        (concatenate 'string it "/share/gemma/"))
-      "frontend/")
+(defvar *static-file-location* "frontend/"
   "Folder from which to serve static assets. If built inside of Nix,
-  the folder is concatenated with the output path at which the files
-  are expected to be.")
+  the path is injected during the build.")
+
+(defvar *p-tasks* nil
+    "All tasks registered in this Gemma instance.")
 
 (defun initialise-persistence (data-dir)
-  (defvar *p-tasks*
-    (cl-prevalence:make-prevalence-system data-dir)
-    "All tasks registered in this Gemma instance.")
+  (setq *p-tasks* (cl-prevalence:make-prevalence-system data-dir))
 
   ;; Initialise database ID counter
   (or (> (length (cl-prevalence:find-all-objects *p-tasks* 'task)) 0)
@@ -161,7 +158,7 @@ maximum interval."
      (complete-task key)
      (encode-json-to-string (response-for (get-task key))))))
 
-(defun entrypoint ()
+(defun main ()
   "This function serves as the entrypoint for ASDF-built executables.
   It joins the Hunchentoot server thread to keep the process running
   for as long as the server is alive."
