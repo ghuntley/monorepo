@@ -31,7 +31,7 @@ let
     (setq *static-file-location* "${runCommandNoCC "frontend" {} ''
       mkdir -p $out
       cp ${frontend} $out/index.html
-    ''}}")
+    ''}")
   '';
 in pkgs.nix.buildLisp.program {
   name = "gemma";
