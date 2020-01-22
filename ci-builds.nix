@@ -7,6 +7,7 @@
 let
   pkgs = import ./default.nix {};
 in with pkgs; [
+  fun.gemma
   nix.yants.tests
   ops."posix_mq.rs"
   ops.journaldriver
