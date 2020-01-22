@@ -73,7 +73,9 @@
 (use-package multiple-cursors)
 
 (use-package notmuch
-  :bind (:map global-map ("s-g m" . notmuch)) ;; g m -> gmail
+  :bind (:map global-map
+              ("s-g m" . notmuch)
+              ("s-g M" . counsel-notmuch)) ;; g m -> gmail
   :config
   (setq notmuch-search-oldest-first nil))
 
