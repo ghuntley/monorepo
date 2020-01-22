@@ -55,7 +55,6 @@ let
       kontemplate
       lib
       libredirect
-      lispPackages
       llvmPackages
       luajit
       luatex
