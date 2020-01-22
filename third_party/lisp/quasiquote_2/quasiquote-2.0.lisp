@@ -26,6 +26,9 @@
 
 (defparameter *injectors* nil)
 
+(defparameter *void-elt* nil)
+(defparameter *void-filter-needed* nil)
+
 ;; (defmacro with-injector-parsed (form)
 ;;   `(let ((kwd (intern (string 
 
@@ -198,9 +201,6 @@
 (defun macro-injector-p (form)
   (and (consp form)
        (find (car form) *known-macro-injectors* :test #'eq)))
-
-(defparameter *void-elt* nil)
-(defparameter *void-filter-needed* nil)
 
 (defun filter-out-voids (lst void-sym)
   (let (caars cadrs cdars cddrs)
