@@ -238,4 +238,25 @@
   (if prefix (text-scale-adjust 0)
     (set-face-attribute 'default nil :height (or to 120))))
 
+(defun notmuch-depot-apply-patch ()
+  "Apply the currently opened notmuch message as a patch on the
+  depot."
+
+  (interactive)
+  ;; The implementation works by letting notmuch render a raw message
+  ;; and capturing it by overriding the `view-buffer' function it
+  ;; calls after rendering.
+  ;;
+  ;; The buffer is then passed to `git-am'.
+  (cl-letf (((symbol-function 'view-buffer)
+             (lambda (buffer &optional exit-action) buffer)))
+    (if-let ((raw-buffer (notmuch-show-view-raw-message)))
+        (progn
+          (with-current-buffer raw-buffer
+            (call-shell-region (point-min) (point-max) "git am -C ~/depot")
+            (message "Patch applied!")
+            (kill-buffer))
+          (magit-status "~/depot"))
+      (warn "notmuch failed to render the raw message buffer"))))
+
 (provide 'functions)
