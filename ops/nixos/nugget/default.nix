@@ -126,6 +126,7 @@ in pkgs.lib.fix(self: {
       spotify
       tokei
       tree
+      unzip
       vlc
       xclip
     ]);
