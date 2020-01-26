@@ -7,8 +7,6 @@ pkgs.nix.buildLisp.library {
     drakma
     lisp-binary
     iterate
-    alexandria
-    cl-json
   ];
 
   srcs = [
