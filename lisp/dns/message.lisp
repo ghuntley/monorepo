@@ -643,7 +643,7 @@
   (write-byte 0 stream))
 
 ;; 4.1.2. Question section format
-(defbinary dns-question (:byte-order :big-endian)
+(defbinary dns-question (:byte-order :big-endian :export t)
            ;; a domain name represented
            (qname "" :type (custom :lisp-type qname
                                    :reader #'read-qname
@@ -661,7 +661,6 @@
 
 ;; 4.1.3. Resource record format
 
-(defbinary dns-rr (:byte-order :big-endian)
 (define-enum dns-type 2
     (:byte-order :big-endian)
 
@@ -677,6 +676,7 @@
     (AAAA 28)
     (ANY  255)) ;; (typically wants SOA, MX, NS and MX)
 
+(defbinary dns-rr (:byte-order :big-endian :export t)
            (name nil :type (custom :lisp-type qname
                                    :reader #'read-qname
                                    :writer #'write-qname))
@@ -712,7 +712,7 @@
                                     ((A) '(simple-array (unsigned-byte 8) (4)))
                                     (otherwise `(simple-array (unsigned-byte 8) (,rdlength)))))))
 
-(defbinary dns-message (:byte-order :big-endian)
+(defbinary dns-message (:byte-order :big-endian :export t)
            (header nil :type dns-header)
 
            ;; the question for the name server
