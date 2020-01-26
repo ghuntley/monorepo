@@ -1,17 +1,19 @@
 # Usocket is a portable socket library
 { pkgs, ... }:
 
+with pkgs.nix;
+
 let src = pkgs.third_party.fetchFromGitHub {
   owner = "usocket";
   repo = "usocket";
   rev = "fdf4fd1e0051ce83340ccfbbc8a43a462bb19cf2";
   sha256 = "0x746wr2324l6bn7skqzgkzcbj5kd0zp2ck0c8rldrw0rzabg826";
 };
-in pkgs.nix.buildLisp.library {
+in buildLisp.library {
   name = "usocket";
   deps = with pkgs.third_party.lisp; [
-    asdf
-    sb-bsd-sockets
+    (buildLisp.bundled "asdf")
+    (buildLisp.bundled "sb-bsd-sockets")
     split-sequence
   ];
 
