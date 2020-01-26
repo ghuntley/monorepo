@@ -706,6 +706,24 @@
            ;; resource records in the additional records section.
            (arcount 0 :type 16))
 
+
+;; Representation of DNS QNAMEs.
+;;
+;; A QNAME can be either made up entirely of labels, which is
+;; basically a list of strings, or be terminated with a pointer to an
+;; offset within the original message.
+
+(deftype qname-field ()
+  '(or
+    ;; pointer
+    (unsigned-byte 14)
+    ;; label
+    string))
+
+(defstruct qname
+  (start-at 0 :type (unsigned-byte 14))
+  (names #() :type (vector qname-field)))
+
 ;; Domain names in questions and resource records are represented as a
 ;; sequence of labels, where each label consists of a length octet
 ;; followed by that number of octets.
@@ -713,42 +731,44 @@
 ;; The domain name terminates with the zero length octet for the null
 ;; label of the root. Note that this field may be an odd number of
 ;; octets; no padding is used.
-(declaim (ftype (function (stream) (values (vector string) integer)) read-qname))
+(declaim (ftype (function (stream) (values qname integer)) read-qname))
 (defun read-qname (stream)
   "Reads a DNS QNAME from STREAM."
-  (format t "reading qname at ~A" (file-position stream))
-  (iter (for byte in-stream stream using #'read-byte)
-    ;; Total size is needed, count for each iteration byte, plus its
-    ;; own value.
-    (sum (+ 1 byte) into size)
+  (let ((start-at (+ 1 (file-position stream))))
+    (iter (for byte in-stream stream using #'read-byte)
+      ;; Total size is needed, count for each iteration byte, plus its
+      ;; own value.
+      (sum (+ 1 byte) into size)
 
-    (until (equal byte 0))
+      (until (equal byte 0))
 
-    ;; Each fragment is collected into this byte vector pre-allocated
-    ;; with the correct size.
-    (for fragment = (make-array byte :element-type '(unsigned-byte 8)
-                                     :fill-pointer 0))
+      ;; Each fragment is collected into this byte vector pre-allocated
+      ;; with the correct size.
+      (for fragment = (make-array byte :element-type '(unsigned-byte 8)
+                                       :fill-pointer 0))
 
-    ;; On each iteration, this will interpret the current byte as an
-    ;; unsigned integer and read from STREAM an equivalent amount of
-    ;; times to assemble the current fragment.
-    ;;
-    ;; Advancing the stream like this also ensures that the next
-    ;; iteration occurs on either a length-byte or the final
-    ;; terminating byte.
-    (dotimes (_ byte (collect (babel:octets-to-string fragment)
-                       into fragments result-type vector))
-      (vector-push (read-byte stream) fragment))
+      ;; On each iteration, this will interpret the current byte as an
+      ;; unsigned integer and read from STREAM an equivalent amount of
+      ;; times to assemble the current fragment.
+      ;;
+      ;; Advancing the stream like this also ensures that the next
+      ;; iteration occurs on either a length-byte or the final
+      ;; terminating byte.
+      (dotimes (_ byte (collect (babel:octets-to-string fragment)
+                         into fragments result-type vector))
+        (vector-push (read-byte stream) fragment))
 
-    (finally (return (values fragments size)))))
+      (finally (return (values (make-qname :start-at start-at
+                                           :names fragments)
+                               size))))))
 
-(declaim (ftype (function (stream (vector string))) write-qname))
+(declaim (ftype (function (stream qname)) write-qname))
 (defun write-qname (stream qname)
   "Write a DNS qname to STREAM."
 
   ;; Write each fragment starting with its (byte-) length, followed by
   ;; the bytes.
-  (iter (for fragment in-vector qname)
+  (iter (for fragment in-vector (qname-names qname))
     (for bytes = (babel:string-to-octets fragment))
     (write-byte (length bytes) stream)
     (iter (for byte in-vector bytes)
@@ -760,7 +780,7 @@
 ;; 4.1.2. Question section format
 (defbinary dns-question (:byte-order :big-endian)
            ;; a domain name represented
-           (qname "" :type (custom :lisp-type (vector string)
+           (qname "" :type (custom :lisp-type qname
                                    :reader #'read-qname
                                    :writer #'write-qname))
 
@@ -785,7 +805,7 @@
            (magic 3 :type (magic :value 3 :actual-type (unsigned-byte 2)))
 
            ;; a domain name to which this resource record pertains.
-           (name nil :type (pointer :data-type (custom :lisp-type (vector string)
+           (name nil :type (pointer :data-type (custom :lisp-type qname
                                                        :reader #'read-qname
                                                        :writer #'write-qname)
                                     :pointer-type (unsigned-byte 14)))
