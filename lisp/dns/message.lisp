@@ -662,6 +662,21 @@
 ;; 4.1.3. Resource record format
 
 (defbinary dns-rr (:byte-order :big-endian)
+(define-enum dns-type 2
+    (:byte-order :big-endian)
+
+    ;; http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml
+    (A 1)
+    (NS 2)
+    (CNAME 5)
+    (SOA 6)
+    (PTR 12)
+    (MX 15)
+    (TXT 16)
+    (SRV 33)
+    (AAAA 28)
+    (ANY  255)) ;; (typically wants SOA, MX, NS and MX)
+
            (name nil :type (custom :lisp-type qname
                                    :reader #'read-qname
                                    :writer #'write-qname))
@@ -669,7 +684,7 @@
            ;; two octets containing one of the RR type codes. This
            ;; field specifies the meaning of the data in the RDATA
            ;; field.
-           (type 0 :type 16)            ; TODO(tazjin): enum?
+           (type 0 :type dns-type)
 
            ;; two octets which specify the class of the data in the
            ;; RDATA field.
@@ -691,7 +706,11 @@
            ;; according to the TYPE and CLASS of the resource record.
            ;; For example, the if the TYPE is A and the CLASS is IN,
            ;; the RDATA field is a 4 octet ARPA Internet address.
-           (rdata #() :type (simple-array (unsigned-byte 8) (rdlength))))
+           (rdata #() :type (eval (case type
+                                    ;; TODO(tazjin): Deal with multiple strings in single RRDATA
+                                    ((TXT) '(counted-string 1))
+                                    ((A) '(simple-array (unsigned-byte 8) (4)))
+                                    (otherwise `(simple-array (unsigned-byte 8) (,rdlength)))))))
 
 (defbinary dns-message (:byte-order :big-endian)
            (header nil :type dns-header)
