@@ -13,6 +13,7 @@ pkgs.nix.buildLisp.library {
 
   srcs = [
     ./package.lisp
+    ./message.lisp
     ./client.lisp
   ];
 }
