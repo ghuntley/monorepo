@@ -4,12 +4,16 @@ pkgs.nix.buildLisp.library {
   name = "dns";
 
   deps = with pkgs.third_party.lisp; [
+    drakma
+    lisp-binary
+    iterate
     alexandria
     cl-json
-    drakma
   ];
 
   srcs = [
-    ./resolver.lisp
+    ./package.lisp
+    ./message.lisp
+    ./client.lisp
   ];
 }
