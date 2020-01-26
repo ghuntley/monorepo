@@ -161,6 +161,13 @@ let
     lispBinary = true;
   };
 
+  # 'bundled' creates a "library" that calls 'require' on a built-in
+  # package, such as any of SBCL's sb-* packages.
+  bundled = name: (makeOverridable library) {
+    inherit name;
+    srcs = lib.singleton (builtins.toFile "${name}.lisp" "(require '${name})");
+  };
+
   # 'sbclWith' creates an image with the specified libraries /
   # programs loaded.
   sbclWith = deps:
@@ -173,4 +180,5 @@ in {
   library = makeOverridable library;
   program = makeOverridable program;
   sbclWith = makeOverridable sbclWith;
+  bundled = makeOverridable bundled;
 }
