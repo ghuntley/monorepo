@@ -1,152 +1,5 @@
 (in-package :dns)
 
-;;   3. DOMAIN NAME SPACE AND RR DEFINITIONS                            10
-;;       3.1. Name space definitions                                    10
-;;       3.2. RR definitions                                            11
-;;           3.2.1. Format                                              11
-;;           3.2.2. TYPE values                                         12
-;;           3.2.3. QTYPE values                                        12
-;;           3.2.4. CLASS values                                        13
-;;           3.2.5. QCLASS values                                       13
-;;       3.3. Standard RRs                                              13
-;;           3.3.1. CNAME RDATA format                                  14
-;;           3.3.2. HINFO RDATA format                                  14
-;;           3.3.3. MB RDATA format (EXPERIMENTAL)                      14
-;;           3.3.4. MD RDATA format (Obsolete)                          15
-;;           3.3.5. MF RDATA format (Obsolete)                          15
-;;           3.3.6. MG RDATA format (EXPERIMENTAL)                      16
-;;           3.3.7. MINFO RDATA format (EXPERIMENTAL)                   16
-;;           3.3.8. MR RDATA format (EXPERIMENTAL)                      17
-;;           3.3.9. MX RDATA format                                     17
-;;           3.3.10. NULL RDATA format (EXPERIMENTAL)                   17
-;;           3.3.11. NS RDATA format                                    18
-;;           3.3.12. PTR RDATA format                                   18
-;;           3.3.13. SOA RDATA format                                   19
-;;           3.3.14. TXT RDATA format                                   20
-;;       3.4. ARPA Internet specific RRs                                20
-;;           3.4.1. A RDATA format                                      20
-;;           3.4.2. WKS RDATA format                                    21
-;;       3.5. IN-ADDR.ARPA domain                                       22
-;;       3.6. Defining new types, classes, and special namespaces       24
-;;   4. MESSAGES                                                        25
-;;       4.1. Format                                                    25
-;;           4.1.1. Header section format                               26
-;;           4.1.2. Question section format                             28
-;;           4.1.3. Resource record format                              29
-;;           4.1.4. Message compression                                 30
-;;       4.2. Transport                                                 32
-;;           4.2.1. UDP usage                                           32
-;;           4.2.2. TCP usage                                           32
-;;   5. MASTER FILES                                                    33
-;;       5.1. Format                                                    33
-;;       5.2. Use of master files to define zones                       35
-;;       5.3. Master file example                                       36
-;;   6. NAME SERVER IMPLEMENTATION                                      37
-;;       6.1. Architecture                                              37
-;;           6.1.1. Control                                             37
-;;           6.1.2. Database                                            37
-;;           6.1.3. Time                                                39
-;;       6.2. Standard query processing                                 39
-;;       6.3. Zone refresh and reload processing                        39
-;;       6.4. Inverse queries (Optional)                                40
-;;           6.4.1. The contents of inverse queries and responses       40
-;;           6.4.2. Inverse query and response example                  41
-;;           6.4.3. Inverse query processing                            42
-;;       6.5. Completion queries and responses                          42
-;;   7. RESOLVER IMPLEMENTATION                                         43
-;;       7.1. Transforming a user request into a query                  43
-;;       7.2. Sending the queries                                       44
-;;       7.3. Processing responses                                      46
-;;       7.4. Using the cache                                           47
-;;   8. MAIL SUPPORT                                                    47
-;;       8.1. Mail exchange binding                                     48
-;;       8.2. Mailbox binding (Experimental)                            48
-;;   9. REFERENCES and BIBLIOGRAPHY                                     50
-;;   Index                                                              54
-
-;; 2.3.4. Size limits
-;; Various objects and parameters in the DNS have size limits.  They are
-;; listed below.  Some could be easily changed, others are more
-;; fundamental.
-;; labels          63 octets or less
-;; names           255 octets or less
-;; TTL             positive values of a signed 32 bit number.
-;; UDP messages    512 octets or less
-
-;; 3. DOMAIN NAME SPACE AND RR DEFINITIONS
-
-;; Domain names in messages are expressed in terms of a sequence of labels.
-;; Each label is represented as a one octet length field followed by that
-;; number of octets.  Since every domain name ends with the null label of
-;; the root, a domain name is terminated by a length byte of zero.  The
-;; high order two bits of every length octet must be zero, and the
-;; remaining six bits of the length field limit the label to 63 octets or
-;; less.
-
-;; To simplify implementations, the total length of a domain name (i.e.,
-;; label octets and label length octets) is restricted to 255 octets or
-;; less.
-
-;; Although labels can contain any 8 bit values in octets that make up a
-;; label, it is strongly recommended that labels follow the preferred
-;; syntax described elsewhere in this memo, which is compatible with
-;; existing host naming conventions.  Name servers and resolvers must
-;; compare labels in a case-insensitive manner (i.e., A=a), assuming ASCII
-;; with zero parity.  Non-alphabetic codes must match exactly.
-
-;; 3.2. RR definitions
-
-;; 3.2.1. Format
-
-;; All RRs have the same top level format shown below:
-
-;;                                     1  1  1  1  1  1
-;;       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     |                                               |
-;;     /                                               /
-;;     /                      NAME                     /
-;;     |                                               |
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     |                      TYPE                     |
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     |                     CLASS                     |
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     |                      TTL                      |
-;;     |                                               |
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     |                   RDLENGTH                    |
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
-;;     /                     RDATA                     /
-;;     /                                               /
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-
-;; where:
-
-;; NAME            an owner name, i.e., the name of the node to which this
-;;                 resource record pertains.
-
-;; TYPE            two octets containing one of the RR TYPE codes.
-
-;; CLASS           two octets containing one of the RR CLASS codes.
-
-;; TTL             a 32 bit signed integer that specifies the time interval
-;;                 that the resource record may be cached before the source
-;;                 of the information should again be consulted.  Zero
-;;                 values are interpreted to mean that the RR can only be
-;;                 used for the transaction in progress, and should not be
-;;                 cached.  For example, SOA records are always distributed
-;;                 with a zero TTL to prohibit caching.  Zero values can
-;;                 also be used for extremely volatile data.
-
-;; RDLENGTH        an unsigned 16 bit integer that specifies the length in
-;;                 octets of the RDATA field.
-
-;; RDATA           a variable length string of octets that describes the
-;;                 resource.  The format of this information varies
-;;                 according to the TYPE and CLASS of the resource record.
-
 ;; 3.2.2. TYPE values
 
 ;; TYPE fields are used in resource records.  Note that these types are a
@@ -734,26 +587,38 @@
 (declaim (ftype (function (stream) (values qname integer)) read-qname))
 (defun read-qname (stream)
   "Reads a DNS QNAME from STREAM."
-  (let ((start-at (+ 1 (file-position stream))))
-    (iter (for byte in-stream stream using #'read-byte)
-      ;; Total size is needed, count for each iteration byte, plus its
-      ;; own value.
-      (sum (+ 1 byte) into size)
 
-      (until (equal byte 0))
-
+  (let ((start-at (file-position stream)))
+    (iter (for byte next (read-byte stream))
       ;; Each fragment is collected into this byte vector pre-allocated
       ;; with the correct size.
       (for fragment = (make-array byte :element-type '(unsigned-byte 8)
                                        :fill-pointer 0))
+
+      ;; If the bit sequence (1 1) is encountered at the beginning of
+      ;; the fragment, a qname pointer is being read.
+      (let ((byte-copy byte))
+        (when (equal #b11 (lisp-binary/integer:pop-bits 2 8 byte-copy))
+          (let ((next (read-byte stream)))
+            (lisp-binary/integer:push-bits byte-copy 8 next)
+            (collect next into fragments result-type vector)
+            (sum 2 into size)
+            (finish))))
+
+      ;; Total size is needed, count for each iteration byte, plus its
+      ;; own value.
+      (sum (+ 1 byte) into size)
+      (until (equal byte 0))
 
       ;; On each iteration, this will interpret the current byte as an
       ;; unsigned integer and read from STREAM an equivalent amount of
       ;; times to assemble the current fragment.
       ;;
       ;; Advancing the stream like this also ensures that the next
-      ;; iteration occurs on either a length-byte or the final
-      ;; terminating byte.
+      ;; iteration occurs on a new fragment or the final terminating
+      ;; byte.
+      ;;
+      ;; TODO(tazjin): Use lisp-binary:read-counted-string.
       (dotimes (_ byte (collect (babel:octets-to-string fragment)
                          into fragments result-type vector))
         (vector-push (read-byte stream) fragment))
@@ -797,18 +662,9 @@
 ;; 4.1.3. Resource record format
 
 (defbinary dns-rr (:byte-order :big-endian)
-           ;; magic number indicating a pointer response
-           ;;
-           ;; TODO(tazjin): This could theoretically be a QNAME, but
-           ;; Google DNS doesn't do that. For compatibility it is
-           ;; still sensible to add support for it.
-           (magic 3 :type (magic :value 3 :actual-type (unsigned-byte 2)))
-
-           ;; a domain name to which this resource record pertains.
-           (name nil :type (pointer :data-type (custom :lisp-type qname
-                                                       :reader #'read-qname
-                                                       :writer #'write-qname)
-                                    :pointer-type (unsigned-byte 14)))
+           (name nil :type (custom :lisp-type qname
+                                   :reader #'read-qname
+                                   :writer #'write-qname))
 
            ;; two octets containing one of the RR type codes. This
            ;; field specifies the meaning of the data in the RDATA
@@ -843,109 +699,12 @@
            ;; the question for the name server
            (question #() :type (simple-array dns-question ((dns-header-qdcount header))))
 
-           ;; RRs answering the question
+           ;; ;; RRs answering the question
+           ;; (answer #() :type (simple-array (unsigned-byte 8) (16)))
            (answer #() :type (simple-array dns-rr ((dns-header-ancount header))))
 
-           ;; ;; RRs pointing toward an authority
-           ;; (authority)
+           ;; ;; ;; RRs pointing toward an authority
+           (authority #() :type (simple-array dns-rr ((dns-header-nscount header))))
 
            ;; ;; RRs holding additional information
-           ;; (additional)
-           )
-
-;; 4.1.4. Message compression
-
-;; In order to reduce the size of messages, the domain system utilizes a
-;; compression scheme which eliminates the repetition of domain names in a
-;; message.  In this scheme, an entire domain name or a list of labels at
-;; the end of a domain name is replaced with a pointer to a prior occurance
-;; of the same name.
-
-;; The pointer takes the form of a two octet sequence:
-
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     | 1  1|                OFFSET                   |
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-;; The first two bits are ones.  This allows a pointer to be distinguished
-;; from a label, since the label must begin with two zero bits because
-;; labels are restricted to 63 octets or less.  (The 10 and 01 combinations
-;; are reserved for future use.)  The OFFSET field specifies an offset from
-;; the start of the message (i.e., the first octet of the ID field in the
-;; domain header).  A zero offset specifies the first byte of the ID field,
-;; etc.
-
-;; The compression scheme allows a domain name in a message to be
-;; represented as either:
-
-;;    - a sequence of labels ending in a zero octet
-
-;;    - a pointer
-
-;;    - a sequence of labels ending with a pointer
-
-;; Pointers can only be used for occurances of a domain name where the
-;; format is not class specific.  If this were not the case, a name server
-;; or resolver would be required to know the format of all RRs it handled.
-;; As yet, there are no such cases, but they may occur in future RDATA
-;; formats.
-
-;; If a domain name is contained in a part of the message subject to a
-;; length field (such as the RDATA section of an RR), and compression is
-;; used, the length of the compressed name is used in the length
-;; calculation, rather than the length of the expanded name.
-
-;; Programs are free to avoid using pointers in messages they generate,
-;; although this will reduce datagram capacity, and may cause truncation.
-;; However all programs are required to understand arriving messages that
-;; contain pointers.
-
-;; For example, a datagram might need to use the domain names F.ISI.ARPA,
-;; FOO.F.ISI.ARPA, ARPA, and the root.  Ignoring the other fields of the
-;; message, these domain names might be represented as:
-
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     20 |           1           |           F           |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     22 |           3           |           I           |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     24 |           S           |           I           |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     26 |           4           |           A           |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     28 |           R           |           P           |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     30 |           A           |           0           |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     40 |           3           |           F           |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     42 |           O           |           O           |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     44 | 1  1|                20                       |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     64 | 1  1|                26                       |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     92 |           0           |                       |
-;;        +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-;; The domain name for F.ISI.ARPA is shown at offset 20.  The domain name
-;; FOO.F.ISI.ARPA is shown at offset 40; this definition uses a pointer to
-;; concatenate a label for FOO to the previously defined F.ISI.ARPA.  The
-;; domain name ARPA is defined at offset 64 using a pointer to the ARPA
-;; component of the name F.ISI.ARPA at 20; note that this pointer relies on
-;; ARPA being the last label in the string at 20.  The root domain name is
-;; defined by a single octet of zeros at 92; the root domain name has no
-;; labels.
-
-;; 4.2. Transport
-;; Messages sent over TCP connections use server port 53 (decimal).  The
-;; message is prefixed with a two byte length field which gives the message
-;; length, excluding the two byte length field.  This length field allows
-;; the low-level processing to assemble a complete message before beginning
-;; to parse it.
+           (additional #() :type (simple-array dns-rr ((dns-header-arcount header)))))
