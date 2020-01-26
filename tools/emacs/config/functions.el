@@ -259,4 +259,10 @@
           (magit-status "~/depot"))
       (warn "notmuch failed to render the raw message buffer"))))
 
+(defun scrot-select ()
+  "Take a screenshot based on a mouse-selection and save it to
+  ~/screenshots."
+  (interactive)
+  (shell-command "scrot '$a_%s.png' -s -e 'mv $f ~/screenshots/'"))
+
 (provide 'functions)
