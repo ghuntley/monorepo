@@ -74,3 +74,11 @@
 (defun lookup-mx (name &key (doh-url *doh-base-url*))
   "Look up the MX records at NAME."
   (lookup-generic name "MX" doh-url))
+
+(defun lookup-cname (name &key (doh-url *doh-base-url*))
+  "Look up the CNAME records at NAME."
+  (lookup-generic name "CNAME" doh-url))
+
+(defun lookup-ns (name &key (doh-url *doh-base-url*))
+  "Look up the NS records at NAME."
+  (lookup-generic name "NS" doh-url))

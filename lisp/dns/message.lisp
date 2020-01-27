@@ -1,80 +1,5 @@
 (in-package :dns)
 
-;; 3.2.2. TYPE values
-
-;; TYPE fields are used in resource records.  Note that these types are a
-;; subset of QTYPEs.
-
-;; TYPE            value and meaning
-
-;; A               1 a host address
-
-;; NS              2 an authoritative name server
-
-;; MD              3 a mail destination (Obsolete - use MX)
-
-;; MF              4 a mail forwarder (Obsolete - use MX)
-
-;; CNAME           5 the canonical name for an alias
-
-;; SOA             6 marks the start of a zone of authority
-
-;; MB              7 a mailbox domain name (EXPERIMENTAL)
-
-;; MG              8 a mail group member (EXPERIMENTAL)
-
-;; MR              9 a mail rename domain name (EXPERIMENTAL)
-
-;; NULL            10 a null RR (EXPERIMENTAL)
-
-;; WKS             11 a well known service description
-
-;; PTR             12 a domain name pointer
-
-;; HINFO           13 host information
-
-;; MINFO           14 mailbox or mail list information
-
-;; MX              15 mail exchange
-
-;; TXT             16 text strings
-
-;; 3.2.3. QTYPE values
-
-;; QTYPE fields appear in the question part of a query.  QTYPES are a
-;; superset of TYPEs, hence all TYPEs are valid QTYPEs.  In addition, the
-;; following QTYPEs are defined:
-
-;; AXFR            252 A request for a transfer of an entire zone
-
-;; MAILB           253 A request for mailbox-related records (MB, MG or MR)
-
-;; MAILA           254 A request for mail agent RRs (Obsolete - see MX)
-
-;; *               255 A request for all records
-
-;; 3.2.4. CLASS values
-
-;; CLASS fields appear in resource records.  The following CLASS mnemonics
-;; and values are defined:
-
-;; IN              1 the Internet
-
-;; CS              2 the CSNET class (Obsolete - used only for examples in
-;;                 some obsolete RFCs)
-
-;; CH              3 the CHAOS class
-
-;; HS              4 Hesiod [Dyer 87]
-
-;; 3.2.5. QCLASS values
-
-;; QCLASS fields appear in the question section of a query.  QCLASS values
-;; are a superset of CLASS values; every CLASS is a valid QCLASS.  In
-;; addition to CLASS values, the following QCLASSes are defined:
-
-;; *               255 any class
-
 ;; 3.3. Standard RRs
 
 ;; The following RR definitions are expected to occur, at least
@@ -88,22 +13,6 @@
 ;; length octet followed by that number of characters.  <character-string>
 ;; is treated as binary information, and can be up to 256 characters in
 ;; length (including the length octet).
-
-;; 3.3.1. CNAME RDATA format
-
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     /                     CNAME                     /
-;;     /                                               /
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-;; where:
-
-;; CNAME           A <domain-name> which specifies the canonical or primary
-;;                 name for the owner.  The owner name is an alias.
-
-;; CNAME RRs cause no additional section processing, but name servers may
-;; choose to restart the query at the canonical name in certain cases.  See
-;; the description of name server logic in [RFC-1034] for details.
 
 
 ;; 3.3.11. NS RDATA format
@@ -220,254 +129,10 @@
 
 ;; where:
 
-;; TXT-DATA        One or more <character-string>s.
+;; TXT-DATA
 
 ;; TXT RRs are used to hold descriptive text.  The semantics of the text
 ;; depends on the domain where it is found.
-
-;; 3.4. Internet specific RRs
-
-;; 3.4.1. A RDATA format
-
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     |                    ADDRESS                    |
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-;; where:
-
-;; ADDRESS         A 32 bit Internet address.
-
-;; Hosts that have multiple Internet addresses will have multiple A
-;; records.
-
-
-;; A records cause no additional section processing.  The RDATA section of
-;; an A line in a master file is an Internet address expressed as four
-;; decimal numbers separated by dots without any imbedded spaces (e.g.,
-;; "10.2.0.52" or "192.0.5.6").
-
-;; 3.4.2. WKS RDATA format
-
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     |                    ADDRESS                    |
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-;;     |       PROTOCOL        |                       |
-;;     +--+--+--+--+--+--+--+--+                       |
-;;     |                                               |
-;;     /                   <BIT MAP>                   /
-;;     /                                               /
-;;     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-;; where:
-
-;; ADDRESS         An 32 bit Internet address
-
-;; PROTOCOL        An 8 bit IP protocol number
-
-;; <BIT MAP>       A variable length bit map.  The bit map must be a
-;;                 multiple of 8 bits long.
-
-;; The WKS record is used to describe the well known services supported by
-;; a particular protocol on a particular internet address.  The PROTOCOL
-;; field specifies an IP protocol number, and the bit map has one bit per
-;; port of the specified protocol.  The first bit corresponds to port 0,
-;; the second to port 1, etc.  If the bit map does not include a bit for a
-;; protocol of interest, that bit is assumed zero.  The appropriate values
-;; and mnemonics for ports and protocols are specified in [RFC-1010].
-
-;; For example, if PROTOCOL=TCP (6), the 26th bit corresponds to TCP port
-;; 25 (SMTP).  If this bit is set, a SMTP server should be listening on TCP
-;; port 25; if zero, SMTP service is not supported on the specified
-;; address.
-
-;; The purpose of WKS RRs is to provide availability information for
-;; servers for TCP and UDP.  If a server supports both TCP and UDP, or has
-;; multiple Internet addresses, then multiple WKS RRs are used.
-
-;; WKS RRs cause no additional section processing.
-
-;; In master files, both ports and protocols are expressed using mnemonics
-;; or decimal numbers.
-
-;; 3.5. IN-ADDR.ARPA domain
-
-;; The Internet uses a special domain to support gateway location and
-;; Internet address to host mapping.  Other classes may employ a similar
-;; strategy in other domains.  The intent of this domain is to provide a
-;; guaranteed method to perform host address to host name mapping, and to
-;; facilitate queries to locate all gateways on a particular network in the
-;; Internet.
-
-;; Note that both of these services are similar to functions that could be
-;; performed by inverse queries; the difference is that this part of the
-;; domain name space is structured according to address, and hence can
-;; guarantee that the appropriate data can be located without an exhaustive
-;; search of the domain space.
-
-;; The domain begins at IN-ADDR.ARPA and has a substructure which follows
-;; the Internet addressing structure.
-
-;; Domain names in the IN-ADDR.ARPA domain are defined to have up to four
-;; labels in addition to the IN-ADDR.ARPA suffix.  Each label represents
-;; one octet of an Internet address, and is expressed as a character string
-;; for a decimal value in the range 0-255 (with leading zeros omitted
-;; except in the case of a zero octet which is represented by a single
-;; zero).
-
-;; Host addresses are represented by domain names that have all four labels
-;; specified.  Thus data for Internet address 10.2.0.52 is located at
-;; domain name 52.0.2.10.IN-ADDR.ARPA.  The reversal, though awkward to
-;; read, allows zones to be delegated which are exactly one network of
-;; address space.  For example, 10.IN-ADDR.ARPA can be a zone containing
-;; data for the ARPANET, while 26.IN-ADDR.ARPA can be a separate zone for
-;; MILNET.  Address nodes are used to hold pointers to primary host names
-;; in the normal domain space.
-
-;; Network numbers correspond to some non-terminal nodes at various depths
-;; in the IN-ADDR.ARPA domain, since Internet network numbers are either 1,
-;; 2, or 3 octets.  Network nodes are used to hold pointers to the primary
-;; host names of gateways attached to that network.  Since a gateway is, by
-;; definition, on more than one network, it will typically have two or more
-;; network nodes which point at it.  Gateways will also have host level
-;; pointers at their fully qualified addresses.
-
-;; Both the gateway pointers at network nodes and the normal host pointers
-;; at full address nodes use the PTR RR to point back to the primary domain
-;; names of the corresponding hosts.
-
-;; For example, the IN-ADDR.ARPA domain will contain information about the
-;; ISI gateway between net 10 and 26, an MIT gateway from net 10 to MIT's
-
-;; net 18, and hosts A.ISI.EDU and MULTICS.MIT.EDU.  Assuming that ISI
-;; gateway has addresses 10.2.0.22 and 26.0.0.103, and a name MILNET-
-;; GW.ISI.EDU, and the MIT gateway has addresses 10.0.0.77 and 18.10.0.4
-;; and a name GW.LCS.MIT.EDU, the domain database would contain:
-
-;;     10.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.
-;;     10.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.
-;;     18.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.
-;;     26.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.
-;;     22.0.2.10.IN-ADDR.ARPA.    PTR MILNET-GW.ISI.EDU.
-;;     103.0.0.26.IN-ADDR.ARPA.   PTR MILNET-GW.ISI.EDU.
-;;     77.0.0.10.IN-ADDR.ARPA.    PTR GW.LCS.MIT.EDU.
-;;     4.0.10.18.IN-ADDR.ARPA.    PTR GW.LCS.MIT.EDU.
-;;     103.0.3.26.IN-ADDR.ARPA.   PTR A.ISI.EDU.
-;;     6.0.0.10.IN-ADDR.ARPA.     PTR MULTICS.MIT.EDU.
-
-;; Thus a program which wanted to locate gateways on net 10 would originate
-;; a query of the form QTYPE=PTR, QCLASS=IN, QNAME=10.IN-ADDR.ARPA.  It
-;; would receive two RRs in response:
-
-;;     10.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.
-;;     10.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.
-
-;; The program could then originate QTYPE=A, QCLASS=IN queries for MILNET-
-;; GW.ISI.EDU. and GW.LCS.MIT.EDU. to discover the Internet addresses of
-;; these gateways.
-
-;; A resolver which wanted to find the host name corresponding to Internet
-;; host address 10.0.0.6 would pursue a query of the form QTYPE=PTR,
-;; QCLASS=IN, QNAME=6.0.0.10.IN-ADDR.ARPA, and would receive:
-
-;;     6.0.0.10.IN-ADDR.ARPA.     PTR MULTICS.MIT.EDU.
-
-;; Several cautions apply to the use of these services:
-;;    - Since the IN-ADDR.ARPA special domain and the normal domain
-;;      for a particular host or gateway will be in different zones,
-;;      the possibility exists that that the data may be inconsistent.
-
-;;    - Gateways will often have two names in separate domains, only
-;;      one of which can be primary.
-
-;;    - Systems that use the domain database to initialize their
-;;      routing tables must start with enough gateway information to
-;;      guarantee that they can access the appropriate name server.
-
-;;    - The gateway data only reflects the existence of a gateway in a
-;;      manner equivalent to the current HOSTS.TXT file.  It doesn't
-;;      replace the dynamic availability information from GGP or EGP.
-
-;; 3.6. Defining new types, classes, and special namespaces
-
-;; The previously defined types and classes are the ones in use as of the
-;; date of this memo.  New definitions should be expected.  This section
-;; makes some recommendations to designers considering additions to the
-;; existing facilities.  The mailing list NAMEDROPPERS@SRI-NIC.ARPA is the
-;; forum where general discussion of design issues takes place.
-
-;; In general, a new type is appropriate when new information is to be
-;; added to the database about an existing object, or we need new data
-;; formats for some totally new object.  Designers should attempt to define
-;; types and their RDATA formats that are generally applicable to all
-;; classes, and which avoid duplication of information.  New classes are
-;; appropriate when the DNS is to be used for a new protocol, etc which
-;; requires new class-specific data formats, or when a copy of the existing
-;; name space is desired, but a separate management domain is necessary.
-
-;; New types and classes need mnemonics for master files; the format of the
-;; master files requires that the mnemonics for type and class be disjoint.
-
-;; TYPE and CLASS values must be a proper subset of QTYPEs and QCLASSes
-;; respectively.
-
-;; The present system uses multiple RRs to represent multiple values of a
-;; type rather than storing multiple values in the RDATA section of a
-;; single RR.  This is less efficient for most applications, but does keep
-;; RRs shorter.  The multiple RRs assumption is incorporated in some
-;; experimental work on dynamic update methods.
-
-;; The present system attempts to minimize the duplication of data in the
-;; database in order to insure consistency.  Thus, in order to find the
-;; address of the host for a mail exchange, you map the mail domain name to
-;; a host name, then the host name to addresses, rather than a direct
-;; mapping to host address.  This approach is preferred because it avoids
-;; the opportunity for inconsistency.
-
-;; In defining a new type of data, multiple RR types should not be used to
-;; create an ordering between entries or express different formats for
-;; equivalent bindings, instead this information should be carried in the
-;; body of the RR and a single type used.  This policy avoids problems with
-;; caching multiple types and defining QTYPEs to match multiple types.
-
-;; For example, the original form of mail exchange binding used two RR
-;; types one to represent a "closer" exchange (MD) and one to represent a
-;; "less close" exchange (MF).  The difficulty is that the presence of one
-;; RR type in a cache doesn't convey any information about the other
-;; because the query which acquired the cached information might have used
-;; a QTYPE of MF, MD, or MAILA (which matched both).  The redesigned
-
-
-
-
-;; service used a single type (MX) with a "preference" value in the RDATA
-;; section which can order different RRs.  However, if any MX RRs are found
-;; in the cache, then all should be there.
-
-;; 4. MESSAGES
-
-;; 4.1. Format
-
-;; All communications inside of the domain protocol are carried in a single
-;; format called a message.  The top level format of message is divided
-;; into 5 sections (some of which are empty in certain cases) shown below:
-
-;; The names of the sections after the header are derived from their use in
-;; standard queries.  The question section contains fields that describe a
-;; question to a name server.  These fields are a query type (QTYPE), a
-;; query class (QCLASS), and a query domain name (QNAME).  The last three
-;; sections have the same format: a possibly empty list of concatenated
-;; resource records (RRs).  The answer section contains RRs that answer the
-;; question; the authority section contains RRs that point toward an
-;; authoritative name server; the additional records section contains RRs
-;; which relate to the query, but are not strictly answers for the
-;; question.
-
-;; The header section is always present.  The header includes fields that
-;; specify which of the remaining sections are present, and also specify
-;; whether the message is a query or a response, a standard query or some
-;; other opcode, etc.
-
-;; 4.1.1. Header section format
 
 (defbinary dns-header (:byte-order :big-endian)
            ;; A 16 bit identifier assigned by the program that
@@ -488,7 +153,7 @@
            ;; 1               an inverse query (IQUERY)
            ;; 2               a server status request (STATUS)
            ;; 3-15            reserved for future use
-           (opcode 0 :type 4) ; TODO(tazjin): use define-enum
+           (opcode 0 :type 4)
 
            ;; Authoritative Answer - this bit is valid in responses,
            ;; and specifies that the responding name server is an
@@ -617,8 +282,6 @@
       ;; Advancing the stream like this also ensures that the next
       ;; iteration occurs on a new fragment or the final terminating
       ;; byte.
-      ;;
-      ;; TODO(tazjin): Use lisp-binary:read-counted-string.
       (dotimes (_ byte (collect (babel:octets-to-string fragment)
                          into fragments result-type vector))
         (vector-push (read-byte stream) fragment))
@@ -642,25 +305,6 @@
   ;; Always finish off the serialisation with a null-byte!
   (write-byte 0 stream))
 
-;; 4.1.2. Question section format
-(defbinary dns-question (:byte-order :big-endian :export t)
-           ;; a domain name represented
-           (qname "" :type (custom :lisp-type qname
-                                   :reader #'read-qname
-                                   :writer #'write-qname))
-
-           ;; a two octet code which specifies the type of the query.
-           ;; The values for this field include all codes valid for a
-           ;; TYPE field, together with some more general codes which
-           ;; can match more than one type of RR.
-           (qtype 0 :type 16) ;; TODO(tazjin): define type after the RR binary
-
-           ;; a two octet code that specifies the class of the query. For
-           ;; example, the QCLASS field is IN for the Internet.
-           (qclass 0 :type 16)) ; TODO(tazjin): enum?
-
-;; 4.1.3. Resource record format
-
 (define-enum dns-type 2
     (:byte-order :big-endian)
 
@@ -674,42 +318,76 @@
     (TXT 16)
     (SRV 33)
     (AAAA 28)
-    (ANY  255)) ;; (typically wants SOA, MX, NS and MX)
+
+    ;; ANY typically wants SOA, MX, NS and MX
+    (ANY 255))
+
+(defbinary dns-question (:byte-order :big-endian :export t)
+           ;; a domain name represented
+           (qname "" :type (custom :lisp-type qname
+                                   :reader #'read-qname
+                                   :writer #'write-qname))
+
+           ;; a two octet code which specifies the type of the query.
+           (qtype 0 :type dns-type)
+
+           ;; a two octet code that specifies the class of the query. For
+           ;; example, the QCLASS field is IN for the Internet.
+           (qclass 0 :type 16))
 
 (defbinary dns-rr (:byte-order :big-endian :export t)
            (name nil :type (custom :lisp-type qname
                                    :reader #'read-qname
                                    :writer #'write-qname))
 
-           ;; two octets containing one of the RR type codes. This
-           ;; field specifies the meaning of the data in the RDATA
-           ;; field.
+           ;; two octets containing one of the RR type codes. This field
+           ;; specifies the meaning of the data in the RDATA field.
            (type 0 :type dns-type)
 
-           ;; two octets which specify the class of the data in the
-           ;; RDATA field.
-           (class 0 :type 16)           ; TODO(tazjin): enum
+           ;; two octets which specify the class of the data in the RDATA
+           ;; field.
+           (class 0 :type 16)
 
-           ;; a 32 bit unsigned integer that specifies the time
-           ;; interval (in seconds) that the resource record may be
-           ;; cached before it should be discarded. Zero values are
-           ;; interpreted to mean that the RR can only be used for the
-           ;; transaction in progress, and should not be cached.
+           ;; a 32 bit unsigned integer that specifies the time interval (in
+           ;; seconds) that the resource record may be cached before it should
+           ;; be discarded. Zero values are interpreted to mean that the RR
+           ;; can only be used for the transaction in progress, and should not
+           ;; be cached.
            (ttl 0 :type 32)
 
-           ;; an unsigned 16 bit integer that specifies the length in
-           ;; octets of the RDATA field.
+           ;; an unsigned 16 bit integer that specifies the length in octets
+           ;; of the RDATA field.
            (rdlength 0 :type 16)
 
-           ;; a variable length string of octets that describes the
-           ;; resource. The format of this information varies
-           ;; according to the TYPE and CLASS of the resource record.
-           ;; For example, the if the TYPE is A and the CLASS is IN,
-           ;; the RDATA field is a 4 octet ARPA Internet address.
+           ;; a variable length string of octets that describes the resource.
+           ;; The format of this information varies according to the TYPE and
+           ;; CLASS of the resource record. For example, the if the TYPE is A
+           ;; and the CLASS is IN, the RDATA field is a 4 octet ARPA Internet
+           ;; address.
            (rdata #() :type (eval (case type
-                                    ;; TODO(tazjin): Deal with multiple strings in single RRDATA
-                                    ((TXT) '(counted-string 1))
+                                    ;; A 32-bit internet address in its
+                                    ;; canonical representation of 4 integers.
                                     ((A) '(simple-array (unsigned-byte 8) (4)))
+
+                                    ;; TODO(tazjin): Deal with multiple strings in single RRDATA
+                                    ;; One or more <character-string>s.
+                                    ((TXT) '(counted-string 1))
+
+                                    ;; A <domain-name> which specifies the
+                                    ;; canonical or primary name for the
+                                    ;; owner. The owner name is an alias.
+                                    ((CNAME) '(custom
+                                               :lisp-type qname
+                                               :reader #'read-qname
+                                               :writer #'write-qname))
+
+                                    ;; A <domain-name> which specifies a host
+                                    ;; which should be authoritative for the
+                                    ;; specified class and domain.
+                                    ((NS) '(custom
+                                            :lisp-type qname
+                                            :reader #'read-qname
+                                            :writer #'write-qname))
                                     (otherwise `(simple-array (unsigned-byte 8) (,rdlength)))))))
 
 (defbinary dns-message (:byte-order :big-endian :export t)
