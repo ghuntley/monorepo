@@ -40,7 +40,8 @@
                                          ("name" . ,name)
                                          ("ct" . "application/dns-message")))
     (if (= 200 status)
-        (read-binary 'dns-message (flexi-streams:make-in-memory-input-stream body))
+        (dns-message-answer
+         (read-binary 'dns-message (flexi-streams:make-in-memory-input-stream body)))
 
         (restart-case (error 'doh-error
                              :query-name name
