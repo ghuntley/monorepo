@@ -79,7 +79,7 @@
          (errbuf (get-buffer-create (format "*depot-errors/%s*" attribute)))
          (expression (format "let depot = import <depot> {}; in depot.nix.buildLisp.sbclWith [ depot.%s ]" attribute))
          ;; TODO(tazjin): use <depot>
-         (command (list "nix-build" "-I" (format "depot=%s" nix-depot-path) "-E" expression)))
+         (command (list "nix-build" "--no-out-link" "-I" (format "depot=%s" nix-depot-path) "-E" expression)))
 
     (message "Acquiring Lisp for <depot>.%s" attribute)
     (make-process :name (format "depot-nix-build/%s" attribute)
