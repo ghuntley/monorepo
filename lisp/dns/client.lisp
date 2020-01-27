@@ -3,7 +3,6 @@
 
 (in-package #:dns)
 
-;;    The DoH client is configured with a URI Template [RFC6570]
 (defvar *doh-base-url* "https://dns.google/resolve"
   "Base URL of the service providing DNS-over-HTTP(S). Defaults to the
   Google-hosted API.")
@@ -32,7 +31,7 @@
                (format stream "DoH service at '~A' responded with non-success (~A): ~%~%~A"
                        url status body)))))
 
-(defun lookup-generic (name type &key (doh-url *doh-base-url*))
+(defun lookup-generic (name type doh-url)
   (multiple-value-bind (body status)
       (drakma:http-request doh-url
                            :decode-content t
@@ -52,22 +51,26 @@
           (call-with-other-name (new-name)
             :interactive (lambda () (list (the string (read))))
             :test (lambda (c) (typep c 'doh-error))
-            (lookup-generic new-name type :doh-url doh-url))
+            (lookup-generic new-name type doh-url))
 
           (call-with-other-type (new-type)
             :interactive (lambda () (list (the string (read))))
             :test (lambda (c) (typep c 'doh-error))
-            (lookup-generic name new-type :doh-url doh-url))
+            (lookup-generic name new-type doh-url))
 
           (call-with-other-url (new-url)
             :interactive (lambda () (list (the string (read))))
             :test (lambda (c) (typep c 'doh-error))
-            (lookup-generic name type :doh-url new-url))))))
+            (lookup-generic name type new-url))))))
 
-(defun lookup-txt (name)
+(defun lookup-a (name &key (doh-url *doh-base-url*))
+  "Look up the A records at NAME."
+  (lookup-generic name "A" doh-url))
+
+(defun lookup-txt (name &key (doh-url *doh-base-url*))
   "Look up the TXT records at NAME."
-  (lookup-generic name "TXT"))
+  (lookup-generic name "TXT" doh-url))
 
-(defun lookup-mx (name)
+(defun lookup-mx (name &key (doh-url *doh-base-url*))
   "Look up the MX records at NAME."
-  (lookup-generic name "MX"))
+  (lookup-generic name "MX" doh-url))
