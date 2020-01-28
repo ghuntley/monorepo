@@ -21,9 +21,10 @@
         (counting is-newline into newlines)
 
         ;; Count every "word", unless the preceding character already
-        ;; was a space.
+        ;; was a space or we are at the beginning of the file.
         (when (or (eq space previous-byte)
-                  (eq newline previous-byte))
+                  (eq newline previous-byte)
+                  (not previous-byte))
           (next-iteration))
 
         (counting (or is-newline (eq space byte))
