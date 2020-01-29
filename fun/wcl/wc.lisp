@@ -12,7 +12,7 @@
       (iter
         (for byte in-stream file-stream using #'read-byte)
         (for previous-byte previous byte)
-        (for is-newline = (eq newline byte))
+        (for is-newline = (eql newline byte))
 
         ;; Count each byte
         (sum 1 into bytes)
@@ -22,12 +22,12 @@
 
         ;; Count every "word", unless the preceding character already
         ;; was a space or we are at the beginning of the file.
-        (when (or (eq space previous-byte)
-                  (eq newline previous-byte)
+        (when (or (eql space previous-byte)
+                  (eql newline previous-byte)
                   (not previous-byte))
           (next-iteration))
 
-        (counting (or is-newline (eq space byte))
+        (counting (or is-newline (eql space byte))
                   into words)
 
         (declare (fixnum bytes newlines words))
