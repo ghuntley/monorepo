@@ -5,7 +5,7 @@
 (declaim (optimize (speed 3) (safety 0)))
 
 (defun main ()
-  (let ((filename (cadr sb-ext:*posix-argv*))
+  (let ((filename (cadr (opts:argv)))
         (space (char-code #\Space))
         (newline (char-code #\Newline)))
     (with-open-file (file-stream filename :element-type '(unsigned-byte 8))

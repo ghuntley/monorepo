@@ -8,6 +8,7 @@ pkgs.nix.buildLisp.program {
   ];
 
   deps = with pkgs.third_party.lisp; [
+    unix-opts
     iterate
   ];
 }
