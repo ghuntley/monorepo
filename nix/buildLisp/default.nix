@@ -116,6 +116,7 @@ let
     lispDeps = allDeps deps;
   in runCommandNoCC "${name}-cllib" {
     LD_LIBRARY_PATH = lib.makeLibraryPath lispNativeDeps;
+    LANG = "C.UTF-8";
   } ''
     ${sbcl}/bin/sbcl --script ${genCompileLisp srcs lispDeps}
 
