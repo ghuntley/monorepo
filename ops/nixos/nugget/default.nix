@@ -14,6 +14,7 @@ in pkgs.lib.fix(self: {
   hardware = {
     pulseaudio.enable = true;
     cpu.intel.updateMicrocode = true;
+    u2f.enable = true;
   };
 
   boot = {
