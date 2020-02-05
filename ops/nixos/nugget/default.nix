@@ -130,6 +130,8 @@ in pkgs.lib.fix(self: {
       unzip
       vlc
       xclip
+      yubico-piv-tool
+      yubikey-personalization
     ]);
 
     fileSystems = {
@@ -182,6 +184,12 @@ in pkgs.lib.fix(self: {
     services.redshift.enable = true;
     services.openssh.enable = true;
     services.keybase.enable = true;
+
+    # Required for Yubikey usage as smartcard
+    services.pcscd.enable = true;
+    services.udev.packages = [
+      nixpkgs.yubikey-personalization
+    ];
 
     services.xserver = {
       enable = true;
