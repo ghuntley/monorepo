@@ -32,6 +32,7 @@ let
 
   # MELPA packages:
   (with epkgs.melpaPackages; [
+    ace-link
     browse-kill-ring
     cargo
     clojure-mode
