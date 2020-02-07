@@ -21,23 +21,23 @@ Currently lacking:
 
 ## Primitives & simple polymorphism
 
-![simple](screenshots/simple.png)
+![simple](yants/screenshots/simple.png)
 
 ## Structs
 
-![structs](screenshots/structs.png)
+![structs](yants/screenshots/structs.png)
 
 ## Nested structs!
 
-![nested structs](screenshots/nested-structs.png)
+![nested structs](yants/screenshots/nested-structs.png)
 
 ## Enums!
 
-![enums](screenshots/enums.png)
+![enums](yants/screenshots/enums.png)
 
 ## Functions!
 
-![functions](screenshots/functions.png)
+![functions](yants/screenshots/functions.png)
 
 # Usage
 
