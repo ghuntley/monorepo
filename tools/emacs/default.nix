@@ -20,6 +20,19 @@ let
   emacsBinPath = lib.makeBinPath [ third_party.telega ];
 
   identity = x: x;
+
+  # EXWM straight from GitHub. As of 2020-02-07, XELB in nixpkgs is
+  # already at a recent enough version and does not need to be
+  # overridden.
+  exwmMaster = exwm.overrideAttrs(_: {
+    src = third_party.fetchFromGitHub {
+      owner = "ch11ng";
+      repo = "exwm";
+      rev = "48db94f48bea1137132345abfe8256cfc6219248";
+      sha256 = "0jj12z6m5kvanq19gds3jpvid2mg8w28bbbq9iycl751y2sj4l1r";
+    };
+  });
+
   tazjinsEmacs = pkgfun: (emacsWithPackages(epkgs: pkgfun(
   # Actual ELPA packages (the enlightened!)
   (with epkgs.elpaPackages; [
@@ -44,7 +57,6 @@ let
     elixir-mode
     elm-mode
     erlang
-    exwm
     geiser
     go-mode
     gruber-darker-theme
@@ -105,6 +117,7 @@ let
   # Custom packages
   (with pkgs.tools.emacs-pkgs; [
     carp-mode
+    exwmMaster
     dottime
     nix-util
     term-switcher
