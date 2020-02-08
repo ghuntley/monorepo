@@ -18,6 +18,7 @@ in with pkgs; [
   tools.blog_cli
   tools.cheddar
   tools.emacs
+  web.blog
   web.cgit-taz
   lisp.dns
   third_party.cgit
