@@ -68,6 +68,7 @@ let
       nix
       openssh
       openssl
+      pandoc
       parallel
       pkgconfig
       protobuf
