@@ -31,7 +31,7 @@ let
   posts = list post (import ./posts.nix);
   fragments = import ./fragments.nix args;
 
-  renderedBlog = pkgs.third_party.runCommandNoCC "tazjins-blog" {} ''
+  rendered = pkgs.third_party.runCommandNoCC "tazjins-blog" {} ''
     mkdir -p $out
 
     cp ${fragments.blogIndex posts} $out/index.html
@@ -40,6 +40,7 @@ let
       "cp ${fragments.renderPost post} $out/${post.key}.html"
     ) posts)}
   '';
-in import ./nginx.nix (args // {
-  inherit posts renderedBlog;
-})
+in {
+  inherit post posts rendered;
+  static = ./static;
+}
