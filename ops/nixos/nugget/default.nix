@@ -105,6 +105,7 @@ in pkgs.lib.fix(self: {
       google-chrome
       google-cloud-sdk
       htop
+      i3lock
       imagemagick
       jq
       keybase-gui
