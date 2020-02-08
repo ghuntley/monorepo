@@ -11,7 +11,7 @@ let
   post = struct "blog-post" {
     key = string; #
     title = string;
-    date = string; # *sigh*
+    date = int;
 
     # Path to the Markdown file containing the post content.
     content = path;
@@ -39,8 +39,7 @@ let
     ${lib.concatStringsSep "\n" (map (post:
       "cp ${fragments.renderPost post} $out/${post.key}.html"
     ) posts)}
-  ''; # '' (this line makes nix-mode happy :/)
-
+  '';
 in import ./nginx.nix (args // {
   inherit posts renderedBlog;
 })

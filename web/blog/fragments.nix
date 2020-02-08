@@ -51,9 +51,13 @@ let
   renderPost = post: runCommandNoCC "${post.key}.html" {} ''
     cat ${toFile "header.html" (header post.title)} > $out
 
-    # Write the actual post
+    # Write the post title & date
     echo '<article><h2 class="inline">${escape post.title}</h2>' >> $out
-    echo '<aside class="date">${post.date}</aside>' >> $out
+    echo '<aside class="date">' >> $out
+    date --date="@${toString post.date}" '+%Y-%m-%d' >> $out
+    echo '</aside>' >> $out
+
+    # Write the actual post through cheddar's about-filter mechanism
     cat ${post.content} | ${pkgs.tools.cheddar}/bin/cheddar --about-filter ${post.content} >> $out
     echo '</article>' >> $out
 
