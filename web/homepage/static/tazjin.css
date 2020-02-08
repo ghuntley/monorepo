@@ -1,0 +1,88 @@
+/* Jetbrains Mono font from https://www.jetbrains.com/lp/mono/
+   licensed under Apache 2.0. Thanks, Jetbrains! */
+@font-face {
+    font-family: jetbrains-mono;
+    src: url(jetbrains-mono.woff2);
+}
+
+@font-face {
+    font-family: jetbrains-mono;
+    font-weight: bold;
+    src: url(jetbrains-mono-bold.woff2);
+}
+
+@font-face {
+    font-family: jetbrains-mono;
+    font-style: italic;
+    src: url(jetbrains-mono-italic.woff2);
+}
+
+@font-face {
+    font-family: jetbrains-mono;
+    font-weight: bold;
+    font-style: italic;
+    src: url(jetbrains-mono-bold-italic.woff2);
+}
+
+/* Generic-purpose styling */
+
+body {
+    margin: 40px auto;
+    max-width: 650px;
+    line-height: 1.6;
+    font-size: 18px;
+    padding: 0 10px;
+    font-family: jetbrains-mono, monospace;
+}
+
+p, a :not(.uncoloured-link) {
+    color: inherit;
+}
+
+.entry-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.entry {
+    
+}
+
+/* Light theme (used for the blog) */
+
+.light {
+    color: #383838;
+}
+
+/* Dark theme (used for the homepage) */
+
+.dark {
+    background-color: #181818;
+    color: #e4e4ef;
+}
+
+.dark a {
+    color: #96a6c8;
+}
+
+h1, h2, h3 {
+    line-height: 1.2
+}
+.footer {
+    text-align: right;
+}
+.unstyled-link {
+    text-decoration: none;
+}
+.uncoloured-link {
+    color: inherit;
+}
+.date {
+    text-align: right;
+    font-style: italic;
+    float: right;
+}
+.inline {
+    display: inline;
+}
