@@ -1,6 +1,13 @@
 [
   {
     class = "project";
+    title = "depot";
+    url = "https://git.tazj.in/about";
+    date = 1576800000;
+    description = "Merging all of my projects into a single, Nix-based monorepo";
+  }
+  {
+    class = "project";
     title = "Nixery";
     url = "https://github.com/google/nixery";
     date = 1565132400;
@@ -19,5 +26,12 @@
     url = "https://dotti.me/";
     date = 1560898800;
     description = "A universal convention for conveying time (by edef <3)";
+  }
+  {
+    class = "project";
+    title = "journaldriver";
+    url = "https://git.tazj.in/about/ops/journaldriver";
+    date = 1527375600;
+    description = "Small daemon to forward logs from journald to Stackdriver Logging";
   }
 ]
