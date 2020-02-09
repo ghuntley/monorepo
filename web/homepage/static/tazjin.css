@@ -75,7 +75,7 @@ h1, h2, h3 {
     flex-grow: 1;
 }
 
-.blog {
+.misc {
     color: #268bd2;
     border-color: #268bd2;
 }
@@ -85,7 +85,7 @@ h1, h2, h3 {
     border-color: #9e95c7;
 }
 
-.misc {
+.blog {
     color: #95a99f;
     border-color: #95a99f;
 }
