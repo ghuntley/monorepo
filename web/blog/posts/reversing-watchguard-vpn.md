@@ -1,4 +1,4 @@
-**Update**: WatchGuard has
+TIP: WatchGuard has
 [responded](https://www.reddit.com/r/netsec/comments/5tg0f9/reverseengineering_watchguard_mobile_vpn/dds6knx/)
 to this post on Reddit. If you haven\'t read the post yet I\'d recommend
 doing that first before reading the response to have the proper context.
@@ -50,9 +50,9 @@ important:
 
 I started with the first one
 
-`%@?action=sslvpn_download&filename=%@&fw_password=%@&fw_username=%@`
+    %@?action=sslvpn_download&filename=%@&fw_password=%@&fw_username=%@
 
-and just =curl=ed it on the VPN host, replacing the username and
+and just curled it on the VPN host, replacing the username and
 password fields with bogus data and the filename field with
 `client.wgssl` - another string in the executable that looked like a
 filename.
@@ -64,7 +64,7 @@ after logging in to the web UI - oh well.
 
 The next endpoint I tried ended up being a bit more interesting still:
 
-`/?action=sslvpn_logon&fw_username=%@&fw_password=%@&style=fw_logon_progress.xsl&fw_logon_type=logon&fw_domain=Firebox-DB`
+    /?action=sslvpn_logon&fw_username=%@&fw_password=%@&style=fw_logon_progress.xsl&fw_logon_type=logon&fw_domain=Firebox-DB
 
 Inserting the correct username and password into the query parameters
 actually triggered the process that sent a token to my phone. The
