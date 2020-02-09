@@ -7,6 +7,8 @@
 with pkgs.nix.yants;
 
 let
+  inherit (builtins) filter;
+
   # Type definition for a single blog post.
   post = struct "blog-post" {
     key = string; #
@@ -38,7 +40,12 @@ let
       "cp ${fragments.renderPost post} $out/${post.key}.html"
     ) posts)}
   '';
+
+  includePost = post: !(fragments.isDraft post) && !(fragments.isUnlisted post);
 in {
-  inherit post posts rendered;
+  inherit post rendered;
   static = ./static;
+
+  # Only include listed posts
+  posts = filter includePost posts;
 }
