@@ -99,9 +99,9 @@ better than other phones out there right now. Unfortunately it runs Samsung's
 impossible-to-remove bloatware on top of Android, but that is still less
 annoying to use than iOS.
 
-This is the only item on this list for which I am actively seeking a
+QUESTION: This is the only item on this list for which I am actively seeking a
 replacement, so if you have any tips about new phones that might fit these
-criteria that I've missed please let me know.
+criteria that I've missed please let me know!
 
 [se]: https://en.wikipedia.org/wiki/IPhone_SE
 [s10e]: https://www.phonearena.com/phones/Samsung-Galaxy-S10e_id11114
