@@ -15,7 +15,6 @@ in with pkgs; [
   ops.kontemplate
   ops.mq_cli
   ops.sync-gcsr
-  tools.blog_cli
   tools.cheddar
   tools.emacs
   web.blog
