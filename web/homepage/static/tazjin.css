@@ -28,7 +28,6 @@
 
 body {
     margin: 40px auto;
-    max-width: 650px;
     line-height: 1.6;
     font-size: 18px;
     padding: 0 10px;
@@ -39,25 +38,14 @@ p, a :not(.uncoloured-link) {
     color: inherit;
 }
 
-.entry-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+h1, h2, h3 {
+    line-height: 1.2
 }
 
-.entry {
-    
-}
-
-/* Light theme (used for the blog) */
-
-.light {
-    color: #383838;
-}
-
-/* Dark theme (used for the homepage) */
+/* Homepage styling */
 
 .dark {
+    max-width: 800px;
     background-color: #181818;
     color: #e4e4ef;
 }
@@ -66,23 +54,80 @@ p, a :not(.uncoloured-link) {
     color: #96a6c8;
 }
 
-h1, h2, h3 {
-    line-height: 1.2
+.entry-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
+
+.interblag-title {
+    text-decoration: none;
+}
+
+.entry {
+    width: 42%;
+    margin: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 2px solid;
+    border-radius: 5px;
+    flex-grow: 1;
+}
+
+.blog {
+    color: #268bd2;
+    border-color: #268bd2;
+}
+
+.project {
+    color: #9e95c7;
+    border-color: #9e95c7;
+}
+
+.misc {
+    color: #95a99f;
+    border-color: #95a99f;
+}
+
+.entry-title {
+    color: inherit !important;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.entry-date {
+    font-style: italic;
+}
+
+/* Blog styling */
+
+.light {
+    max-width: 650px;
+    color: #383838;
+}
+
+.blog-title {
+    color: inherit;
+    text-decoration: none;
+}
+
 .footer {
     text-align: right;
 }
-.unstyled-link {
-    text-decoration: none;
-}
-.uncoloured-link {
-    color: inherit;
-}
+
 .date {
     text-align: right;
     font-style: italic;
     float: right;
 }
+
 .inline {
     display: inline;
+}
+
+pre {
+    min-width: 100%;
+    /* some code snippets escape to the side, but I don't want to wrap them */
+    width: max-content;
 }

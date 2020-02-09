@@ -30,25 +30,37 @@ let
 
   postToEntry = defun [ web.blog.post entry ] (post: {
     class = "blog";
-    title = "Blog: " + post.title;
+    title = post.title;
     url = "/blog/${post.key}";
     date = post.date;
   });
 
-  # TODO(tazjin): add date formatting function
+  formatDate = defun [ int string ] (date: readFile (runCommandNoCC "date" {} ''
+    date --date='@${toString date}' '+%Y-%m-%d' > $out
+  ''));
+
+  formatEntryDate = defun [ entry string ] (entry: entryClass.match entry.class {
+    blog = "Blog post from ${formatDate entry.date}";
+    project = "Project from ${formatDate entry.date}";
+    misc = "Posted on ${formatDate entry.date}";
+  });
+
   entryToDiv = defun [ entry string ] (entry: ''
     <div class="entry ${entry.class}">
-      <p class="entry-title">${escape entry.title}</p>
+      <p>
+        <a class="entry-title" href="${entry.url}">${escape entry.title}</a>
+      </p>
       ${
         lib.optionalString ((entry ? description) && (entry.description != null))
         "<p class=\"entry-description\">${escape entry.description}</p>"
       }
+      <p class="entry-date">${formatEntryDate entry}</p>
     </div>
   '');
 
   index = entries: third_party.writeText "index.html" (lib.concatStrings (
     [ (builtins.readFile ./header.html) ]
-    ++ (map entryToDiv (sort (a: b: a.date < b.date) entries))
+    ++ (map entryToDiv (sort (a: b: a.date > b.date) entries))
     ++ [ (builtins.readFile ./footer.html) ]
   ));
 
