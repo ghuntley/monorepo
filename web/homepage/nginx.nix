@@ -6,7 +6,7 @@
   writeText, writeShellScriptBin, nginx, lib,
 
   # website content
-  blog
+  blog, website
 }:
 
 let
@@ -44,15 +44,13 @@ let
 
       server {
         listen 8080 default_server;
-        root ${blog.rendered};
-
-        location /static {
-          alias ${blog.static}/;
-        }
+        root ${website};
 
         ${oldRedirects}
 
-        location / {
+        location /blog {
+          alias ${blog.rendered};
+
           if ($request_uri ~ ^/(.*)\.html$) {
             return 302 /$1;
           }

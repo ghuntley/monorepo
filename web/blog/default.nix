@@ -34,8 +34,6 @@ let
   rendered = pkgs.third_party.runCommandNoCC "tazjins-blog" {} ''
     mkdir -p $out
 
-    cp ${fragments.blogIndex posts} $out/index.html
-
     ${lib.concatStringsSep "\n" (map (post:
       "cp ${fragments.renderPost post} $out/${post.key}.html"
     ) posts)}

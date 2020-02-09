@@ -20,15 +20,13 @@ let
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="tazjin&#39;s blog">
-    <link rel="stylesheet" type="text/css" href="static/blog.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/tazjin.css" media="all">
     <link rel="alternate" type="application/rss+xml" title="RSS-Feed" href="/rss.xml">
-    <title>tazjin&#39;s blog${lib.optionalString (title != "") (
-      ": " + (escape title)
-    )}</title>
+    <title>tazjin&#39;s blog: ${escape title}</title>
   </head>
-  <body>
+  <body class="light">
     <header>
-      <h1><a class="unstyled-link" href="/">tazjin&#39;s blog</a> </h1>
+      <h1><a class="blog-title" href="/">tazjin&#39;s interblag</a> </h1>
       <hr>
     </header>
   '';
@@ -68,18 +66,6 @@ let
   isDraft = post: (hasAttr "draft" post) && post.draft;
   isUnlisted = post: (hasAttr "listed" post) && !post.listed;
   includePost = post: !(isDraft post) && !(isUnlisted post);
-
-  indexEntry= post: "<li>a blog post</li>";
-  blogIndex = posts: writeText "blog-index.html" (lib.concatStrings (
-    [
-      (header "")
-      "<ul>"
-    ]
-    ++ (map indexEntry (filter includePost posts))
-    ++ [
-      "</ul>"
-      footer
-    ]));
 in {
-  inherit blogIndex renderPost;
+  inherit renderPost;
 }
