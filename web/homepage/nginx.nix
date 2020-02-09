@@ -14,9 +14,9 @@ let
   inherit (pkgs.third_party) ;
 
   oldRedirects = lib.concatStringsSep "\n" (map (post: ''
-    location ~* ^(en)?/${post.oldKey} {
+    location ~* ^(/en)?/${post.oldKey} {
       # TODO(tazjin): 301 once this works
-      return 302 /${post.key};
+      return 302 /blog/${post.key};
     }
   '') (filter (hasAttr "oldKey") blog.posts));
 
