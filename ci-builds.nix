@@ -25,5 +25,4 @@ in with pkgs; [
   third_party.git
   third_party.guile
   third_party.lisp # will build all third-party libraries
-  # web.tazblog #  TODO(tazjin): Happstack build failure in nixos-unstable
 ]
