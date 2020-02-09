@@ -50,7 +50,7 @@ h1, h2, h3 {
     color: #e4e4ef;
 }
 
-.dark a {
+.dark-link, .interblag-title {
     color: #96a6c8;
 }
 
@@ -68,11 +68,12 @@ h1, h2, h3 {
 .entry {
     width: 42%;
     margin: 5px;
-    padding-left: 5px;
+    padding-left: 7px;
     padding-right: 5px;
     border: 2px solid;
     border-radius: 5px;
     flex-grow: 1;
+    text-decoration: none;
 }
 
 .misc {

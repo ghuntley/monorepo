@@ -46,16 +46,16 @@ let
   });
 
   entryToDiv = defun [ entry string ] (entry: ''
-    <div class="entry ${entry.class}">
-      <p>
-        <a class="entry-title" href="${entry.url}">${escape entry.title}</a>
-      </p>
-      ${
-        lib.optionalString ((entry ? description) && (entry.description != null))
-        "<p class=\"entry-description\">${escape entry.description}</p>"
-      }
-      <p class="entry-date">${formatEntryDate entry}</p>
-    </div>
+    <a href="${entry.url}" class="entry ${entry.class}">
+      <div>
+        <p class="entry-title">${escape entry.title}</p>
+        ${
+          lib.optionalString ((entry ? description) && (entry.description != null))
+          "<p class=\"entry-description\">${escape entry.description}</p>"
+        }
+        <p class="entry-date">${formatEntryDate entry}</p>
+      </div>
+    </a>
   '');
 
   index = entries: third_party.writeText "index.html" (lib.concatStrings (
