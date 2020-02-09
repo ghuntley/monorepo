@@ -9,8 +9,16 @@ metadata:
     networking.gke.io/managed-certificates: tazj-in, git-tazj-in, www-tazj-in, oslo-pub
 spec:
   rules:
-    # Route blog to the blog ...
+    # Route website to, well, the website ...
     - host: tazj.in
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: website
+              servicePort: 8080
+    # Same for www.* (the redirect is handled by the website nginx)
+    - host: www.tazj.in
       http:
         paths:
           - path: /*
