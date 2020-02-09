@@ -16,9 +16,6 @@ case "${TARGET_TOOL}" in
   kontemplate)
     attr="kontemplate"
     ;;
-  blog_cli)
-    attr="tools.blog_cli"
-    ;;
   stern)
     attr="third_party.stern"
     ;;
