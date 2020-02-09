@@ -34,4 +34,14 @@
     date = 1527375600;
     description = "Small daemon to forward logs from journald to Stackdriver Logging";
   }
+  {
+    class = "misc";
+    title = "Principia Discordia";
+    url = "https://principiadiscordia.com/book/1.php";
+    date = 1495494000;
+    description = ''
+      The Principia is a short book I read as a child, and didn't
+      understand until much later. It shaped much of my world view.
+    '';
+  }
 ]
