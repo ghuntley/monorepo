@@ -1,8 +1,5 @@
-tazjin's best tools
-===================
-
 In the spirit of various other "Which X do you use?"-pages I thought it would be
-fun to have a little document here that describes which tools I've found to work
+fun to have a little post here that describes which tools I've found to work
 well for myself.
 
 When I say "tools" here, it's not about software - it's about real, physical

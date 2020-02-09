@@ -1,6 +1,12 @@
 # This file defines all the blog posts.
 [
   {
+    key = "best-tools";
+    title = "tazjin's best tools";
+    date = 1576800001;
+    content = ./posts/best-tools.md;
+  }
+  {
     key = "reversing-watchguard-vpn";
     title = "Reverse-engineering WatchGuard Mobile VPN";
     date = 1486830338;
