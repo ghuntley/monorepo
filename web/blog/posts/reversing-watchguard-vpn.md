@@ -39,14 +39,14 @@ Diving into the client
 The first surprise came up right after opening the executable: It had
 debug symbols in it - and was written in Objective-C!
 
-![Debug symbols](https://i.imgur.com/EacIeXH.png)
+![Debug symbols](/static/img/watchblob_1.webp)
 
 A good first step when looking at an application binary is going through
 the strings that are included in it, and the WatchGuard client had a lot
 to offer. Among the most interesting were a bunch of URIs that looked
 important:
 
-![Some URIs](https://i.imgur.com/4rg24K5.png)
+![Some URIs](/static/img/watchblob_2.webp)
 
 I started with the first one
 
@@ -70,7 +70,7 @@ Inserting the correct username and password into the query parameters
 actually triggered the process that sent a token to my phone. The
 response was a simple XML blob:
 
-``` {.example}
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <resp>
   <action>sslvpn_logon</action>
@@ -97,7 +97,7 @@ response.
 
 *(Code snippets from here on are Hopper\'s pseudo-Objective-C)*
 
-![sslvpnLogon](https://i.imgur.com/KUK6MPz.png)
+![sslvpnLogon](/static/img/watchblob_3.webp)
 
 It proceeded to the function `-[VPNController processTokenPrompt]` which
 showed the dialog window into which the user enters the token, sent it
@@ -105,12 +105,12 @@ off to the next URL and checked the `logon_status` again:
 
 (`r12` is the reference to the `VPNController` instance, i.e. `self`).
 
-![processTokenPrompt](https://i.imgur.com/y6eYHxG.png)
+![processTokenPrompt](/static/img/watchblob_4.webp)
 
 If the `logon_status` was `1` (apparently \"success\" here) it proceeded
 to do something quite interesting:
 
-![processTokenPrompt2](https://i.imgur.com/f5dAsHD.png)
+![processTokenPrompt2](/static/img/watchblob_5.webp)
 
 The user\'s password was overwritten with the (verified) OTP token -
 before OpenVPN had even been started!
@@ -123,7 +123,7 @@ remotely control an `openvpn` process by sending it commands over TCP.
 It then simply sent the username and the OTP token as the credentials
 after configuring OpenVPN with the correct config file:
 
-![doLogin](https://i.imgur.com/YLxxpKD.png)
+![doLogin](/static/img/watchblob_6.webp)
 
 ... and the OpenVPN connection then succeeds.
 
