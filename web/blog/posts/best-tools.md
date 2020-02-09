@@ -86,8 +86,7 @@ flat.
 ## Phone
 
 The best phone I have used in recent years is the [iPhone SE][se]. It was the
-*last* phone that had a reasonable size (up to 4"") *and* a 3.5mm headphone
-jack.
+*last* phone that had a reasonable size (up to 4") *and* a 3.5mm headphone jack.
 
 Unfortunately, it runs iOS. Despite owning a whole bunch of SEs, I have finally
 moved on to an Android phone that is only moderately larger (still by an

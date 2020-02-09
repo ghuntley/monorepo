@@ -77,18 +77,18 @@ h1, h2, h3 {
 }
 
 .misc {
+    color: #73c936;
+    border-color: #73c936;
+}
+
+.blog {
     color: #268bd2;
     border-color: #268bd2;
 }
 
 .project {
-    color: #9e95c7;
-    border-color: #9e95c7;
-}
-
-.blog {
-    color: #95a99f;
-    border-color: #95a99f;
+    color: #ff4f58;
+    border-color: #ff4f58;
 }
 
 .entry-title {
