@@ -126,8 +126,16 @@ h1, h2, h3 {
     display: inline;
 }
 
+.lod {
+    text-align: center;
+}
+
 pre {
     min-width: 100%;
     /* some code snippets escape to the side, but I don't want to wrap them */
     width: max-content;
+}
+
+img {
+    max-width: 100%;
 }
