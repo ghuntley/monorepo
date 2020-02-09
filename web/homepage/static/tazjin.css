@@ -131,9 +131,8 @@ h1, h2, h3 {
 }
 
 pre {
-    min-width: 100%;
-    /* some code snippets escape to the side, but I don't want to wrap them */
-    width: max-content;
+    width: 100%;
+    overflow: auto;
 }
 
 img {
