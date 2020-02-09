@@ -47,7 +47,8 @@ Twitter][].
 Services in this repository are deployed on a Google Kubernetes Engine cluster
 using [Nixery]().
 
-* `web/tazblog` contains my blog software (serving at [tazj.in][])
+* `web/blog` and `web/homepage` contain my blog and website setup
+  (serving at [tazj.in][])
 * `web/cgit-taz` contains a slightly patched version of `cgit` that serves my
   git web interface at [git.tazj.in][]
 * `ops/sync-gcsr` contains a tiny service that synchronises a Google Cloud

@@ -25,7 +25,7 @@ spec:
         config: {{ insertFile "nginx.conf" | sha1sum }}
     spec:
       containers:
-        - name: tazblog
+        - name: nginx
           image: nixery.local/shell/third_party.nginx:{{ .version }}
           command: ["/bin/bash", "-c"]
           args:
