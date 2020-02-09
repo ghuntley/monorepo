@@ -16,7 +16,7 @@ let
   oldRedirects = lib.concatStringsSep "\n" (map (post: ''
     location ~* ^(/en)?/${post.oldKey} {
       # TODO(tazjin): 301 once this works
-      return 302 /blog/${post.key};
+      return 302 https://tazj.in/blog/${post.key};
     }
   '') (filter (hasAttr "oldKey") blog.posts));
 
@@ -44,6 +44,7 @@ let
 
       server {
         listen 8080 default_server;
+        server_name tazj.in;
         root ${website};
 
         ${oldRedirects}
@@ -57,6 +58,12 @@ let
 
           try_files $uri $uri.html $uri/ =404;
         }
+      }
+
+      server {
+        listen 8080;
+        server_name www.tazj.in;
+        return 301 https://tazj.in$request_uri;
       }
     }
   '';
