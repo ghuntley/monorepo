@@ -27,6 +27,7 @@
 /* Generic-purpose styling */
 
 body {
+    max-width: 800px;
     margin: 40px auto;
     line-height: 1.6;
     font-size: 18px;
@@ -45,7 +46,6 @@ h1, h2, h3 {
 /* Homepage styling */
 
 .dark {
-    max-width: 800px;
     background-color: #181818;
     color: #e4e4ef;
 }
@@ -104,7 +104,6 @@ h1, h2, h3 {
 /* Blog styling */
 
 .light {
-    max-width: 650px;
     color: #383838;
 }
 
