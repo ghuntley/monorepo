@@ -85,18 +85,26 @@ flat.
 
 ## Phone
 
-The best phone that's on the market at the moment is the [iPhone SE][se]. It's
-as far as I am aware the *only* phone that has a reasonable size (up to 4")
-*and* a 3.5mm headphone jack.
+The best phone I have used in recent years is the [iPhone SE][se]. It was the
+*last* phone that had a reasonable size (up to 4"") *and* a 3.5mm headphone
+jack.
 
-These two are the make-it-or-break-it requirements for me. Despite iOS being an
-annoying system to use there is nothing better available at the moment.
+Unfortunately, it runs iOS. Despite owning a whole bunch of SEs, I have finally
+moved on to an Android phone that is only moderately larger (still by an
+annoying amount), but does at least have a headphone jack: The [Samsung Galaxy
+S10e][s10e].
+
+It has pretty good hardware and I can almost reach 70% of the screen, which is
+better than other phones out there right now. Unfortunately it runs Samsung's
+impossible-to-remove bloatware on top of Android, but that is still less
+annoying to use than iOS.
 
 This is the only item on this list for which I am actively seeking a
 replacement, so if you have any tips about new phones that might fit these
 criteria that I've missed please let me know.
 
 [se]: https://en.wikipedia.org/wiki/IPhone_SE
+[s10e]: https://www.phonearena.com/phones/Samsung-Galaxy-S10e_id11114
 
 # Other stuff
 
