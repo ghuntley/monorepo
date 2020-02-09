@@ -15,8 +15,8 @@ spec:
         paths:
           - path: /*
             backend:
-              serviceName: tazblog
-              servicePort: 8000
+              serviceName: website
+              servicePort: 8080
     # Route git.tazj.in to the cgit pods
     - host: git.tazj.in
       http:
