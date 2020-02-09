@@ -49,6 +49,10 @@ let
 
         ${oldRedirects}
 
+        location ~* \.(webp|woff2)$ {
+          add_header Cache-Control "public, max-age=31536000";
+        }
+
         location /blog {
           alias ${blog.rendered};
 
