@@ -21,6 +21,7 @@ let
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="tazjin&#39;s blog">
     <link rel="stylesheet" type="text/css" href="/static/tazjin.css" media="all">
+    <link rel="icon" type="image/webp" href="/static/favicon.webp">
     <link rel="alternate" type="application/rss+xml" title="RSS-Feed" href="/rss.xml">
     <title>tazjin&#39;s blog: ${escape title}</title>
   </head>
