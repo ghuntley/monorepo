@@ -19,6 +19,8 @@ in buildGoModule {
   goPackagePath = "tailscale.com";
   modSha256 = "0cnih9flwgqjq4x4cwyac9yyz1prv2i2by1ki3g71ai8q621bq10";
   subPackages = [
+    "cmd/relaynode"
+    "cmd/taillogin"
     "cmd/tailscale"
     "cmd/tailscaled"
   ];
