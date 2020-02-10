@@ -1,6 +1,13 @@
 # This file defines all the blog posts.
 [
   {
+    key = "emacs-is-underrated";
+    title = "Emacs is the most underrated tool";
+    date = 1581286656;
+    content = ./posts/emacs-is-underrated.md;
+    draft = true;
+  }
+  {
     key = "best-tools";
     title = "tazjin's best tools";
     date = 1576800001;
