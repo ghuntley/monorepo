@@ -25,6 +25,7 @@ let
       bashInteractive
       bat
       buildGoPackage
+      buildGoModule
       bzip2
       cacert
       cachix
