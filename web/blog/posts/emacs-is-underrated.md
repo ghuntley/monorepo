@@ -1,9 +1,25 @@
-TODO: Hello, and thanks for offering to review my draft! This post
+TIP: Hello, and thanks for offering to review my draft! This post
 intends to convey to people what the point of Emacs is. Not to convert
 them to use it, but at least with opening their minds to the
 possibility that it might contain valuable things. I don't know if I'm
 on track in the right direction, and your input will help me figure it
 out. Thanks!
+
+TODO(tazjin): Rewrite the last section to highlight that the primary
+UX paradigm of Emacs is *interactive text* (from which fluidity is
+derived). This ties together stuff like muscle memory being universal
+across programs.
+
+TODO(tazjin): Highlight more that it's not about editing: People can
+derive useful things from Emacs by just using magit/org/notmuch/etc.!
+
+TODO(tazjin): Note that there's value in trying Emacs even if people
+don't end up using it, similar to how learning languages like Lisp or
+Haskell helps grow as a programmer even without using them day-to-day.
+
+*Real post starts below!*
+
+---------
 
 There are two kinds of people: Those who use Emacs, and those who
 think it is a text editor. This post is aimed at those in the second
