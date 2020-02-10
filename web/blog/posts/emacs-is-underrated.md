@@ -1,15 +1,15 @@
-TODO: Hello, and thanks for offering to review my draft! The intention
-of this post is to convey to people what the point of Emacs is. Not
-with the intention of converting them to use it, but at least with
-opening their minds to the possibility that it might contain valuable
-things. I don't know if I'm on track in the right direction and your
-input will help me figure it out. Thanks!
+TODO: Hello, and thanks for offering to review my draft! This post
+intends to convey to people what the point of Emacs is. Not to convert
+them to use it, but at least with opening their minds to the
+possibility that it might contain valuable things. I don't know if I'm
+on track in the right direction, and your input will help me figure it
+out. Thanks!
 
 There are two kinds of people: Those who use Emacs, and those who
 think it is a text editor. This post is aimed at those in the second
 category.
 
-Emacs is the most important piece of software I run. My [Emacs
+Emacs is the most critical piece of software I run. My [Emacs
 configuration][emacs-config] has steadily evolved for almost a decade.
 Emacs is my window manager, mail client, terminal, git client,
 information management system and - perhaps unsurprisingly - text
@@ -38,7 +38,7 @@ Things look a bit different this time - after all, the program is
 open-source! You can go and fetch its source code, figure out its
 internal structure and wrangle various layers of code into submission
 until you find the piece that implements the functionality you want to
-change. If you know the language it is written in, you can modify the
+change. If you know the language it is written in; you can modify the
 feature.
 
 Now all that's left is figuring out its build system[^1], building and
@@ -62,19 +62,19 @@ was using a program called Helm, which is similar in spirit to dmenu,
 that let me select installed programs interactively and press
 <kbd>RET</kbd> to execute them.
 
-This was very useful - until I discovered that if I tried to open a
-second terminal emulator while one was already running it would
+Helm was very useful - until I discovered that if I tried to open a
+second terminal emulator while one was already running, it would
 display an error:
 
     Error: urxvt is already running
 
-Now if this had been dmenu, I might have had to go through the whole
-process described above to fix the issue. But it wasn't dmenu - it was
-an Emacs program, and I did the following things:
+Had this been dmenu, I might have had to go through the whole process
+described above to fix the issue. But it wasn't dmenu - it was an
+Emacs program, and I did the following things:
 
 1. I pressed <kbd>C-h k</kbd>[^2] (which means "please tell me what
    the following key does"), followed by <kbd>s-d</kbd> (which was my
-   key binding for launching programs).
+   keybinding for launching programs).
 
 2. Emacs displayed a new buffer saying, roughly:
 
@@ -124,8 +124,7 @@ The core of Emacs implements the language and the functionality needed
 to evaluate and run it, as well as various primitives for user
 interface construction such as buffers, windows and frames.
 
-Everything else that people think of when Emacs is mentioned is
-implemented *in Emacs Lisp*.
+Every other feature of Emacs is implemented *in Emacs Lisp*.
 
 The Emacs distribution ships with rudimentary text editing
 functionality (and some language-specific support for the most popular
@@ -137,12 +136,12 @@ Outside of the core distribution there is a myriad of available
 programs for Emacs: [magit][] (the famous git porcelain), text-based
 [HTTP clients][], even interactive [Kubernetes frontends][k8s].
 
-What all of these tools have in common is that they gain the
-introspectability and composability of everything else in Emacs.
+What all of these tools have in common is that they can be
+introspected and composed like everything else in Emacs.
 
 If magit does not expose a git flag I need, it's trivial to add. If I
-want a key binding to jump from a buffer showing me a Kubernetes pod
-to a magit buffer for the source code of the container it only takes a
+want a keybinding to jump from a buffer showing me a Kubernetes pod to
+a magit buffer for the source code of the container, it only takes a
 few lines of Emacs Lisp to implement.
 
 As proficiency with Emacs Lisp ramps up, the environment becomes
@@ -151,16 +150,16 @@ Muscle memory learned for one program translates seamlessly to others,
 and the overall effect is an improvement in *workflow fluidity* that
 is difficult to overstate.
 
-In addition, workflows based on Emacs are *stable*. Moving my window
-management to Emacs has meant that I'm not subject to some third-party
-developer deciding that my window layouting features will now change
-(as they often do on systems like MacOS).
+Also, workflows based on Emacs are *stable*. Moving my window
+management to Emacs has meant that I'm not subject to the whim of some
+third-party developer changing my window layouting features (as they
+often do on MacOS).
 
-To illustrate this: Emacs has development history all the way back to
-the 1970s, continuous git history that survived multiple VCS
-migrations [since 1985][first-commit] (that's 22 years before git
-itself was released!) and there is code[^3] implementing interactive
-functionality that has survived unmodified in Emacs *since then*.
+To illustrate this: Emacs has development history back to the 1970s,
+continuous git history that survived multiple VCS migrations [since
+1985][first-commit] (that's 22 years before git itself was released!)
+and there is code[^3] implementing interactive functionality that has
+survived unmodified in Emacs *since then*.
 
 ---------------
 
@@ -173,8 +172,9 @@ the context of todo-management apps):
 > to be Emacs might be the saddest thing I've ever heard
 
 What bothers me is that people see this as *sad*. Emacs being around
-for this long and still being unparlleled for many of the UX paradigms
-implemented by its programs is, in my book, incredible - and not sad.
+for this long and still being unparalleled for many of the UX
+paradigms implemented by its programs is, in my book, incredible - and
+not sad.
 
 How many other paradigms have survived this long? How many other tools
 still have fervent followers, amazing [developer tooling][] and a
@@ -186,10 +186,10 @@ Name.
 What I wish you, the reader, should take away from this post is the
 following:
 
-TODO(tazjin): Figure out what people should actually take away from
-this post. I need to sleep on it. It's something about not dismissing
-tools just because of their age, urging them to explore paradigms that
-might seem unfamiliar and so on. Ideas welcome.
+TODO(tazjin): Figure out what people should take away from this post.
+I need to sleep on it. It's something about not dismissing tools just
+because of their age, urging them to explore paradigms that might seem
+unfamiliar and so on. Ideas welcome.
 
 ---------------
 
