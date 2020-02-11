@@ -86,6 +86,7 @@ in pkgs.lib.fix(self: {
       ops.kontemplate
       third_party.git
       third_party.guile
+      third_party.tailscale
       tools.emacs
     ]) ++
 
