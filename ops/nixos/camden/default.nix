@@ -118,5 +118,58 @@ in pkgs.lib.fix(self: {
     ];
   };
 
+  # serve my website
+  services.nginx = {
+    enable = true;
+    enableReload = true;
+
+    # recommendedTlsSettings = true;
+    # recommendedGzipSettings = true;
+    # recommendedProxySettings = true;
+
+    commonHttpConfig = ''
+      log_format json_combined escape=json
+      '{'
+          '"time_local":"$time_local",'
+          '"remote_addr":"$remote_addr",'
+          '"remote_user":"$remote_user",'
+          '"request":"$request",'
+          '"status": "$status",'
+          '"body_bytes_sent":"$body_bytes_sent",'
+          '"request_time":"$request_time",'
+          '"http_referrer":"$http_referer",'
+          '"http_user_agent":"$http_user_agent"'
+      '}';
+
+      access_log /var/log/nginx_access.log json_combined;
+    '';
+
+    virtualHosts.homepage = {
+      serverName = "camden.tazj.in"; # TODO(tazjin): change to actual host later
+      default = true;
+      enableACME = true;
+      root = pkgs.web.homepage;
+      addSSL = true;
+
+      extraConfig = ''
+        ${pkgs.web.blog.oldRedirects}
+
+        location ~* \.(webp|woff2)$ {
+          add_header Cache-Control "public, max-age=31536000";
+        }
+
+        location /blog/ {
+          alias ${pkgs.web.blog.rendered}/;
+
+          if ($request_uri ~ ^/(.*)\.html$) {
+            return 302 /$1;
+          }
+
+          try_files $uri $uri.html $uri/ =404;
+        }
+      '';
+    };
+  };
+
   system.stateVersion = "19.09";
 })
