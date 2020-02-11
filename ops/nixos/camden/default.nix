@@ -59,9 +59,16 @@ in pkgs.lib.fix(self: {
     };
   };
 
+  nix = {
+    maxJobs = lib.mkDefault 4;
 
-  # TODO(tazjin): audit these (from generated hardware-config)
-  nix.maxJobs = lib.mkDefault 4;
+    nixPath = [
+      "depot=/home/tazjin/depot"
+      "nixpkgs=${pkgs.third_party.nixpkgsSrc}"
+    ];
+  };
+  nixpkgs.pkgs = nixpkgs;
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   networking = {
