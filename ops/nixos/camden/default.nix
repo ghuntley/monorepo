@@ -142,7 +142,7 @@ in pkgs.lib.fix(self: {
           '"http_user_agent":"$http_user_agent"'
       '}';
 
-      access_log /var/log/nginx_access.log json_combined;
+      access_log syslog:server=unix:/dev/log json_combined;
     '';
 
     virtualHosts.homepage = {
@@ -167,6 +167,10 @@ in pkgs.lib.fix(self: {
           }
 
           try_files $uri $uri.html $uri/ =404;
+        }
+
+        location /blobs/ {
+          alias /var/www/blobs/;
         }
       '';
     };
