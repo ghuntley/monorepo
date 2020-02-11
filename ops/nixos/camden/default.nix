@@ -109,14 +109,16 @@ in pkgs.lib.fix(self: {
     enable = true;
     relayConf = "/etc/tailscale.conf";
     package = pkgs.third_party.tailscale;
-    aclFile = pkgs.nix.tailscale [
-      # Allow any traffic from myself
-      {
-        Action = "accept";
-        Users = [ "mail@tazj.in" ];
-        Ports = [ "*:*" ];
-      }
-    ];
+    aclFile = pkgs.nix.tailscale {
+      ACLs = [
+        # Allow any traffic from myself
+        {
+          Action = "accept";
+          Users = [ "mail@tazj.in" ];
+          Ports = [ "*:*" ];
+        }
+      ];
+    } ;
   };
 
   # serve my website
