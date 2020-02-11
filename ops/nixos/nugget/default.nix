@@ -11,6 +11,10 @@ config: let
 
   lieer = (pkgs.third_party.lieer {});
 in pkgs.lib.fix(self: {
+  imports = [
+    ../modules/tailscale.nix
+  ];
+
   hardware = {
     pulseaudio.enable = true;
     cpu.intel.updateMicrocode = true;
@@ -235,6 +239,14 @@ in pkgs.lib.fix(self: {
         OnActiveSec = "1";
         OnUnitActiveSec = "180";
       };
+    };
+
+    # Use Tailscale \o/
+    services.tailscale = {
+      enable = true;
+      relayConf = "/etc/tailscale/relay.conf";
+      aclFile = null; # allow all traffic for testing
+      package = pkgs.third_party.tailscale;
     };
 
     # ... and other nonsense.
