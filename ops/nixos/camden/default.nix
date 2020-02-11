@@ -100,8 +100,15 @@ in pkgs.lib.fix(self: {
   services.tailscale = {
     enable = true;
     relayConf = "/etc/tailscale.conf";
-    aclFile = null; # allow all traffic for testing
     package = pkgs.third_party.tailscale;
+    aclFile = pkgs.nix.tailscale [
+      # Allow any traffic from myself
+      {
+        Action = "accept";
+        Users = [ "mail@tazj.in" ];
+        Ports = [ "*:*" ];
+      }
+    ];
   };
 
   system.stateVersion = "19.09";
