@@ -23,6 +23,10 @@ let
       echo "Rebuilding NixOS for //ops/nixos/nugget"
       system=$(nix-build -E '(import <depot> {}).ops.nixos.nuggetSystem' --no-out-link)
       ;;
+    camden)
+      echo "Rebuilding NixOS for //ops/nixos/camden"
+      system=$(nix-build -E '(import <depot> {}).ops.nixos.camdenSystem' --no-out-link)
+      ;;
     *)
       echo "$HOSTNAME is not a known NixOS host!" >&2
       exit 1
