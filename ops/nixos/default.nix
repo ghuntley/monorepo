@@ -11,8 +11,6 @@ let
     );
   }).system;
 
-  nuggetSystem = systemFor [ pkgs.ops.nixos.nugget ];
-
   rebuilder = pkgs.third_party.writeShellScriptBin "rebuilder" ''
     set -ue
     if [[ $EUID -ne 0 ]]; then
@@ -35,5 +33,8 @@ let
     $system/bin/switch-to-configuration switch
   '';
 in {
-  inherit nuggetSystem rebuilder;
+  inherit rebuilder;
+
+  nuggetSystem = systemFor [ pkgs.ops.nixos.nugget ];
+  camdenSystem = systemFor [ pkgs.ops.nixos.camden ];
 }

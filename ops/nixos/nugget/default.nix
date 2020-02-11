@@ -1,10 +1,8 @@
-# This file contains the configuration for my home desktop.
+# This file configures nugget, my home desktop machine.
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 config: let
-  inherit (pkgs) lib;
-
   nixpkgs = import pkgs.third_party.nixpkgsSrc {
     config.allowUnfree = true;
   };
