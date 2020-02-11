@@ -16,6 +16,8 @@ in buildGoModule rec {
     sha256 = "1islxzr8lhnl2f0r686mcciwb8lzvqjczg9fs0nagr5pp6dsi9fa";
   };
 
+  patches = [ ./0001-fix-client-logger.patch ];
+
   goPackagePath = "tailscale.com";
   modSha256 = "0cnih9flwgqjq4x4cwyac9yyz1prv2i2by1ki3g71ai8q621bq10";
   subPackages = [
