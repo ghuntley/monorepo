@@ -7,6 +7,8 @@ config: let
     config.allowUnfree = true;
   };
 in pkgs.lib.fix(self: {
+  imports = [ ../modules/tailscale.nix ];
+
   # camden is intended to boot unattended, despite having an encrypted
   # root partition.
   #
@@ -72,9 +74,17 @@ in pkgs.lib.fix(self: {
 
   # System-wide application setup
   programs.fish.enable = true;
-  environment.systemPackages = with nixpkgs; [
-    curl emacs26-nox git gnupg pass pciutils
-  ];
+  environment.systemPackages =
+    # programs from the depot
+    (with pkgs; [
+      third_party.git
+      third_party.tailscale
+    ]) ++
+
+    # programs from nixpkgs
+    (with nixpkgs; [
+      curl emacs26-nox gnupg pass pciutils direnv
+    ]);
 
   # Services setup
   services.openssh.enable = true;
@@ -84,6 +94,14 @@ in pkgs.lib.fix(self: {
     uid = 1000;
     extraGroups = [ "wheel" ];
     shell = nixpkgs.fish;
+  };
+
+  # Join Tailscale into home network
+  services.tailscale = {
+    enable = true;
+    relayConf = "/etc/tailscale.conf";
+    aclFile = null; # allow all traffic for testing
+    package = pkgs.third_party.tailscale;
   };
 
   system.stateVersion = "19.09";
