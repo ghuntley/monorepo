@@ -93,15 +93,16 @@ in pkgs.lib.fix(self: {
       curl emacs26-nox gnupg pass pciutils direnv
     ]);
 
-  # Services setup
-  services.openssh.enable = true;
-
   users.users.tazjin = {
     isNormalUser = true;
     uid = 1000;
     extraGroups = [ "wheel" ];
     shell = nixpkgs.fish;
   };
+
+  # Services setup
+  services.openssh.enable = true;
+  services.haveged.enable = true;
 
   # Join Tailscale into home network
   services.tailscale = {
