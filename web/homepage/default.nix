@@ -65,12 +65,8 @@ let
   ));
 
   homepage = index ((map postToEntry web.blog.posts) ++ (import ./entries.nix));
-  website = runCommandNoCC "website" {} ''
-    mkdir $out
-    cp ${homepage} $out/index.html
-    cp -r ${./static} $out/static
-  '';
-in third_party.callPackage ./nginx.nix {
-  inherit website;
-  blog = web.blog;
-}
+in runCommandNoCC "website" {} ''
+  mkdir $out
+  cp ${homepage} $out/index.html
+  cp -r ${./static} $out/static
+''

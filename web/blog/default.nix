@@ -7,7 +7,7 @@
 with pkgs.nix.yants;
 
 let
-  inherit (builtins) filter;
+  inherit (builtins) filter hasAttr map;
 
   # Type definition for a single blog post.
   post = struct "blog-post" {
@@ -48,4 +48,12 @@ in {
 
   # Only include listed posts
   posts = filter includePost posts;
+
+  # Generate embeddable nginx configuration for redirects from old post URLs
+  oldRedirects = lib.concatStringsSep "\n" (map (post: ''
+    location ~* ^(/en)?/${post.oldKey} {
+      # TODO(tazjin): 301 once this works
+      return 302 https://tazj.in/blog/${post.key};
+    }
+  '') (filter (hasAttr "oldKey") posts));
 }
