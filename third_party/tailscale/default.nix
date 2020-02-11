@@ -5,7 +5,7 @@
 
 let
   inherit (pkgs.third_party) buildGoModule fetchFromGitHub;
-in buildGoModule {
+in buildGoModule rec {
   pname = "tailscale";
   version = "fef25489";
 
@@ -24,6 +24,11 @@ in buildGoModule {
     "cmd/tailscale"
     "cmd/tailscaled"
   ];
+
+  postInstall = ''
+    mkdir -p $out/etc/
+    cp ${src}/cmd/relaynode/acl.json $out/etc/
+  '';
 
   meta = with lib; {
     homepage = "https://tailscale.com/";
