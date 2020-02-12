@@ -28,18 +28,17 @@ let
 
     # Repository configuration
     repo.url=depot
-    repo.path=/git/depot/
+    repo.path=/var/git/depot/
     repo.desc=tazjin's personal monorepo
     repo.owner=tazjin <mail@tazj.in>
-    repo.clone-url=https://git.tazj.in ssh://source.developers.google.com:2022/p/tazjins-infrastructure/r/depot
+    repo.clone-url=https://git.tazj.in
   '';
 
   thttpdConfig = writeText "thttpd.conf" ''
-    port=8080
+    port=2448
     dir=${cgit}/cgit
     nochroot
     novhost
-    logfile=/dev/stdout
     cgipat=**.cgi
   '';
 
