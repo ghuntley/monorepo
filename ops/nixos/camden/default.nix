@@ -93,11 +93,21 @@ in pkgs.lib.fix(self: {
       curl emacs26-nox gnupg pass pciutils direnv
     ]);
 
-  users.users.tazjin = {
-    isNormalUser = true;
-    uid = 1000;
-    extraGroups = [ "wheel" ];
-    shell = nixpkgs.fish;
+  users = {
+    # Set up my own user for logging in and doing things ...
+    users.tazjin = {
+      isNormalUser = true;
+      uid = 1000;
+      extraGroups = [ "git" "wheel" ];
+      shell = nixpkgs.fish;
+    };
+
+    # Set up a user & group for general git shenanigans
+    groups.git = {};
+    users.git = {
+      group = "git";
+      isNormalUser = false;
+    };
   };
 
   # Services setup
@@ -119,6 +129,18 @@ in pkgs.lib.fix(self: {
         }
       ];
     } ;
+  };
+
+  # Run cgit for the depot. The onion here is nginx(thttpd(cgit)).
+  systemd.services.cgit = {
+    wantedBy = [ "multi-user.target" ];
+    script = "${pkgs.web.cgit-taz}/bin/cgit-launch";
+
+    serviceConfig = {
+      Restart = "on-failure";
+      User = "git";
+      Group = "git";
+    };
   };
 
   # serve my website
