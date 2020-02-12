@@ -149,6 +149,9 @@ in pkgs.lib.fix(self: {
     user = "nginx";
     group = "nginx";
     webroot = "/var/lib/acme/acme-challenge";
+    extraDomains = {
+      "git.camden.tazj.in" = null;
+    };
     postRun = "systemctl reload nginx";
   };
 
@@ -204,6 +207,24 @@ in pkgs.lib.fix(self: {
 
         location /blobs/ {
           alias /var/www/blobs/;
+        }
+      '';
+    };
+
+    virtualHosts.cgit = {
+      serverName = "git.camden.tazj.in";
+      useACMEHost = "camden.tazj.in";
+      addSSL = true;
+
+      extraConfig = ''
+        # Static assets must always hit the root.
+        location ~ ^/(favicon\.ico|cgit\.(css|png))$ {
+           proxy_pass http://localhost:2448;
+        }
+
+        # Everything else hits the depot directly.
+        location / {
+            proxy_pass http://localhost:2448/cgit.cgi/depot/;
         }
       '';
     };
