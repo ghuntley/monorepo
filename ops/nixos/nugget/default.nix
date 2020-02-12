@@ -68,6 +68,13 @@ in pkgs.lib.fix(self: {
         psk = "washyourface";
       };
     };
+
+    # The current home router can't forward ports on the local
+    # network, but I'd like to test if camden is serving the correct
+    # certificates.
+    extraHosts = ''
+      192.168.1.205 camden camden.tazj.in git.camden.tazj.in
+    '';
   };
 
   # Generate an immutable /etc/resolv.conf from the nameserver settings
