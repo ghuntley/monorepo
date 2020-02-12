@@ -143,14 +143,23 @@ in pkgs.lib.fix(self: {
     };
   };
 
+  # Provision a TLS certificate outside of nginx to avoid
+  # nixpkgs#38144
+  security.acme.certs."camden.tazj.in" = {
+    user = "nginx";
+    group = "nginx";
+    webroot = "/var/lib/acme/acme-challenge";
+    postRun = "systemctl reload nginx";
+  };
+
   # serve my website
   services.nginx = {
     enable = true;
     enableReload = true;
 
-    # recommendedTlsSettings = true;
-    # recommendedGzipSettings = true;
-    # recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+    recommendedGzipSettings = true;
+    recommendedProxySettings = true;
 
     commonHttpConfig = ''
       log_format json_combined escape=json
@@ -172,7 +181,7 @@ in pkgs.lib.fix(self: {
     virtualHosts.homepage = {
       serverName = "camden.tazj.in"; # TODO(tazjin): change to actual host later
       default = true;
-      enableACME = true;
+      useACMEHost = "camden.tazj.in";
       root = pkgs.web.homepage;
       addSSL = true;
 
