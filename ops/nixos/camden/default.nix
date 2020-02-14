@@ -145,16 +145,6 @@ in pkgs.lib.fix(self: {
 
   # Provision a TLS certificate outside of nginx to avoid
   # nixpkgs#38144
-  security.acme.certs."camden.tazj.in" = {
-    user = "nginx";
-    group = "nginx";
-    webroot = "/var/lib/acme/acme-challenge";
-    extraDomains = {
-      "git.camden.tazj.in" = null;
-    };
-    postRun = "systemctl reload nginx";
-  };
-
   security.acme.certs."tazj.in" = {
     user = "nginx";
     group = "nginx";
@@ -162,6 +152,10 @@ in pkgs.lib.fix(self: {
     extraDomains = {
       "git.tazj.in" = null;
       "www.tazj.in" = null;
+
+      # Local domains (for this machine only)
+      "camden.tazj.in" = null;
+      "git.camden.tazj.in" = null;
     };
     postRun = "systemctl reload nginx";
   };
@@ -193,7 +187,8 @@ in pkgs.lib.fix(self: {
     '';
 
     virtualHosts.homepage = {
-      serverName = "tazj.in"; # TODO(tazjin): change to actual host later
+      serverName = "tazj.in";
+      serverAliases = [ "camden.tazj.in" ];
       default = true;
       useACMEHost = "tazj.in";
       root = pkgs.web.homepage;
@@ -224,6 +219,7 @@ in pkgs.lib.fix(self: {
 
     virtualHosts.cgit = {
       serverName = "git.tazj.in";
+      serverAliases = [ "git.camden.tazj.in" ];
       useACMEHost = "tazj.in";
       addSSL = true;
 
