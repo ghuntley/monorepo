@@ -155,6 +155,17 @@ in pkgs.lib.fix(self: {
     postRun = "systemctl reload nginx";
   };
 
+  security.acme.certs."tazj.in" = {
+    user = "nginx";
+    group = "nginx";
+    webroot = "/var/lib/acme/acme-challenge";
+    extraDomains = {
+      "git.tazj.in" = null;
+      "www.tazj.in" = null;
+    };
+    postRun = "systemctl reload nginx";
+  };
+
   # serve my website
   services.nginx = {
     enable = true;
@@ -182,9 +193,9 @@ in pkgs.lib.fix(self: {
     '';
 
     virtualHosts.homepage = {
-      serverName = "camden.tazj.in"; # TODO(tazjin): change to actual host later
+      serverName = "tazj.in"; # TODO(tazjin): change to actual host later
       default = true;
-      useACMEHost = "camden.tazj.in";
+      useACMEHost = "tazj.in";
       root = pkgs.web.homepage;
       addSSL = true;
 
@@ -212,8 +223,8 @@ in pkgs.lib.fix(self: {
     };
 
     virtualHosts.cgit = {
-      serverName = "git.camden.tazj.in";
-      useACMEHost = "camden.tazj.in";
+      serverName = "git.tazj.in";
+      useACMEHost = "tazj.in";
       addSSL = true;
 
       extraConfig = ''
