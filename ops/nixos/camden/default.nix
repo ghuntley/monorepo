@@ -92,7 +92,14 @@ in pkgs.lib.fix(self: {
 
     # programs from nixpkgs
     (with nixpkgs; [
-      curl emacs26-nox gnupg pass pciutils direnv
+      curl
+      direnv
+      emacs26-nox
+      gnupg
+      htop
+      pass
+      pciutils
+      pounce
     ]);
 
   users = {
