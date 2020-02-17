@@ -88,6 +88,7 @@ in pkgs.lib.fix(self: {
     (with pkgs; [
       third_party.git
       third_party.tailscale
+      third_party.pounce
     ]) ++
 
     # programs from nixpkgs
@@ -99,7 +100,6 @@ in pkgs.lib.fix(self: {
       htop
       pass
       pciutils
-      pounce
     ]);
 
   users = {
