@@ -81,6 +81,8 @@ in pkgs.lib.fix(self: {
 
   # System-wide application setup
   programs.fish.enable = true;
+  programs.mosh.enable = true;
+
   environment.systemPackages =
     # programs from the depot
     (with pkgs; [
