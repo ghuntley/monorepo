@@ -66,6 +66,8 @@ in pkgs.lib.fix(self: {
       "depot=/home/tazjin/depot"
       "nixpkgs=${pkgs.third_party.nixpkgsSrc}"
     ];
+
+    trustedUsers = [ "root" "tazjin" ];
   };
   nixpkgs.pkgs = nixpkgs;
 
