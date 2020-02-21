@@ -170,6 +170,14 @@ in lib.fix(self: {
     postRun = "systemctl reload nginx";
   };
 
+  # Forward logs to Google Cloud Platform
+  services.journaldriver = {
+    enable                 = true;
+    logStream              = "home";
+    googleCloudProject     = "tazjins-infrastructure";
+    applicationCredentials = "/etc/gcp/key.json";
+  };
+
   # serve my website
   services.nginx = {
     enable = true;
