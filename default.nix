@@ -15,8 +15,12 @@ let
   fix = f: let x = f x; in x;
 
   # Global configuration that all packages are called with.
-  config = pkgs: {
-    inherit pkgs;
+  config = depot: {
+    inherit depot;
+
+    # Pass third_party as 'pkgs' (for compatibility with external
+    # imports for certain subdirectories)
+    pkgs = depot.third_party;
 
     kms = {
       project = "tazjins-infrastructure";
@@ -58,5 +62,5 @@ in fix(self: {
 #
 # This can be used to move things from third_party into the top-level, too (such
 # as `lib`).
-// (readTree' { pkgs = self; }) ./overrides
+// (readTree' { depot = self; pkgs = self.third_party; }) ./overrides
 )
