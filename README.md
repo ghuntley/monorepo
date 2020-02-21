@@ -31,6 +31,8 @@ Twitter][].
   but actually uses Google Cloud KMS for secret decryption
 * `ops/kontemplate` contains my Kubernetes resource templating tool (with which
   the services in this repository are deployed!)
+* `ops/besadii` contains a tool that runs as the git
+  `post-receive`-hook on my git server to trigger builds on sourcehut.
 
 ## Packages / Libraries
 
@@ -57,9 +59,6 @@ using [Nixery]().
   (serving at [tazj.in][])
 * `web/cgit-taz` contains a slightly patched version of `cgit` that serves my
   git web interface at [git.tazj.in][]
-* `ops/sync-gcsr` contains a tiny service that synchronises a Google Cloud
-  Source Repository with a local disk path. My `cgit` setup uses this
-  under-the-hood.
 * `ops/journaldriver` contains a small Rust daemon that can forward logs from
   journald to Stackdriver Logging
 
