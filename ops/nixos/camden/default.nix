@@ -99,6 +99,7 @@ in lib.fix(self: {
       emacs26-nox
       gnupg
       htop
+      jq
       pass
       pciutils
     ]);
