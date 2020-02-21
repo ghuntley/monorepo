@@ -167,7 +167,6 @@ in depot.lib.fix(self: {
       fonts = with nixpkgs; [
         corefonts
         dejavu_fonts
-        input-fonts
         jetbrains-mono
         noto-fonts-cjk
         noto-fonts-emoji
