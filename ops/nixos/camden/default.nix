@@ -195,7 +195,7 @@ in lib.fix(self: {
           '"method":"$request_method",'
           '"uri":"$request_uri",'
           '"status":$status,'
-          '"request_size":$request_length,
+          '"request_size":$request_length,'
           '"response_size":$body_bytes_sent,'
           '"response_time":$request_time,'
           '"referrer":"$http_referer",'
