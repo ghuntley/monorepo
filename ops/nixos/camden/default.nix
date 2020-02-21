@@ -191,15 +191,15 @@ in lib.fix(self: {
     commonHttpConfig = ''
       log_format json_combined escape=json
       '{'
-          '"time_local":"$time_local",'
           '"remote_addr":"$remote_addr",'
-          '"remote_user":"$remote_user",'
-          '"request":"$request",'
-          '"status": "$status",'
-          '"body_bytes_sent":"$body_bytes_sent",'
-          '"request_time":"$request_time",'
-          '"http_referrer":"$http_referer",'
-          '"http_user_agent":"$http_user_agent"'
+          '"method":"$request_method",'
+          '"uri":"$request_uri",'
+          '"status":$status,'
+          '"request_size":$request_length,
+          '"response_size":$body_bytes_sent,'
+          '"response_time":$request_time,'
+          '"referrer":"$http_referer",'
+          '"user_agent":"$http_user_agent"'
       '}';
 
       access_log syslog:server=unix:/dev/log,nohostname json_combined;
