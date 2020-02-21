@@ -202,7 +202,7 @@ in lib.fix(self: {
           '"http_user_agent":"$http_user_agent"'
       '}';
 
-      access_log syslog:server=unix:/dev/log json_combined;
+      access_log syslog:server=unix:/dev/log,nohostname json_combined;
     '';
 
     virtualHosts.homepage = {
