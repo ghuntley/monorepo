@@ -84,7 +84,7 @@ func main() {
 	failOn(err, "could not deserialise listings:")
 
 	ctx := context.Background()
-	apiKey = os.Getenv("MAPS_API_KEY", "")
+	apiKey := os.Getenv("MAPS_API_KEY")
 	if apiKey == "" {
 		log.Fatalln("API key must be supplied via MAPS_API_KEY")
 	}
