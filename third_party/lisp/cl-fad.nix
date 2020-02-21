@@ -1,9 +1,9 @@
 # Portable pathname library
-{ pkgs, ...}:
+{ depot, ...}:
 
-with pkgs.nix;
+with depot.nix;
 
-let src = pkgs.third_party.fetchFromGitHub {
+let src = depot.third_party.fetchFromGitHub {
   owner = "edicl";
   repo = "cl-fad";
   rev = "c13d81c4bd9ba3a172631fd05dd213ab90e7d4cb";
@@ -12,7 +12,7 @@ let src = pkgs.third_party.fetchFromGitHub {
 in buildLisp.library {
   name = "cl-fad";
 
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     alexandria
     bordeaux-threads
     (buildLisp.bundled "sb-posix")

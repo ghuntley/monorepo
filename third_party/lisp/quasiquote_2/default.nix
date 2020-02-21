@@ -1,11 +1,11 @@
 # Quasiquote more suitable for macros that define other macros
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.nix.buildLisp.library {
+depot.nix.buildLisp.library {
   name = "quasiquote-2.0";
 
   deps = [
-    pkgs.third_party.lisp.iterate
+    depot.third_party.lisp.iterate
   ];
 
   srcs = [

@@ -17,7 +17,7 @@
   project ? "tazjins-infrastructure"
 }:
 
-with pkgs.third_party;
+with pkgs;
 
 let
   authPatch = runCommand "client_secret.patch" {} ''

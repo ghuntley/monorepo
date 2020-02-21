@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.buildGo.external {
+depot.buildGo.external {
   path = "github.com/mitchellh/go-homedir";
 
-  src = pkgs.third_party.fetchFromGitHub {
+  src = depot.third_party.fetchFromGitHub {
     owner = "mitchellh";
     repo = "go-homedir";
     rev = "af06845cf3004701891bf4fdb884bfe4920b3727";

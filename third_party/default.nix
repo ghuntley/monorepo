@@ -2,8 +2,8 @@
 # third-party code) into my package tree.
 #
 # This includes *all packages needed from nixpkgs*.
+{ ... }:
 
-{ pkgs, ... }:
 let
   # Tracking nixos-unstable as of 2020-02-17.
   commit = "8130f3c1c2bb0e533b5e150c39911d6e61dcecc2";

@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.buildGo.external {
+depot.buildGo.external {
   path = "github.com/google/uuid";
 
-  src = pkgs.third_party.fetchFromGitHub {
+  src = depot.third_party.fetchFromGitHub {
     owner = "google";
     repo = "uuid";
     rev = "c2e93f3ae59f2904160ceaab466009f965df46d6";

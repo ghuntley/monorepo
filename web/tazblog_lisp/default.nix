@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.nix.buildLisp.library {
+depot.nix.buildLisp.library {
   name = "tazblog";
 
   deps =

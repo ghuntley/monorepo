@@ -5,9 +5,9 @@
 # elements for things such as blog posts and projects.
 #
 # Content for the blog is in //web/blog instead of here.
-{ pkgs, lib, ... }:
+{ depot, lib, ... }:
 
-with pkgs;
+with depot;
 with nix.yants;
 
 let

@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
 let
-  inherit (pkgs.nix) buildLisp;
+  inherit (depot.nix) buildLisp;
 
   # Example Lisp library.
   #

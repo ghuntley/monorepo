@@ -1,7 +1,7 @@
 # Imported from https://github.com/didierverna/asdf-flv
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.nix;
+with depot.nix;
 buildLisp.library {
   name = "asdf-flv";
   deps = [ (buildLisp.bundled "asdf") ];

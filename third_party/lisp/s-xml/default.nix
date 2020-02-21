@@ -1,9 +1,9 @@
 # XML serialiser for Common Lisp.
 #
 # This system was imported from a Quicklisp tarball at 's-xml-20150608'.
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.nix.buildLisp.library {
+depot.nix.buildLisp.library {
   name = "s-xml";
 
   srcs = [

@@ -1,3 +1,3 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.third_party.naersk.buildPackage ./.
+depot.third_party.naersk.buildPackage ./.

@@ -7,9 +7,9 @@
 # Forcing Emacs to link against Imagemagick currently causes libvterm
 # to segfault, which is a lot less desirable than not having telega
 # render images correctly.
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs;
+with depot;
 with third_party.emacsPackagesNg;
 with third_party.emacs;
 
@@ -115,7 +115,7 @@ let
   ]) ++
 
   # Custom packages
-  (with pkgs.tools.emacs-pkgs; [
+  (with depot.tools.emacs-pkgs; [
     carp-mode
     exwmMaster
     dottime

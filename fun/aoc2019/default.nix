@@ -1,7 +1,7 @@
 # Solutions for Advent of Code 2019, written in Emacs Lisp.
 #
 # For each day a new file is created as "solution-day$n.el".
-{ pkgs, ... }:
+{ depot, ... }:
 
 let
   inherit (builtins) attrNames filter head listToAttrs match readDir;
@@ -13,7 +13,7 @@ let
   solutionFiles = filter (e: dir."${e}" == "regular" && isSolution e) (attrNames dir);
   solutions = map (f: let day = getDay f; in {
     name = day;
-    value = pkgs.writeElispBin {
+    value = depot.writeElispBin { # TODO(tazjin): move writeElispBin to depot.nix
       name = "aoc2019";
       deps = p: with p; [ dash s ht ];
       src = ./. + ("/" + f);

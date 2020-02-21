@@ -1,8 +1,8 @@
 # Use the upstream git derivation (there's a lot of stuff happening in
 # there!) and just override the source:
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.third_party;
+with depot.third_party;
 
 (originals.git.overrideAttrs(_: {
   version = "2.23.0";

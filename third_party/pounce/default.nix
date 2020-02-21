@@ -4,7 +4,7 @@
 # nixos-unstable.
 { pkgs, ... }:
 
-with pkgs.third_party;
+with pkgs;
 
 originals.pounce.overrideAttrs(old: rec {
   version = "1.1";

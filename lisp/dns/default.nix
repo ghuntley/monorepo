@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.nix.buildLisp.library {
+depot.nix.buildLisp.library {
   name = "dns";
 
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     drakma
     lisp-binary
     iterate

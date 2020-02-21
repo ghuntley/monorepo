@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.buildGo.external {
+depot.buildGo.external {
   path = "github.com/golang/groupcache";
   src = builtins.fetchGit {
     url = "https://github.com/golang/groupcache";

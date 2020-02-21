@@ -1,14 +1,13 @@
 # This file configures nugget, my home desktop machine.
-
-{ pkgs, lib, ... }:
+{ depot, lib, ... }:
 
 config: let
-  nixpkgs = import pkgs.third_party.nixpkgsSrc {
+  nixpkgs = import depot.third_party.nixpkgsSrc {
     config.allowUnfree = true;
   };
 
-  lieer = (pkgs.third_party.lieer {});
-in pkgs.lib.fix(self: {
+  lieer = (depot.third_party.lieer {});
+in depot.lib.fix(self: {
   imports = [
     ../modules/tailscale.nix
   ];
@@ -39,7 +38,7 @@ in pkgs.lib.fix(self: {
   nix = {
     nixPath = [
       "depot=/home/tazjin/depot"
-      "nixpkgs=${pkgs.third_party.nixpkgsSrc}"
+      "nixpkgs=${depot.third_party.nixpkgsSrc}"
     ];
   };
 
@@ -79,8 +78,8 @@ in pkgs.lib.fix(self: {
 
   # Generate an immutable /etc/resolv.conf from the nameserver settings
   # above (otherwise DHCP overwrites it):
-  environment.etc."resolv.conf" = with lib; with pkgs; {
-    source = writeText "resolv.conf" ''
+  environment.etc."resolv.conf" = with lib; {
+    source = depot.third_party.writeText "resolv.conf" ''
       ${concatStringsSep "\n" (map (ns: "nameserver ${ns}") self.networking.nameservers)}
       options edns0
     '';
@@ -90,7 +89,7 @@ in pkgs.lib.fix(self: {
 
   environment.systemPackages =
     # programs from the depot
-    (with pkgs; [
+    (with depot; [
       lieer
       ops.kontemplate
       third_party.git
@@ -217,9 +216,9 @@ in pkgs.lib.fix(self: {
         lightdm.greeters.gtk.clock-format = "%H·%M";
       };
 
-      windowManager.session = pkgs.lib.singleton {
+      windowManager.session = lib.singleton {
         name = "exwm";
-        start = "${pkgs.tools.emacs}/bin/tazjins-emacs";
+        start = "${depot.tools.emacs}/bin/tazjins-emacs";
       };
     };
 
@@ -251,7 +250,7 @@ in pkgs.lib.fix(self: {
       enable = true;
       relayConf = "/etc/tailscale/relay.conf";
       aclFile = null; # allow all traffic for testing
-      package = pkgs.third_party.tailscale;
+      package = depot.third_party.tailscale;
     };
 
     # ... and other nonsense.

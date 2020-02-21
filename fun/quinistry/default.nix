@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.buildGo.program {
+depot.nix.buildGo.program {
   name = "quinistry";
   srcs = [
     ./const.go

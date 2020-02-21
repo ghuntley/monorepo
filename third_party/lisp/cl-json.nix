@@ -1,8 +1,8 @@
 # JSON encoder & decoder
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.nix;
-let src = pkgs.third_party.fetchFromGitHub {
+with depot.nix;
+let src = depot.third_party.fetchFromGitHub {
   owner = "hankhero";
   repo = "cl-json";
   rev = "6dfebb9540bfc3cc33582d0c03c9ec27cb913e79";

@@ -1,9 +1,9 @@
 # Common Lisp library for decompressing deflate, zlib, gzip, and bzip2 data
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.nix;
+with depot.nix;
 
-let src = pkgs.third_party.fetchFromGitHub {
+let src = depot.third_party.fetchFromGitHub {
   owner = "froydnj";
   repo = "chipz";
   rev = "75dfbc660a5a28161c57f115adf74c8a926bfc4d";

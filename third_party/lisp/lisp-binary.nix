@@ -1,16 +1,16 @@
 # A library to easily read and write complex binary formats.
-{ pkgs, ... }:
+{ depot, ... }:
 
-let src = pkgs.third_party.fetchFromGitHub {
+let src = depot.third_party.fetchFromGitHub {
   owner = "j3pic";
   repo = "lisp-binary";
   rev = "1aefc8618b7734f68697ddf59bc93cb8522aa0bf";
   sha256 = "1hflzn3mjp32jz9fxx9wayp3c3x58s77cgjfbs06nrynqkv0c6df";
 };
-in pkgs.nix.buildLisp.library {
+in depot.nix.buildLisp.library {
   name = "lisp-binary";
 
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     cffi
     quasiquote_2
     moptilities

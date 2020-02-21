@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
 let
-  inherit (pkgs.third_party) stdenv gzip bzip2 xz luajit zlib autoconf openssl pkgconfig;
+  inherit (depot.third_party) stdenv gzip bzip2 xz luajit zlib autoconf openssl pkgconfig;
 in stdenv.mkDerivation rec {
   pname = "cgit";
   version = "master";
@@ -22,7 +22,7 @@ in stdenv.mkDerivation rec {
   # git version).
   preBuild = ''
     rm -rf git # remove submodule dir ...
-    cp -r --no-preserve=ownership,mode ${pkgs.third_party.git.src} git
+    cp -r --no-preserve=ownership,mode ${depot.third_party.git.src} git
     makeFlagsArray+=(prefix="$out" CGIT_SCRIPT_PATH="$out/cgit/")
   '';
 

@@ -2,9 +2,9 @@
 #
 # https://tailscale.com/kb/1018/install-acls
 
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.nix.yants;
+with depot.nix.yants;
 
 let
   inherit (builtins) toFile toJSON;

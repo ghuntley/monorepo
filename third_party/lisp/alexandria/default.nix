@@ -2,9 +2,9 @@
 # pretty much everything depends on:
 #
 # Imported from https://common-lisp.net/project/alexandria/
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.nix.buildLisp.library {
+depot.nix.buildLisp.library {
   name = "alexandria";
   srcs = [
     ./package.lisp

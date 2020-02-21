@@ -1,12 +1,11 @@
 # This file configures camden.tazj.in, my homeserver.
-
-{ pkgs, lib, ... }:
+{ depot, lib, ... }:
 
 config: let
-  nixpkgs = import pkgs.third_party.nixpkgsSrc {
+  nixpkgs = import depot.third_party.nixpkgsSrc {
     config.allowUnfree = true;
   };
-in pkgs.lib.fix(self: {
+in lib.fix(self: {
   imports = [ ../modules/tailscale.nix ];
 
   # camden is intended to boot unattended, despite having an encrypted
@@ -64,7 +63,7 @@ in pkgs.lib.fix(self: {
 
     nixPath = [
       "depot=/home/tazjin/depot"
-      "nixpkgs=${pkgs.third_party.nixpkgsSrc}"
+      "nixpkgs=${depot.third_party.nixpkgsSrc}"
     ];
 
     trustedUsers = [ "root" "tazjin" ];
@@ -87,7 +86,7 @@ in pkgs.lib.fix(self: {
 
   environment.systemPackages =
     # programs from the depot
-    (with pkgs; [
+    (with depot; [
       third_party.git
       third_party.tailscale
       third_party.pounce
@@ -129,8 +128,8 @@ in pkgs.lib.fix(self: {
   services.tailscale = {
     enable = true;
     relayConf = "/etc/tailscale.conf";
-    package = pkgs.third_party.tailscale;
-    aclFile = pkgs.nix.tailscale {
+    package = depot.third_party.tailscale;
+    aclFile = depot.nix.tailscale {
       ACLs = [
         # Allow any traffic from myself
         {
@@ -145,7 +144,7 @@ in pkgs.lib.fix(self: {
   # Run cgit for the depot. The onion here is nginx(thttpd(cgit)).
   systemd.services.cgit = {
     wantedBy = [ "multi-user.target" ];
-    script = "${pkgs.web.cgit-taz}/bin/cgit-launch";
+    script = "${depot.web.cgit-taz}/bin/cgit-launch";
 
     serviceConfig = {
       Restart = "on-failure";
@@ -202,18 +201,18 @@ in pkgs.lib.fix(self: {
       serverAliases = [ "camden.tazj.in" ];
       default = true;
       useACMEHost = "tazj.in";
-      root = pkgs.web.homepage;
+      root = depot.web.homepage;
       addSSL = true;
 
       extraConfig = ''
-        ${pkgs.web.blog.oldRedirects}
+        ${depot.web.blog.oldRedirects}
 
         location ~* \.(webp|woff2)$ {
           add_header Cache-Control "public, max-age=31536000";
         }
 
         location /blog/ {
-          alias ${pkgs.web.blog.rendered}/;
+          alias ${depot.web.blog.rendered}/;
 
           if ($request_uri ~ ^/(.*)\.html$) {
             return 302 /$1;

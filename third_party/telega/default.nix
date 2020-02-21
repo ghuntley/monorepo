@@ -2,7 +2,7 @@
 # component to run correctly, which is built by this derivation.
 { pkgs, ... }:
 
-with pkgs.third_party;
+with pkgs;
 
 stdenv.mkDerivation {
   name = "telega";

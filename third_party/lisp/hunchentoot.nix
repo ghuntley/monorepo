@@ -1,14 +1,14 @@
 # Hunchentoot is a web framework for Common Lisp.
-{ pkgs, ...}:
+{ depot, ...}:
 
 let
-  src = pkgs.third_party.fetchFromGitHub {
+  src = depot.third_party.fetchFromGitHub {
     owner = "edicl";
     repo = "hunchentoot";
     rev = "585b45b6b873f2da421fdf456b61860ab5868207";
     sha256 = "13nazwix067mdclq9vgjhsi2vpr57a8dz51dd5d3h99ccsq4mik5";
   };
-  url-rewrite = pkgs.nix.buildLisp.library {
+  url-rewrite = depot.nix.buildLisp.library {
     name = "url-rewrite";
 
     srcs = map (f: src + ("/url-rewrite/" + f)) [
@@ -19,10 +19,10 @@ let
       "url-rewrite.lisp"
     ];
   };
-in pkgs.nix.buildLisp.library {
+in depot.nix.buildLisp.library {
   name = "hunchentoot";
 
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     alexandria
     bordeaux-threads
     chunga

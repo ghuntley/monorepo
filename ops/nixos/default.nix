@@ -1,17 +1,15 @@
-# TODO(tazjin): rename 'pkgs' -> 'depot'?
-{ pkgs, ... }:
+{ depot, lib, ... }:
 
 let
-  inherit (pkgs) lib;
   inherit (builtins) foldl';
 
-  systemFor = configs: (pkgs.third_party.nixos {
+  systemFor = configs: (depot.third_party.nixos {
     configuration = lib.fix(config:
       foldl' lib.recursiveUpdate {} (map (c: c config) configs)
     );
   }).system;
 
-  rebuilder = pkgs.third_party.writeShellScriptBin "rebuilder" ''
+  rebuilder = depot.third_party.writeShellScriptBin "rebuilder" ''
     set -ue
     if [[ $EUID -ne 0 ]]; then
       echo "Oh no! Only root is allowed to rebuild the system!" >&2
@@ -39,6 +37,6 @@ let
 in {
   inherit rebuilder;
 
-  nuggetSystem = systemFor [ pkgs.ops.nixos.nugget ];
-  camdenSystem = systemFor [ pkgs.ops.nixos.camden ];
+  nuggetSystem = systemFor [ depot.ops.nixos.nugget ];
+  camdenSystem = systemFor [ depot.ops.nixos.camden ];
 }

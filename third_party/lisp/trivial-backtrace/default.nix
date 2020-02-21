@@ -1,9 +1,8 @@
 # Imported from http://common-lisp.net/project/trivial-backtrace/trivial-backtrace.git
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.nix.buildLisp.library {
+depot.nix.buildLisp.library {
   name = "trivial-backtrace";
-  # deps = with pkgs.third_party.lisp; [ asdf ];
 
   srcs = [
     ./dev/packages.lisp

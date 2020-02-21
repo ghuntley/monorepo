@@ -1,15 +1,15 @@
 # Portable chunked streams for Common Lisp
-{ pkgs, ... }:
+{ depot, ... }:
 
-let src = pkgs.third_party.fetchFromGitHub {
+let src = depot.third_party.fetchFromGitHub {
   owner = "edicl";
   repo = "chunga";
   rev = "16330852d01dfde4dd97dee7cd985a88ea571e7e";
   sha256 = "0jzn3nyb3f22gm983rfk99smqs3mhb9ivjmasvhq9qla5cl9pyhd";
 };
-in pkgs.nix.buildLisp.library {
+in depot.nix.buildLisp.library {
   name = "chunga";
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     trivial-gray-streams
   ];
 

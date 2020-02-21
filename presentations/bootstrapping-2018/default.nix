@@ -2,7 +2,7 @@
 
 { pkgs, ... }:
 
-with pkgs.third_party;
+with pkgs;
 
 let tex = texlive.combine {
   inherit (texlive)

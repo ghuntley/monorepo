@@ -4,13 +4,13 @@
 # In the first round this will just serve my GitHub repositories until
 # I'm happy with the display.
 
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.third_party;
+with depot.third_party;
 
 let
   sourceFilter = writeShellScriptBin "cheddar-about" ''
-    exec ${pkgs.tools.cheddar}/bin/cheddar --about-filter $@
+    exec ${depot.tools.cheddar}/bin/cheddar --about-filter $@
   '';
   cgitConfig = writeText "cgitrc" ''
     # Global configuration
@@ -18,7 +18,7 @@ let
     enable-http-clone=1
     readme=:README.md
     about-filter=${sourceFilter}/bin/cheddar-about
-    source-filter=${pkgs.tools.cheddar}/bin/cheddar
+    source-filter=${depot.tools.cheddar}/bin/cheddar
     enable-log-filecount=1
     enable-log-linecount=1
     enable-follow-links=1

@@ -1,7 +1,7 @@
 # Common Lisp bindings to OpenSSL
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.nix;
+with depot.nix;
 
 let src = builtins.fetchGit {
   url = "https://github.com/cl-plus-ssl/cl-plus-ssl.git";
@@ -9,7 +9,7 @@ let src = builtins.fetchGit {
 };
 in buildLisp.library {
   name = "cl-plus-ssl";
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     alexandria
     bordeaux-threads
     cffi
@@ -21,7 +21,7 @@ in buildLisp.library {
     (buildLisp.bundled "sb-posix")
   ];
 
-  native = [ pkgs.third_party.openssl ];
+  native = [ depot.third_party.openssl ];
 
   srcs = map (f: src + ("/src/" + f)) [
     "package.lisp"

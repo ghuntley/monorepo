@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs;
+with depot;
 
 third_party.writeShellScriptBin "kontemplate" ''
   export PATH="${ops.kms_pass}/bin:$PATH"

@@ -1,13 +1,13 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.nix.buildLisp.program {
+depot.nix.buildLisp.program {
   name = "wc";
 
   srcs = [
     ./wc.lisp
   ];
 
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     unix-opts
     iterate
   ];

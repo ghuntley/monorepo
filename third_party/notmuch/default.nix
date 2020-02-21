@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-pkgs.third_party.originals.notmuch.overrideAttrs(old: {
+pkgs.originals.notmuch.overrideAttrs(old: {
   doCheck = false;
   patches = [ ./dottime.patch ] ++ (if old ? patches then old.patches else []);
 })

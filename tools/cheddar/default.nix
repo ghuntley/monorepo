@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.third_party;
+with depot.third_party;
 
 naersk.buildPackage {
   src = ./.;

@@ -1,13 +1,13 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.buildGo.program {
+depot.nix.buildGo.program {
   name = "watchblob";
   srcs = [
     ./main.go
     ./urls.go
   ];
 
-  deps = with pkgs.third_party; [
+  deps = with depot.third_party; [
     gopkgs."golang.org".x.crypto.ssh.terminal.gopkg
   ];
 }

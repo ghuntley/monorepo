@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
 let
-  inherit (pkgs) elmPackages;
-  inherit (pkgs.third_party) cacert iana-etc libredirect stdenv runCommandNoCC;
+  inherit (depot) elmPackages;
+  inherit (depot.third_party) cacert iana-etc libredirect stdenv runCommandNoCC writeText;
 
   frontend = stdenv.mkDerivation {
     name = "gemma-frontend.html";
@@ -26,17 +26,17 @@ let
     '';
   };
 
-  injectFrontend = pkgs.writeText "gemma-frontend.lisp" ''
+  injectFrontend = writeText "gemma-frontend.lisp" ''
     (in-package :gemma)
     (setq *static-file-location* "${runCommandNoCC "frontend" {} ''
       mkdir -p $out
       cp ${frontend} $out/index.html
     ''}/")
   '';
-in pkgs.nix.buildLisp.program {
+in depot.nix.buildLisp.program {
   name = "gemma";
 
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     cl-json
     cl-prevalence
     hunchentoot

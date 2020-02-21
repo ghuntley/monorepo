@@ -2,9 +2,9 @@
 # files in this repository.
 #
 # All blog posts are rendered from Markdown by cheddar.
-{ pkgs, lib, ... }@args:
+{ depot, lib, ... }@args:
 
-with pkgs.nix.yants;
+with depot.nix.yants;
 
 let
   inherit (builtins) filter hasAttr map;
@@ -33,7 +33,7 @@ let
   posts = list post (import ./posts.nix);
   fragments = import ./fragments.nix args;
 
-  rendered = pkgs.third_party.runCommandNoCC "tazjins-blog" {} ''
+  rendered = depot.third_party.runCommandNoCC "tazjins-blog" {} ''
     mkdir -p $out
 
     ${lib.concatStringsSep "\n" (map (post:

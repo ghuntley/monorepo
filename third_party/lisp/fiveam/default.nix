@@ -2,12 +2,12 @@
 #
 # Imported from https://github.com/sionescu/fiveam.git
 
-{ pkgs, ... }:
+{ depot, ... }:
 
-pkgs.nix.buildLisp.library {
+depot.nix.buildLisp.library {
   name = "fiveam";
 
-  deps = with pkgs.third_party.lisp; [
+  deps = with depot.third_party.lisp; [
     alexandria
     asdf-flv
     trivial-backtrace

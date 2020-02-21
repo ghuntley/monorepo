@@ -1,9 +1,9 @@
 # MD5 hash implementation
-{ pkgs, ... }:
+{ depot, ... }:
 
-with pkgs.nix;
+with depot.nix;
 
-let src = pkgs.third_party.fetchFromGitHub {
+let src = depot.third_party.fetchFromGitHub {
   owner = "pmai";
   repo = "md5";
   rev = "b1412600f60d526ee34a7ba1596ec483da7894ab";

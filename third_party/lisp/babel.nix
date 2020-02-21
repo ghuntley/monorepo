@@ -1,13 +1,13 @@
 # Babel is an encoding conversion library for Common Lisp.
-{ pkgs, ... }:
+{ depot, ... }:
 
 let src = builtins.fetchGit {
   url = "https://github.com/cl-babel/babel.git";
   rev = "ec9a17cdbdba3c1dd39609fc7961cfb3f0aa260e";
 };
-in pkgs.nix.buildLisp.library {
+in depot.nix.buildLisp.library {
   name = "babel";
-  deps = [ pkgs.third_party.lisp.alexandria ];
+  deps = [ depot.third_party.lisp.alexandria ];
 
   srcs = map (f: src + ("/src/" + f)) [
     "packages.lisp"

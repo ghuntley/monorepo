@@ -1,9 +1,9 @@
 { pkgs, ... }:
 
-{ name, src, deps ? (_: []), emacs ? pkgs.third_party.emacs26-nox }:
+{ name, src, deps ? (_: []), emacs ? pkgs.emacs26-nox }:
 
 let
-  inherit (pkgs.third_party) emacsPackagesNg emacsPackagesNgGen writeTextFile;
+  inherit (pkgs) emacsPackagesNg emacsPackagesNgGen writeTextFile;
   inherit (builtins) isString toFile;
 
   finalEmacs = (emacsPackagesNgGen emacs).emacsWithPackages deps;

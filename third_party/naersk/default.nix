@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ depot, ... }:
 
-let inherit (pkgs.third_party) callPackage fetchFromGitHub;
+let inherit (depot.third_party) callPackage fetchFromGitHub;
 in callPackage (fetchFromGitHub {
   owner = "nmattia";
   repo = "naersk";

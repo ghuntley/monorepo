@@ -4,12 +4,11 @@
 # buildLisp is designed to enforce conventions and do away with the
 # free-for-all of existing Lisp build systems.
 
-{ pkgs ? { third_party = import <nixpkgs> {}; }
-, ... }:
+{ pkgs ? import <nixpkgs> {}, ... }:
 
 let
   inherit (builtins) map elemAt match filter;
-  inherit (pkgs.third_party) lib runCommandNoCC makeWrapper writeText writeShellScriptBin sbcl;
+  inherit (pkgs) lib runCommandNoCC makeWrapper writeText writeShellScriptBin sbcl;
 
   #
   # Internal helper definitions

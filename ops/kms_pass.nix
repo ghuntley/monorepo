@@ -6,9 +6,9 @@
 #
 # Only the 'show' and 'insert' commands are supported.
 
-{ pkgs, kms, ... }:
+{ depot, kms, ... }:
 
-let inherit (pkgs.third_party) google-cloud-sdk tree writeShellScriptBin;
+let inherit (depot.third_party) google-cloud-sdk tree writeShellScriptBin;
 in (writeShellScriptBin "pass" ''
   set -eo pipefail
 

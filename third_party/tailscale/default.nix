@@ -4,7 +4,7 @@
 { pkgs, lib, ... }:
 
 let
-  inherit (pkgs.third_party) buildGoModule fetchFromGitHub;
+  inherit (pkgs) buildGoModule fetchFromGitHub;
 in buildGoModule rec {
   pname = "tailscale";
   version = "fef25489";

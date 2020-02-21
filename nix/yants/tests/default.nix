@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ depot, pkgs, ... }:
 
 with builtins;
-with pkgs.nix.yants;
+with depot.nix.yants;
 
 # Note: Derivations are not included in the tests below as they cause
 # issues with deepSeq.

@@ -1,13 +1,13 @@
 # Flexible bivalent streams for Common Lisp
-{ pkgs, ... }:
+{ depot, ... }:
 
 let src = builtins.fetchGit {
   url = "https://github.com/edicl/flexi-streams.git";
   rev = "0fd872ae32022e834ef861a67d86879cf33a6b64";
 };
-in pkgs.nix.buildLisp.library {
+in depot.nix.buildLisp.library {
   name = "flexi-streams";
-  deps = [ pkgs.third_party.lisp.trivial-gray-streams ];
+  deps = [ depot.third_party.lisp.trivial-gray-streams ];
 
   srcs = map (f: src + ("/" + f)) [
     "packages.lisp"
