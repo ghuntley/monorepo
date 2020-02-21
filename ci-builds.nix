@@ -14,13 +14,13 @@ with (import ./default.nix {}); [
   nix.buildLisp.example
   nix.yants.tests
   ops."posix_mq.rs"
+  ops.besadii
   ops.journaldriver
   ops.kms_pass
   ops.kontemplate
   ops.mq_cli
   ops.nixos.camdenSystem
   ops.nixos.nuggetSystem
-  ops.sync-gcsr
   third_party.cgit
   third_party.git
   third_party.guile
