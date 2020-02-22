@@ -5,10 +5,10 @@ possibility that it might contain valuable things. I don't know if I'm
 on track in the right direction, and your input will help me figure it
 out. Thanks!
 
-TODO(tazjin): Rewrite the last section to highlight that the primary
-UX paradigm of Emacs is *interactive text* (from which fluidity is
-derived). This ties together stuff like muscle memory being universal
-across programs.
+TODO(tazjin): Restructure sections: Intro -> Introspectability (and
+story) -> text-based UIs (which lead to fluidity, muscle memory across
+programs and "translatability" of workflows) -> Outro. It needs more
+flow!
 
 TODO(tazjin): Highlight more that it's not about editing: People can
 derive useful things from Emacs by just using magit/org/notmuch/etc.!
@@ -36,15 +36,13 @@ follow me along on a little thought experiment:
 
 ----------
 
-Imagine you have a computer running a standard, proprietary operating
-system.
+Lets say you use a proprietary spreadsheet program. You find that
+there are features in it that *almost, but not quite* do what you
+want.
 
-On it, you use a proprietary spreadsheet program. You find that there
-are features in it that *almost, but not quite* do what you want.
-
-What can you do about this? You can file a feature request to the
-company that makes it and hope they listen, but for the likes of Apple
-and Microsoft chances are they won't and there is nothing you can do.
+What can you do? You can file a feature request to the company that
+makes it and hope they listen, but for the likes of Apple and
+Microsoft chances are they won't and there is nothing you can do.
 
 Let's say you are also running an open-source program for image
 manipulation. You again find that some of its features are subtly
@@ -72,15 +70,13 @@ What if it didn't have to be this way?
 One of the core properties of Emacs is that it is *introspective* and
 *self-documenting*.
 
-For a simple example: A few years ago, I had just switched over to
-using [EXWM][], the Emacs X Window Manager. To launch applications I
-was using a program called Helm, which is similar in spirit to dmenu,
-that let me select installed programs interactively and press
-<kbd>RET</kbd> to execute them.
+For example: A few years ago, I had just switched over to using
+[EXWM][], the Emacs X Window Manager. To launch applications I was
+using an Emacs program called Helm that let me select installed
+programs interactively and press <kbd>RET</kbd> to execute them.
 
-Helm was very useful - until I discovered that if I tried to open a
-second terminal emulator while one was already running, it would
-display an error:
+This was very useful - until I discovered that if I tried to open a
+second terminal window, it would display an error:
 
     Error: urxvt is already running
 
@@ -123,8 +119,11 @@ Emacs program, and I did the following things:
 
 The whole process took maybe a minute, and the problem was now gone.
 
-For those to whom this means something: Emacs is the closest we can
-get to the experience of Lisp machines on modern hardware.
+Emacs isn't just "open-source", it actively encourages the user to
+modify it, discover what to modify and experiment while it is running.
+
+In some sense it is like the experience of the old Lisp machines, a
+paradigm that we have completely forgotten.
 
 ---------------
 
@@ -152,8 +151,10 @@ Outside of the core distribution there is a myriad of available
 programs for Emacs: [magit][] (the famous git porcelain), text-based
 [HTTP clients][], even interactive [Kubernetes frontends][k8s].
 
-What all of these tools have in common is that they can be
-introspected and composed like everything else in Emacs.
+What all of these tools have in common is that they use text-based
+user interfaces (UI elements like images are used only sparingly in
+Emacs), and that they can be introspected and composed like everything
+else in Emacs.
 
 If magit does not expose a git flag I need, it's trivial to add. If I
 want a keybinding to jump from a buffer showing me a Kubernetes pod to
