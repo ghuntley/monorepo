@@ -46,6 +46,7 @@
 (require 'cl-lib)
 (require 'ring)
 (require 'time-date)
+(require 'subr-x)
 
 (defgroup rcirc nil
   "Simple IRC client."
@@ -457,6 +458,8 @@ will be killed."
 (defvar rcirc-user-name-history nil
   "History variable for \\[rcirc] call.")
 
+(defvar rcirc-last-message-time nil)
+
 ;;;###autoload
 (defun rcirc (arg)
   "Connect to all servers in `rcirc-server-alist'.
@@ -609,6 +612,7 @@ If ARG is non-nil, instead prompt for connection parameters."
       (unless (zerop (length password))
         (rcirc-send-string process (concat "PASS " password)))
       (rcirc-send-string process (concat "NICK " nick))
+      (rcirc-send-string process "CAP LS 302")
       (rcirc-send-string process (concat "USER " user-name
                                          " 0 * :" full-name))
 
@@ -783,7 +787,28 @@ Function is called with PROCESS, COMMAND, SENDER, ARGS and LINE.")
                       (format "\"%s\" %s" text err) t)))
     (rcirc-process-server-response-1 process text)))
 
+(defun rcirc-handle-message-tags (tags)
+  (if-let* ((time (cdr (assoc "time" tags)))
+            (timestamp (floor (float-time (date-to-time time)))))
+      (setq rcirc-last-message-time timestamp)))
+
+(defun rcirc-parse-tags (tags)
+  "Parse TAGS message prefix."
+  (mapcar (lambda (tag)
+            (let ((p (split-string tag "=")))
+              `(,(car p) . ,(cadr p))))
+          (split-string tags ";")))
+
 (defun rcirc-process-server-response-1 (process text)
+
+  ;; attempt to extract and handle IRCv3 message tags (which contain server-time)
+  (if (string-match "^\\(@\\([^ ]+\\) \\)?\\(\\(:[^ ]+ \\)?[^ ]+ .+\\)$" text)
+      (let ((tags (match-string 2 text))
+            (rest (match-string 3 text)))
+        (when tags
+          (rcirc-handle-message-tags (rcirc-parse-tags tags)))
+        (setq text rest)))
+
   (if (string-match "^\\(:\\([^ ]+\\) \\)?\\([^ ]+\\) \\(.+\\)$" text)
       (let* ((user (match-string 2 text))
 	     (sender (rcirc-user-nick user))
@@ -795,11 +820,11 @@ Function is called with PROCESS, COMMAND, SENDER, ARGS and LINE.")
                (args2 (match-string 2 args))
                (args (delq nil (append (split-string args1 " " t)
 				       (list args2)))))
-        (if (not (fboundp handler))
-            (rcirc-handler-generic process cmd sender args text)
-          (funcall handler process sender args text))
-        (run-hook-with-args 'rcirc-receive-message-functions
-                            process cmd sender args text)))
+          (if (not (fboundp handler))
+              (rcirc-handler-generic process cmd sender args text)
+            (funcall handler process sender args text))
+          (run-hook-with-args 'rcirc-receive-message-functions
+                              process cmd sender args text)))
     (message "UNHANDLED: %s" text)))
 
 (defvar rcirc-responses-no-activity '("305" "306")
@@ -2459,7 +2484,10 @@ If ARG is given, opens the URL in a new browser window."
 
 (defun rcirc-markup-timestamp (_sender _response)
   (goto-char (point-min))
-  (insert (rcirc-facify (format-time-string rcirc-time-format)
+  (insert (rcirc-facify (format-time-string rcirc-time-format
+                                            (let ((time rcirc-last-message-time))
+                                              (when time (setq rcirc-last-message-time nil))
+                                              time))
 			'rcirc-timestamp)))
 
 (defun rcirc-markup-attributes (_sender _response)
@@ -2956,7 +2984,18 @@ Passwords are stored in `rcirc-authinfo' (which see)."
 
 (defun rcirc-handler-CTCP-response (process _target sender message)
   (rcirc-print process sender "CTCP" nil message t))
-
+
+(defun rcirc-handler-CAP (process _sender args _text)
+  (when (equal (cadr args) "LS")
+    (rcirc-send-string process "CAP REQ :server-time"))
+
+  (when (or (equal (cadr args) "ACK")
+            (equal (cadr args) "NAK"))
+    ;; Capability negotiation is best-effort here, I know that my
+    ;; servers support server-time and thus we end negotiation
+    ;; immediately.
+    (rcirc-send-string process "CAP END")))
+
 (defgroup rcirc-faces nil
   "Faces for rcirc."
   :group 'rcirc
