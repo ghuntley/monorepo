@@ -121,6 +121,9 @@ let
     dottime
     nix-util
     term-switcher
+
+    # patched version of rcirc
+    depot.third_party.emacs.rcirc
   ]))));
 in lib.fix(self: l: f: third_party.writeShellScriptBin "tazjins-emacs" ''
   export PATH="${emacsBinPath}:$PATH"
