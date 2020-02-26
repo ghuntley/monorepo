@@ -90,7 +90,14 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/spanner/v1/transaction.proto"
     "google/spanner/v1/type.proto"
     "google/storage/v1/storage.proto"
-    "google/storage/v1/storage_resources.proto")
+    "google/storage/v1/storage_resources.proto"
+    "google/logging/type/http_request.proto"
+    "google/logging/type/log_severity.proto"
+    "google/logging/v2/log_entry.proto"
+    "google/logging/v2/logging.proto"
+    "google/logging/v2/logging_config.proto"
+    "google/logging/v2/logging_metrics.proto"
+)
 
 set(GOOGLEAPIS_CPP_BYPRODUCTS)
 foreach (proto ${GOOGLEAPIS_CPP_PROTO_FILES})
@@ -112,6 +119,22 @@ ExternalProject_Add(
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 find_package(ProtobufTargets REQUIRED)
 find_package(gRPC REQUIRED)
+
+# Define the project name and where to report bugs.
+set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
+project(googleapis-cpp-protos CXX C)
+
+set(GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR 0)
+set(GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR 5)
+set(GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH 0)
+
+string(
+    CONCAT GOOGLE_APIS_CPP_PROTOS_VERSION
+           "${GOOGLEAPIS_CPP_PROTOS_VERSION_MAJOR}"
+           "."
+           "${GOOGLEAPIS_CPP_PROTOS_VERSION_MINOR}"
+           "."
+           "${GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH}")
 
 # Sometimes (this happens often with vcpkg) protobuf is installed in a non-
 # standard directory. We need to find out where, and then add that directory to
@@ -186,6 +209,7 @@ googleapis_cpp_add_library("google/api/monitored_resource.proto"
 googleapis_cpp_add_library("google/api/annotations.proto" api_http_protos)
 googleapis_cpp_add_library("google/api/auth.proto" api_annotations_protos)
 googleapis_cpp_add_library("google/api/client.proto")
+googleapis_cpp_add_library("google/api/distribution.proto" api_distribution_protos)
 googleapis_cpp_add_library("google/api/field_behavior.proto")
 googleapis_cpp_add_library("google/api/label.proto")
 googleapis_cpp_add_library("google/api/launch_stage.proto")
@@ -335,6 +359,27 @@ target_link_libraries(
            googleapis-c++::iam_v1_policy_protos
     PRIVATE googleapis_cpp_common_flags)
 
+google_cloud_cpp_grpcpp_library(
+    googleapis_cpp_logging_protos
+    "${GOOGLEAPIS_CPP_SOURCE}/google/logging/type/http_request.proto"
+    "${GOOGLEAPIS_CPP_SOURCE}/google/logging/type/log_severity.proto"
+    "${GOOGLEAPIS_CPP_SOURCE}/google/logging/v2/log_entry.proto"
+    "${GOOGLEAPIS_CPP_SOURCE}/google/logging/v2/logging.proto"
+    "${GOOGLEAPIS_CPP_SOURCE}/google/logging/v2/logging_config.proto"
+    "${GOOGLEAPIS_CPP_SOURCE}/google/logging/v2/logging_metrics.proto"
+    PROTO_PATH_DIRECTORIES
+    "${GOOGLEAPIS_CPP_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+
+googleapis_cpp_set_version_and_alias(logging_protos)
+
+target_link_libraries(
+    googleapis_cpp_logging_protos
+    # TODO
+    PUBLIC googleapis-c++::api_annotations_protos
+           googleapis-c++::api_distribution_protos
+    PRIVATE googleapis_cpp_common_flags)
+
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 include(GNUInstallDirs)
@@ -345,9 +390,11 @@ set(googleapis_cpp_installed_libraries_list
     googleapis_cpp_pubsub_protos
     googleapis_cpp_spanner_protos
     googleapis_cpp_storage_protos
+    googleapis_cpp_logging_protos
     googleapis_cpp_longrunning_operations_protos
     googleapis_cpp_api_http_protos
     googleapis_cpp_api_annotations_protos
+    googleapis_cpp_api_distribution_protos
     googleapis_cpp_api_auth_protos
     googleapis_cpp_api_client_protos
     googleapis_cpp_api_field_behavior_protos
@@ -441,6 +488,7 @@ string(
            " googleapis_cpp_iam_v1_iam_policy_protos"
            " googleapis_cpp_iam_v1_options_protos"
            " googleapis_cpp_iam_v1_policy_protos"
+           " googleapis_cpp_logging_protos"
            " googleapis_cpp_longrunning_operations_protos"
            " googleapis_cpp_api_auth_protos"
            " googleapis_cpp_api_annotations_protos"
