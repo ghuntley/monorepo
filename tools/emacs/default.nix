@@ -49,6 +49,7 @@ let
     browse-kill-ring
     cargo
     clojure-mode
+    cmake-mode
     counsel
     counsel-notmuch
     dash-functional
