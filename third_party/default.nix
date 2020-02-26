@@ -24,13 +24,16 @@ let
       autoconf
       bashInteractive
       bat
-      buildGoPackage
       buildGoModule
+      buildGoPackage
       bzip2
+      c-ares
       cacert
       cachix
       cargo
       cgit
+      clang_9
+      cmake
       coreutils
       darwin
       dockerTools
@@ -49,6 +52,7 @@ let
       gnutar
       go
       google-cloud-sdk
+      grpc
       gzip
       haskell
       iana-etc
@@ -70,6 +74,8 @@ let
       nix
       openssh
       openssl
+      overrideCC
+      overrideCCC
       pandoc
       parallel
       pkgconfig
