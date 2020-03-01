@@ -156,19 +156,24 @@ in lib.fix(self: {
 
   # Provision a TLS certificate outside of nginx to avoid
   # nixpkgs#38144
-  security.acme.certs."tazj.in" = {
-    user = "nginx";
-    group = "nginx";
-    webroot = "/var/lib/acme/acme-challenge";
-    extraDomains = {
-      "git.tazj.in" = null;
-      "www.tazj.in" = null;
+  security.acme = {
+    acceptTerms = true;
+    email = "mail@tazj.in";
 
-      # Local domains (for this machine only)
-      "camden.tazj.in" = null;
-      "git.camden.tazj.in" = null;
+    certs."tazj.in" = {
+      user = "nginx";
+      group = "nginx";
+      webroot = "/var/lib/acme/acme-challenge";
+      extraDomains = {
+        "git.tazj.in" = null;
+        "www.tazj.in" = null;
+
+        # Local domains (for this machine only)
+        "camden.tazj.in" = null;
+        "git.camden.tazj.in" = null;
+      };
+      postRun = "systemctl reload nginx";
     };
-    postRun = "systemctl reload nginx";
   };
 
   # Forward logs to Google Cloud Platform
