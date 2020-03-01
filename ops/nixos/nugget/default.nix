@@ -49,6 +49,7 @@ in depot.lib.fix(self: {
     useDHCP = false;
     interfaces.eno1.useDHCP = true;
     interfaces.wlp7s0.useDHCP = true;
+    interfaces.enp0s20u11.useDHCP = true; # Remarkable USB
 
     # Don't use ISP's DNS servers:
     nameservers = [
