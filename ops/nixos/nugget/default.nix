@@ -94,7 +94,6 @@ in depot.lib.fix(self: {
       lieer
       ops.kontemplate
       third_party.git
-      third_party.guile
       third_party.tailscale
       tools.emacs
     ]) ++
@@ -114,6 +113,7 @@ in depot.lib.fix(self: {
       go
       google-chrome
       google-cloud-sdk
+      guile
       htop
       i3lock
       imagemagick
