@@ -23,7 +23,6 @@ with (import ./default.nix {}); [
   ops.nixos.nuggetSystem
   third_party.cgit
   third_party.git
-  third_party.guile
   third_party.lisp # will build all third-party libraries
   tools.cheddar
   tools.emacs
