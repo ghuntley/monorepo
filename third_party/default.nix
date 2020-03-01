@@ -79,6 +79,7 @@ let
       pandoc
       parallel
       pkgconfig
+      pounce
       protobuf
       python3Packages
       remarshal
@@ -117,7 +118,7 @@ in exposed // {
 
   # Packages to be overridden
   originals = {
-    inherit (nixpkgs) git guile notmuch pounce;
+    inherit (nixpkgs) git guile notmuch;
   };
 
   # Make NixOS available
