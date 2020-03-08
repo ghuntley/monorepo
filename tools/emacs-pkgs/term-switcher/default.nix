@@ -1,6 +1,6 @@
 { pkgs, ... }:
 
-with pkgs.emacsPackagesNg;
+with pkgs.emacsPackages;
 
 melpaBuild rec {
   pname = "term-switcher";

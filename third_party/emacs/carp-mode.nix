@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 with pkgs;
-with emacsPackagesNg;
+with emacsPackages;
 
 melpaBuild rec {
   pname = "carp-mode";

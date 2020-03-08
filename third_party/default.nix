@@ -39,8 +39,8 @@ let
       dockerTools
       emacs26
       emacs26-nox
-      emacsPackagesNg
-      emacsPackagesNgGen
+      emacsPackages
+      emacsPackagesGen
       fetchFromGitHub
       fetchurl
       fetchzip

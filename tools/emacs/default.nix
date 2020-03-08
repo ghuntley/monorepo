@@ -10,11 +10,11 @@
 { depot, ... }:
 
 with depot;
-with third_party.emacsPackagesNg;
+with third_party.emacsPackages;
 with third_party.emacs;
 
 let
-  emacsWithPackages = (third_party.emacsPackagesNgGen third_party.emacs26).emacsWithPackages;
+  emacsWithPackages = (third_party.emacsPackagesGen third_party.emacs26).emacsWithPackages;
 
   # $PATH for binaries that need to be available to Emacs
   emacsBinPath = lib.makeBinPath [ third_party.telega ];
