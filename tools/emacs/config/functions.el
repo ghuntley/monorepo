@@ -1,3 +1,6 @@
+(require 'chart)
+(require 'dash)
+
 (defun load-file-if-exists (filename)
   (if (file-exists-p filename)
       (load filename)))
@@ -264,5 +267,26 @@
   ~/screenshots."
   (interactive)
   (shell-command "scrot '$a_%s.png' -s -e 'mv $f ~/screenshots/'"))
+
+(defun graph-unread-mails ()
+  "Create a bar chart of unread mails based on notmuch tags.
+  Certain tags are excluded from the overview."
+
+  (interactive)
+  (let ((tag-counts
+         (-keep (-lambda ((name . search))
+                  (let ((count
+                         (string-to-number
+                          (s-trim
+                           (notmuch-command-to-string "count" search "and" "tag:unread")))))
+                    (when (>= count 1) (cons name count))))
+                (notmuch-hello-generate-tag-alist '("unread" "signed" "attachment")))))
+
+    (chart-bar-quickie
+     (if (< (length tag-counts) 6)
+         'vertical 'horizontal)
+     "Unread emails"
+     (-map #'car tag-counts) "Tag:"
+     (-map #'cdr tag-counts) "Count:")))
 
 (provide 'functions)
