@@ -130,6 +130,7 @@
         org-journal-encrypt-journal t
         org-journal-file-type 'weekly
         org-journal-date-format "%A, %Y-%m-%d"
+        org-journal-file-format "%Y%m%d-weekly"
 
         ;; Saturday, because reasons.
         org-journal-start-on-weekday 6)
