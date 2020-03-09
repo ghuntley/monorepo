@@ -77,7 +77,9 @@
               ("s-g m" . notmuch)
               ("s-g M" . counsel-notmuch)) ;; g m -> gmail
   :config
-  (setq notmuch-search-oldest-first nil))
+  (setq notmuch-search-oldest-first nil)
+  (setq notmuch-show-all-tags-list t)
+  (setq notmuch-hello-tag-list-make-query "tag:unread"))
 
 (use-package paredit :hook ((lisp-mode . paredit-mode)
                             (emacs-lisp-mode . paredit-mode)))
