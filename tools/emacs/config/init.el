@@ -117,6 +117,30 @@
   :config (setq magit-repository-directories '(("/home/tazjin/projects" . 2)
                                                ("/home/tazjin" . 1))))
 
+(use-package org-journal
+  ;; Always use my own key to encrypt files. There seems to be no
+  ;; global way to set this, as `epa-file-encrypt-to' only has an
+  ;; effect as a file-local variable (?!)
+  :hook ((org-journal-mode . (lambda ()
+                               (setq-local epa-file-encrypt-to
+                                           "DCF34CFAC1AC44B87E26333136EE34814F6D294A"))))
+
+  :config
+  (setq org-journal-dir "/ssh:camden.tazj.in:/home/tazjin/journal"
+        org-journal-encrypt-journal t
+        org-journal-file-type 'weekly
+        org-journal-date-format "%A, %Y-%m-%d"
+
+        ;; Saturday, because reasons.
+        org-journal-start-on-weekday 6)
+
+  ;; org-journal doesn't actually enter its mode automatically if
+  ;; encryption is used (I'm not sure why), so this teaches Emacs to
+  ;; recognise the files.
+  (add-to-list 'auto-mode-alist '("[0-9]-weekly\\.gpg\\'" . org-journal-mode)))
+
+(use-package org-ql)
+
 (use-package password-store)
 (use-package pg)
 (use-package restclient)
