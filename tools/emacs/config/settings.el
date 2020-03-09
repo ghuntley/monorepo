@@ -19,7 +19,8 @@
       whitespace-line-column 80
       default-directory "~"
       fill-column 80
-      ediff-split-window-function 'split-window-horizontally)
+      ediff-split-window-function 'split-window-horizontally
+      initial-major-mode 'emacs-lisp-mode)
 
 (add-to-list 'safe-local-variable-values '(lexical-binding . t))
 (add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
