@@ -280,7 +280,7 @@
                           (s-trim
                            (notmuch-command-to-string "count" search "and" "tag:unread")))))
                     (when (>= count 1) (cons name count))))
-                (notmuch-hello-generate-tag-alist '("unread" "signed" "attachment")))))
+                (notmuch-hello-generate-tag-alist '("unread" "signed" "attachment" "important")))))
 
     (chart-bar-quickie
      (if (< (length tag-counts) 6)
