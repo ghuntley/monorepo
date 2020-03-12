@@ -109,6 +109,9 @@ in depot.lib.fix(self: {
       bat
       cachix
       chromium
+      clang-manpages
+      clang-tools
+      clang_9
       curl
       direnv
       dnsutils
