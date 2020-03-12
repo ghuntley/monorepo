@@ -7,6 +7,12 @@ config: let
   };
 
   lieer = (depot.third_party.lieer {});
+
+  # google-c-style is installed only on nugget because other
+  # machines get it from, eh, elsewhere.
+  nuggetEmacs = (depot.tools.emacs.overrideEmacs(epkgs: epkgs ++ [
+    depot.third_party.emacsPackages.google-c-style
+  ]));
 in depot.lib.fix(self: {
   imports = [
     ../modules/tailscale.nix
@@ -91,15 +97,10 @@ in depot.lib.fix(self: {
     # programs from the depot
     (with depot; [
       lieer
+      nuggetEmacs
       ops.kontemplate
       third_party.git
       third_party.tailscale
-
-      # google-c-style is installed only on nugget because other
-      # machines get it from, eh, elsewhere.
-      (tools.emacs.overrideEmacs(epkgs: epkgs ++ [
-        third_party.emacsPackages.google-c-style
-      ]))
     ]) ++
 
     # programs from nixpkgs
@@ -222,7 +223,7 @@ in depot.lib.fix(self: {
 
       windowManager.session = lib.singleton {
         name = "exwm";
-        start = "${depot.tools.emacs}/bin/tazjins-emacs";
+        start = "${nuggetEmacs}/bin/tazjins-emacs";
       };
     };
 
