@@ -95,7 +95,12 @@ in depot.lib.fix(self: {
       ops.kontemplate
       third_party.git
       third_party.tailscale
-      tools.emacs
+
+      # google-c-style is installed only on nugget because other
+      # machines get it from, eh, elsewhere.
+      (tools.emacs.overrideEmacs(epkgs: epkgs ++ [
+        third_party.emacsPackages.google-c-style
+      ]))
     ]) ++
 
     # programs from nixpkgs
