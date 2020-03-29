@@ -55,9 +55,11 @@ let
     dash-functional
     direnv
     dockerfile-mode
+    eglot
     elixir-mode
     elm-mode
     erlang
+    flymake
     geiser
     go-mode
     gruber-darker-theme
@@ -106,6 +108,7 @@ let
     which-key
     xelb
     yaml-mode
+    yasnippet
 
     (vterm.overrideAttrs(_: {
       src = third_party.fetchFromGitHub{
