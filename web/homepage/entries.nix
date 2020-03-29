@@ -50,10 +50,8 @@
     url = "http://www.microbe.tv/twiv/";
     date = 1585517557;
     description = ''
-      If you're looking for actual information about the COVID19
-      situation, I recommend listening to this podcast. Everyone on it
-      is actually working in a related field and the discussions are
-      very high-quality.
+      Podcast with high-quality information about virology,
+      epidemiology and so on. Highly relevant to COVID19.
     '';
   }
 ]
