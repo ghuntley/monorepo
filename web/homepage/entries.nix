@@ -44,4 +44,16 @@
       understand until much later. It shaped much of my world view.
     '';
   }
+  {
+    class = "misc";
+    title = "This Week in Virology";
+    url = "http://www.microbe.tv/twiv/";
+    date = 1585517557;
+    description = ''
+      If you're looking for actual information about the COVID19
+      situation, I recommend listening to this podcast. Everyone on it
+      is actually working in a related field and the discussions are
+      very high-quality.
+    '';
+  }
 ]
