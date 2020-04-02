@@ -1,5 +1,6 @@
 (require 'chart)
 (require 'dash)
+(require 'map)
 
 (defun load-file-if-exists (filename)
   (if (file-exists-p filename)
@@ -289,17 +290,14 @@
      (-map #'car tag-counts) "Tag:"
      (-map #'cdr tag-counts) "Count:")))
 
-(defun notmuch-show-open-or-close-subthread ()
-  "Open or close the subthread from (and including) the message
-  at point. Opens by default, closes if the prefix argument is
-  set."
+(defun notmuch-show-open-or-close-subthread (&optional open)
+  "Open or close the subthread from (and including) the message at point."
   (interactive)
   (save-excursion
     (let ((current-depth (map-elt (notmuch-show-get-message-properties) :depth 0)))
-      (loop do (notmuch-show-message-visible (notmuch-show-get-message-properties)
-                                             (not current-prefix-arg))
+      (loop do (notmuch-show-message-visible (notmuch-show-get-message-properties) open)
             until (or (not (notmuch-show-goto-message-next))
-                      (= (map-elt (notmuch-show-get-message-properties) :depth 0) current-depth)))))
+                      (= (map-elt (notmuch-show-get-message-properties)) current-depth)))))
   (force-window-update))
 
 (provide 'functions)

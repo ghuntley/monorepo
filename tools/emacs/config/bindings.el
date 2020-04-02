@@ -41,4 +41,14 @@
 ;; Insert TODO comments
 (global-set-key (kbd "C-c t") 'insert-todo-comment)
 
+;; Add subthread collapsing to notmuch-show.
+;;
+;; C-, closes a thread, C-. opens a thread. This mirrors stepping
+;; in/out of definitions.
+(define-key notmuch-show-mode-map (kbd "C-,") 'notmuch-show-open-or-close-subthread)
+(define-key notmuch-show-mode-map (kbd "C-.")
+  (lambda ()
+    (interactive)
+    (notmuch-show-open-or-close-subthread t))) ;; open
+
 (provide 'bindings)
