@@ -290,14 +290,14 @@
      (-map #'car tag-counts) "Tag:"
      (-map #'cdr tag-counts) "Count:")))
 
-(defun notmuch-show-open-or-close-subthread (&optional open)
+(defun notmuch-show-open-or-close-subthread (&optional prefix)
   "Open or close the subthread from (and including) the message at point."
-  (interactive)
+  (interactive "P")
   (save-excursion
     (let ((current-depth (map-elt (notmuch-show-get-message-properties) :depth 0)))
-      (loop do (notmuch-show-message-visible (notmuch-show-get-message-properties) open)
+      (loop do (notmuch-show-message-visible (notmuch-show-get-message-properties) prefix)
             until (or (not (notmuch-show-goto-message-next))
-                      (= (map-elt (notmuch-show-get-message-properties)) current-depth)))))
+                      (= (map-elt (notmuch-show-get-message-properties) :depth) current-depth)))))
   (force-window-update))
 
 (provide 'functions)
