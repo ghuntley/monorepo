@@ -108,6 +108,11 @@
              title))
      (format "IRCCloud<%s>" title))
 
+    ;; The Virus Lounge should be, well ...
+    (`("Google-chrome"
+       ,(and (pred (lambda (title) (s-contains? "Meet - mng-biyw-xbb" title))) title))
+     "The Virus Lounge")
+
     ;; For other Chrome windows, make the title shorter.
     (`("Google-chrome" ,title)
      (format "Chrome<%s>" (s-truncate 42 (s-chop-suffix " - Google Chrome" title))))
