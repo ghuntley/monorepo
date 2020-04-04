@@ -7,7 +7,8 @@ depot.third_party.writeShellScriptBin "start-tvl-stream" ''
        -init_hw_device cuda=0 -filter_hw_device 0 \
        -f x11grab \
        -video_size 1920x1080 \
-       -framerate 30 \
+       -framerate 60 \
+       -thread_queue_size 256 \
        -i :0.0+0,0 \
        -filter:v "format=nv12,hwupload,scale_npp=w=1280:h=720:interp_algo=lanczos" \
        -c:v h264_nvenc \
