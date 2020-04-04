@@ -15,7 +15,6 @@ config: let
   ]));
 in depot.lib.fix(self: {
   imports = [
-    ../modules/tailscale.nix
     ../modules/v4l2loopback.nix
   ];
 
@@ -98,7 +97,6 @@ in depot.lib.fix(self: {
       nuggetEmacs
       ops.kontemplate
       third_party.git
-      third_party.tailscale
       third_party.ffmpeg
     ]) ++
 
@@ -253,12 +251,7 @@ in depot.lib.fix(self: {
     };
 
     # Use Tailscale \o/
-    services.tailscale = {
-      enable = true;
-      relayConf = "/etc/tailscale/relay.conf";
-      aclFile = null; # allow all traffic for testing
-      package = depot.third_party.tailscale;
-    };
+    services.tailscale.enable = true;
 
     # ... and other nonsense.
     system.stateVersion = "19.09";
