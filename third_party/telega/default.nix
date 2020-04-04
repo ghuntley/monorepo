@@ -11,8 +11,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "zevlg";
     repo = "telega.el";
-    rev = "d532b16067cf24728a2aa03a7aeaebe2ceac7df4";
-    sha256 = "1s2sd07sin9sy833wqprhbfk5j1d1s4azzvj6d8k68sxlgz8996m";
+    rev = "76ffa52cd36b9ba3236d0f4e0c213495d3609212";
+    sha256 = "15w6yj8n75yh6zhra4qw5pkfc8asgrwh6m8dz1vax2ma6yy2ds2r";
   } + "/server";
 
   installPhase = ''
