@@ -16,6 +16,7 @@ config: let
 in depot.lib.fix(self: {
   imports = [
     ../modules/tailscale.nix
+    ../modules/v4l2loopback.nix
   ];
 
   hardware = {
