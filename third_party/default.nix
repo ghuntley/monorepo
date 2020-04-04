@@ -35,6 +35,7 @@ let
       clang_9
       cmake
       coreutils
+      cudatoolkit
       darwin
       dockerTools
       emacs26
@@ -119,6 +120,7 @@ in exposed // {
   # Packages to be overridden
   originals = {
     inherit (nixpkgs) git notmuch;
+    ffmpeg = nixpkgs.ffmpeg-full;
   };
 
   # Make NixOS available
