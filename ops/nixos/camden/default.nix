@@ -75,7 +75,7 @@ in lib.fix(self: {
   networking = {
     hostName = "camden";
     interfaces.enp1s0.useDHCP = true;
-    firewall.allowedTCPPorts = [ 22 8080 80 443 ];
+    firewall.allowedTCPPorts = [ 22 8080 80 443 1935 ];
   };
 
   time.timeZone = "UTC";
@@ -188,10 +188,34 @@ in lib.fix(self: {
   services.nginx = {
     enable = true;
     enableReload = true;
+    package = with nixpkgs; nginx.override {
+      modules = [ nginxModules.rtmp ];
+    };
 
     recommendedTlsSettings = true;
     recommendedGzipSettings = true;
     recommendedProxySettings = true;
+
+
+    appendConfig = ''
+      rtmp_auto_push on;
+      rtmp {
+        server {
+          listen 1935;
+          chunk_size 4000;
+
+          application tvl {
+            live on;
+
+            allow publish 88.98.195.213;
+            allow publish 10.0.1.0/24;
+            deny publish all;
+
+            allow play all;
+          }
+        }
+      }
+    '';
 
     commonHttpConfig = ''
       log_format json_combined escape=json
