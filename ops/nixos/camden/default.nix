@@ -228,6 +228,8 @@ in lib.fix(self: {
       extraConfig = ''
         ${depot.web.blog.oldRedirects}
 
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+
         location ~* \.(webp|woff2)$ {
           add_header Cache-Control "public, max-age=31536000";
         }
