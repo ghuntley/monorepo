@@ -102,6 +102,7 @@ in depot.lib.fix(self: {
       ops.kontemplate
       third_party.git
       third_party.tailscale
+      third_party.ffmpeg
     ]) ++
 
     # programs from nixpkgs
