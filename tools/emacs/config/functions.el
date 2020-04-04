@@ -267,7 +267,7 @@
   "Take a screenshot based on a mouse-selection and save it to
   ~/screenshots."
   (interactive)
-  (shell-command "scrot '$a_%s.png' -s -e 'mv $f ~/screenshots/'"))
+  (shell-command "scrot '$a_%Y-%m-%d_%s.png' -s -e 'mv $f ~/screenshots/'"))
 
 (defun graph-unread-mails ()
   "Create a bar chart of unread mails based on notmuch tags.
