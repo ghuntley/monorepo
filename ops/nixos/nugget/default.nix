@@ -75,11 +75,8 @@ in depot.lib.fix(self: {
       };
     };
 
-    # The current home router can't forward ports on the local
-    # network, but I'd like to test if camden is serving the correct
-    # certificates.
     extraHosts = ''
-      192.168.1.205 camden git.tazj.in tazj.in camden.tazj.in git.camden.tazj.in
+      10.0.1.205 camden git.tazj.in tazj.in camden.tazj.in git.camden.tazj.in
     '';
   };
 
