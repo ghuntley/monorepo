@@ -6,8 +6,6 @@ config: let
     config.allowUnfree = true;
   };
 in lib.fix(self: {
-  imports = [ ../modules/tailscale.nix ];
-
   # camden is intended to boot unattended, despite having an encrypted
   # root partition.
   #
@@ -88,7 +86,6 @@ in lib.fix(self: {
     # programs from the depot
     (with depot; [
       third_party.git
-      third_party.tailscale
       third_party.pounce
     ]) ++
 
@@ -126,21 +123,7 @@ in lib.fix(self: {
   services.haveged.enable = true;
 
   # Join Tailscale into home network
-  services.tailscale = {
-    enable = true;
-    relayConf = "/etc/tailscale.conf";
-    package = depot.third_party.tailscale;
-    aclFile = depot.nix.tailscale {
-      ACLs = [
-        # Allow any traffic from myself
-        {
-          Action = "accept";
-          Users = [ "mail@tazj.in" ];
-          Ports = [ "*:*" ];
-        }
-      ];
-    } ;
-  };
+  services.tailscale.enable = true;
 
   # Run cgit for the depot. The onion here is nginx(thttpd(cgit)).
   systemd.services.cgit = {
