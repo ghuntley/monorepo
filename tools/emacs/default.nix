@@ -87,7 +87,9 @@ let
     paredit
     password-store
     pg
+    polymode
     prescient
+    protobuf-mode
     racket-mode
     rainbow-delimiters
     refine
