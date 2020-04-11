@@ -141,6 +141,7 @@ in depot.lib.fix(self: {
       sbcl
       scrot
       spotify
+      steam
       tokei
       tree
       unzip
