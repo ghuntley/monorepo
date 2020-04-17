@@ -40,37 +40,6 @@
   ;; is tied to suspend.target.
   (shell-command "/usr/bin/sudo /usr/bin/systemctl start xsecurelock.service"))
 
-(defun generate-randr-config (primary secondary)
-  (-flatten `(,(-map (lambda (n) (list n primary)) (number-sequence 1 7))
-              (0 secondary)
-              ,(-map (lambda (n) (list n secondary)) (number-sequence 8 9)))))
-
-(defun randr-layout-dp1-extend ()
-  "Layout for connecting my X1 Carbon to my screen at home."
-
-  (interactive)
-  (setq exwm-randr-workspace-monitor-plist (generate-randr-config "DP1-1" "eDP1"))
-  (exwm-randr-refresh)
-  (shell-command "xrandr --output DP1-1 --right-of eDP1 --auto --primary"))
-
-(defun randr-layout-hdmi1-extend ()
-  "Office layout for The Big Screen(tm)"
-
-  (interactive)
-  (setq exwm-randr-workspace-monitor-plist (generate-randr-config "HDMI1" "eDP1"))
-  (exwm-randr-refresh)
-  (shell-command "xrandr --output HDMI1 --dpi 144 --auto --right-of eDP1 --primary")
-  (set-default-text-scale nil 165))
-
-(defun randr-layout-single ()
-  "Laptop screen only!"
-
-  (interactive)
-  (shell-command "xrandr --output HDMI1 --off")
-  (shell-command "xrandr --output DP1-1 --off")
-  (exwm-randr-refresh)
-  (set-default-text-scale nil))
-
 (defun set-xkb-layout (layout)
   "Set the current X keyboard layout."
 
@@ -198,21 +167,58 @@
 ;; enable display of X11 system tray within Emacs
 (exwm-systemtray-enable)
 
-;; Configure xrandr (multi-monitor setup)
-(setq exwm-randr-workspace-monitor-plist (generate-randr-config "HDMI1" "eDP1"))
+;; Configure xrandr (multi-monitor setup).
+;;
+;; This makes some assumptions about how the machine (vauxhall) is
+;; connected to my home setup during the COVID19 isolation period.
+
+(defun set-randr-config (screens)
+  (setq exwm-randr-workspace-monitor-plist
+        (-flatten (-map (lambda (screen)
+                          (-map (lambda (screen-id) (list screen-id (car screen))) (cdr screen)))
+                        screens))))
+
+(defun randr-layout-single ()
+  "Laptop screen only!"
+  (interactive)
+  (set-randr-config '(("eDP1" (number-sequence 0 9))))
+  (shell-command "xrandr --output eDP1 --auto --primary")
+  (shell-command "xrandr --output HDMI1 --off")
+  (shell-command "xrandr --output DP2 --off")
+  (exwm-randr-refresh))
+
+(defun randr-layout-all ()
+  "Use all screens at home."
+  (interactive)
+  (set-randr-config
+   '(("eDP1" 0)
+     ("HDMI1" 1 2 3 4 5)
+     ("DP2" 6 7 8 9)))
+
+  (shell-command "xrandr --output HDMI1 --right-of eDP1 --auto --primary")
+  (shell-command "xrandr --output DP2 --right-of HDMI1 --auto")
+  (exwm-randr-refresh))
+
+(defun randr-layout-wide-only ()
+  "Use only the wide screen at home."
+  (interactive)
+  (set-randr-config
+   '(("eDP1" 8 9 0)
+     ("HDMI1" 1 2 4 5 6 7)))
+
+  (shell-command "xrandr --output DP2 --off")
+  (shell-command "xrandr --output HDMI1 --right-of eDP1 --auto --primary")
+  (exwm-randr-refresh))
+
 (exwm-randr-enable)
+
+(exwm-input-set-key (kbd "s-m s") #'randr-layout-single)
+(exwm-input-set-key (kbd "s-m a") #'randr-layout-all)
+(exwm-input-set-key (kbd "s-m w") #'randr-layout-wide-only)
 
 ;; Let buffers move seamlessly between workspaces by making them
 ;; accessible in selectors on all frames.
 (setq exwm-workspace-show-all-buffers t)
 (setq exwm-layout-show-all-buffers t)
-
-;; Monitor layouts
-;;
-;; TODO(tazjin): Desired layout should be inferred based on
-;; connected screens - autorandr or something?
-(exwm-input-set-key (kbd "s-m d") #'randr-layout-dp1-extend)
-(exwm-input-set-key (kbd "s-m h") #'randr-layout-hdmi1-extend)
-(exwm-input-set-key (kbd "s-m s") #'randr-layout-single)
 
 (provide 'desktop)
