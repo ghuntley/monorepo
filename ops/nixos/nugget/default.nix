@@ -96,8 +96,9 @@ in depot.lib.fix(self: {
       lieer
       nuggetEmacs
       ops.kontemplate
-      third_party.git
+      third_party.chromiumVaapi
       third_party.ffmpeg
+      third_party.git
     ]) ++
 
     # programs from nixpkgs
@@ -105,7 +106,6 @@ in depot.lib.fix(self: {
       age
       bat
       cachix
-      chromium
       clang-manpages
       clang-tools
       clang_9

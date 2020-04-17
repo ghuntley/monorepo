@@ -125,4 +125,10 @@ in exposed // {
 
   # Make NixOS available
   nixos = import "${nixpkgsSrc}/nixos";
+
+  # Build a Chromium with VAAPI (hardware-accelerated video decoding)
+  # enabled. This is useful for Stadia on desktop.
+  chromiumVaapi = nixpkgs.chromium.override {
+    useVaapi = true;
+  };
 }
