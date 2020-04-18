@@ -169,8 +169,8 @@
 
 ;; Configure xrandr (multi-monitor setup).
 ;;
-;; This makes some assumptions about how the machine (vauxhall) is
-;; connected to my home setup during the COVID19 isolation period.
+;; This makes some assumptions about how my machines are connected to
+;; my home setup during the COVID19 isolation period.
 
 (defun set-randr-config (screens)
   (setq exwm-randr-workspace-monitor-plist
@@ -178,7 +178,9 @@
                           (-map (lambda (screen-id) (list screen-id (car screen))) (cdr screen)))
                         screens))))
 
-(defun randr-layout-single ()
+;; Layouts for Vauxhall (laptop)
+
+(defun randr-vauxhall-layout-single ()
   "Laptop screen only!"
   (interactive)
   (set-randr-config '(("eDP1" (number-sequence 0 9))))
@@ -187,7 +189,7 @@
   (shell-command "xrandr --output DP2 --off")
   (exwm-randr-refresh))
 
-(defun randr-layout-all ()
+(defun randr-vauxhall-layout-all ()
   "Use all screens at home."
   (interactive)
   (set-randr-config
@@ -199,7 +201,7 @@
   (shell-command "xrandr --output DP2 --right-of HDMI1 --auto")
   (exwm-randr-refresh))
 
-(defun randr-layout-wide-only ()
+(defun randr-vauxhall-layout-wide-only ()
   "Use only the wide screen at home."
   (interactive)
   (set-randr-config
@@ -210,11 +212,35 @@
   (shell-command "xrandr --output HDMI1 --right-of eDP1 --auto --primary")
   (exwm-randr-refresh))
 
-(exwm-randr-enable)
+;; Layouts for nugget (desktop)
 
-(exwm-input-set-key (kbd "s-m s") #'randr-layout-single)
-(exwm-input-set-key (kbd "s-m a") #'randr-layout-all)
-(exwm-input-set-key (kbd "s-m w") #'randr-layout-wide-only)
+(defun randr-nugget-layout-right-only ()
+  "Use only the right screen on nugget."
+  (interactive)
+  (set-randr-config `(("DP-2" ,(number-sequence 0 9))))
+  (shell-command "xrandr --output DP-0 --off")
+  (shell-command "xrandr --output DP-2 --auto --primary"))
+
+(defun randr-nugget-layout-both ()
+  "Use the left and right screen on nugget."
+  (interactive)
+  (set-randr-config `(("DP-0" 1 2 3 4 5)
+                      ("DP-2" 6 7 8 9 0)))
+
+  (shell-command "xrandr --output DP-0 --auto --primary --left-of DP-2")
+  (shell-command "xrandr --output DP-2 --auto --right-of DP-0"))
+
+(pcase (s-trim (shell-command-to-string "hostname"))
+  ("vauxhall"
+   (exwm-input-set-key (kbd "s-m s") #'randr-vauxhall-layout-single)
+   (exwm-input-set-key (kbd "s-m a") #'randr-vauxhall-layout-all)
+   (exwm-input-set-key (kbd "s-m w") #'randr-vauxhall-layout-wide-only))
+
+  ("nugget"
+   (exwm-input-set-key (kbd "s-m b") #'randr-nugget-layout-both)
+   (exwm-input-set-key (kbd "s-m r") #'randr-nugget-layout-right-only)))
+
+(exwm-randr-enable)
 
 ;; Let buffers move seamlessly between workspaces by making them
 ;; accessible in selectors on all frames.
