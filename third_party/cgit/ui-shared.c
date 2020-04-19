@@ -515,6 +515,10 @@ static void cgit_self_link(char *name, const char *title, const char *class)
 	if (!strcmp(ctx.qry.page, "repolist"))
 		cgit_index_link(name, title, class, ctx.qry.search, ctx.qry.sort,
 				ctx.qry.ofs, 1);
+        else if (!strcmp(ctx.qry.page, "about"))
+		cgit_about_link(name, title, class, ctx.qry.head,
+			        ctx.qry.has_sha1 ? ctx.qry.sha1 : NULL,
+			        ctx.qry.path);
 	else if (!strcmp(ctx.qry.page, "summary"))
 		cgit_summary_link(name, title, class, ctx.qry.head);
 	else if (!strcmp(ctx.qry.page, "tag"))
