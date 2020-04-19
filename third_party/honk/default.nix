@@ -11,6 +11,11 @@ pkgs.stdenv.mkDerivation rec {
     sha256 = "0fj1ybhsra626q5vy1sy9aigxx5rjda5mgq74m7kzw7an4z2a67m";
   };
 
+  # Go tooling needs $HOME to exist because, well, who knows.
+  preBuild = ''
+    mkdir home && export HOME=$PWD/home
+  '';
+
   installPhase = ''
     install -D honk $out/bin/honk
     install -D docs/honk.1 $out/share/man/man1/honk.1
