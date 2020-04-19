@@ -86,6 +86,7 @@ in lib.fix(self: {
     # programs from the depot
     (with depot; [
       third_party.git
+      third_party.honk
       third_party.pounce
     ]) ++
 
