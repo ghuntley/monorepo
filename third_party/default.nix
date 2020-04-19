@@ -92,6 +92,7 @@ let
       rustPlatform
       rustc
       sbcl
+      sqlite
       stdenv
       stern
       symlinkJoin
