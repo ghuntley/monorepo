@@ -138,6 +138,24 @@ in lib.fix(self: {
     };
   };
 
+  # Run honk as the ActivityPub server, using all the fancy systemd
+  # magic.
+  systemd.services.honk = {
+    wantedBy = [ "multi-user.target" ];
+    script = lib.concatStringsSep " " [
+      "${depot.third_party.honk}/bin/honk"
+      "-datadir /var/lib/honk"
+      "-viewdir ${depot.third_party.honk.src}"
+    ];
+
+    serviceConfig = {
+      Restart = "always";
+      DynamicUser = true;
+      StateDirectory = "honk";
+      WorkingDirectory = "/var/lib/honk";
+    };
+  };
+
   # Provision a TLS certificate outside of nginx to avoid
   # nixpkgs#38144
   security.acme = {
