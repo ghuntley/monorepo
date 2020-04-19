@@ -20,7 +20,6 @@ with (import ./default.nix {}); [
   ops.kontemplate
   ops.mq_cli
   ops.nixos.camdenSystem
-  ops.nixos.nuggetSystem
   third_party.cgit
   third_party.git
   third_party.lisp # will build all third-party libraries
@@ -28,4 +27,9 @@ with (import ./default.nix {}); [
   tools.emacs
   web.blog
   web.cgit-taz
+
+  # Nugget is not currently built because it depends on various things
+  # (such as chromium-vaapi) that don't work in CI.
+  #
+  # ops.nixos.nuggetSystem
 ]
