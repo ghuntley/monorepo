@@ -73,6 +73,13 @@ in lib.fix(self: {
   networking = {
     hostName = "camden";
     interfaces.enp1s0.useDHCP = true;
+    interfaces.enp1s0.ipv6.addresses = [
+      {
+        address = "2a01:4b00:821a:ce02::5";
+        prefixLength = 64;
+      }
+    ];
+
     firewall.allowedTCPPorts = [ 22 8080 80 443 1935 ];
   };
 
