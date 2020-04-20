@@ -1,4 +1,5 @@
 digraph tvl {
+  node [fontname = "JetBrains Mono"];
   overlap = false;
   splines = polyline;
 
@@ -28,30 +29,28 @@ digraph tvl {
   lukegb;
   marcusr;
   multi;
+  ncl;
   profpatsch;
   puck;
   qyliss;
   seven;
   tazjin;
   wpcarro;
-
-  // anonymous
-  anon1 [color="grey"];
+  anon1 [color="grey" fontcolor="grey"];
 
   // companies (blue)
-  spotify [color="#4285f4"];
-  google [color="#4285f4"];
+  spotify [color="#4285f4" fontcolor="#4285f4"];
+  google [color="#4285f4" fontcolor="#4285f4"];
 
   // communities? (red)
-  // fp_twitter [color="#0f9d58"];
-  eve [color="#DB4437"];
-  nix [color="#DB4437"];
-  ircv3 [color="#DB4437"];
-  lgbtslack [label="lgbt.tech" color="#DB4437"];
-  unspecific [color="grey"];
-  baby [color="pink"];
+  eve [color="#DB4437" fontcolor="#DB4437"];
+  nix [color="#DB4437" fontcolor="#DB4437"];
+  ircv3 [color="#DB4437" fontcolor="#DB4437"];
+  lgbtslack [label="lgbt.tech" color="#DB4437" fontcolor="#DB4437"];
+  unspecific [color="grey" fontcolor="grey"];
+  baby [color="pink" fontcolor="pink"];
 
-  // primary edges (how did they end up here?)
+  // primary edges (how did they end up in TVL?)
 
   // Direct edges
   nix -> tazjin;
@@ -70,11 +69,12 @@ digraph tvl {
   profpatsch -> nix;
 
   // via edef
+  benjojo -> edef;
+  espes -> edef;
   firefly -> edef;
   leah2 -> aurora;
   multi -> edef;
-  espes -> edef;
-  benjojo -> edef;
+  ncl -> edef;
   puck -> edef;
   qyliss -> edef;
 
