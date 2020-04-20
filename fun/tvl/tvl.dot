@@ -1,0 +1,130 @@
+digraph tvl {
+  overlap = false;
+  splines = polyline;
+
+  TVL [style="bold"];
+  tazjin -> TVL [style="bold"];
+
+  // people
+  ac;
+  andi;
+  anna;
+  aurora;
+  benjojo;
+  cynthia;
+  edef;
+  espes;
+  eta;
+  firefly;
+  flokli;
+  geoffrey;
+  glittershark;
+  grahamc;
+  isomer;
+  joern;
+  justinw;
+  leah2;
+  loke;
+  lukegb;
+  marcusr;
+  multi;
+  profpatsch;
+  puck;
+  qyliss;
+  seven;
+  tazjin;
+  wpcarro;
+
+  // anonymous
+  anon1 [color="grey"];
+
+  // companies (blue)
+  spotify [color="#4285f4"];
+  google [color="#4285f4"];
+
+  // communities? (red)
+  // fp_twitter [color="#0f9d58"];
+  eve [color="#DB4437"];
+  nix [color="#DB4437"];
+  ircv3 [color="#DB4437"];
+  lgbtslack [label="lgbt.tech" color="#DB4437"];
+  unspecific [color="grey"];
+  baby [color="pink"];
+
+  // primary edges (how did they end up here?)
+
+  // Direct edges
+  nix -> tazjin;
+  spotify -> tazjin;
+  google -> tazjin;
+  eve -> tazjin;
+  unspecific -> tazjin;
+
+  // via nix
+  edef -> nix;
+  justinw -> nix;
+  geoffrey -> nix;
+  flokli -> nix;
+  andi -> nix;
+  grahamc -> nix;
+  profpatsch -> nix;
+
+  // via edef
+  firefly -> edef;
+  leah2 -> aurora;
+  multi -> edef;
+  espes -> edef;
+  benjojo -> edef;
+  puck -> edef;
+  qyliss -> edef;
+
+  // via spotify
+  loke -> spotify;
+  seven -> spotify;
+
+  // via google
+  lukegb -> google;
+  isomer -> google;
+  wpcarro -> google;
+
+  // random primary
+  eta -> anon1;
+  anon1 -> google;
+  anna -> unspecific;
+  marcusr -> unspecific;
+  joern -> unspecific;
+  aurora -> eve;
+  cynthia -> benjojo;
+  ac -> wpcarro;
+  glittershark -> wpcarro;
+
+  // secondary edges (how are they connected otherwise?)
+
+  // lgbt slack
+  aurora -> lgbtslack [weight=0 style="dotted" color="grey" arrowhead="none"];
+  leah2 -> lgbtslack  [weight=0 style="dotted" color="grey" arrowhead="none"];
+  edef -> lgbtslack  [weight=0 style="dotted" color="grey" arrowhead="none"];
+
+  // ircv3
+  multi -> ircv3  [weight=0 style="dotted" color="grey" arrowhead="none"];
+  eta -> ircv3  [weight=0 style="dotted" color="grey" arrowhead="none"];
+  firefly -> ircv3  [weight=0 style="dotted" color="grey" arrowhead="none"];
+
+  // random
+  leah2 -> edef  [weight=0 style="dotted" color="grey" arrowhead="none"];
+  lukegb -> isomer  [weight=0 style="dotted" color="grey" arrowhead="none"];
+  eta -> multi  [weight=0 style="dotted" color="grey" arrowhead="none"];
+  eta -> firefly  [weight=0 style="dotted" color="grey" arrowhead="none"];
+  cynthia -> firefly [weight=0 style="dotted" color="grey" arrowhead="none"];
+  cynthia -> lukegb [weight=0 style="dotted" color="grey" arrowhead="none"];
+  lukegb -> benjojo [weight=0 style="dotted" color="grey" arrowhead="none"];
+  multi -> benjojo [weight=0 style="dotted" color="grey" arrowhead="none"];
+  espes -> benjojo [weight=0 style="dotted" color="grey" arrowhead="none"];
+  espes -> aurora [weight=0 style="dotted" color="grey" arrowhead="none"];
+  puck -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
+  qyliss -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
+  glittershark -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
+
+  cynthia -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
+  eta -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
+}
