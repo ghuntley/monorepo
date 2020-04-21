@@ -35,6 +35,14 @@ let
         channel on Freenode.
       </p>
 
+      <p>
+        <a href="https://meet.google.com/mng-biyw-xbb" target="_blank">
+          <button>Join The Lounge!</button>
+        </a>
+        <br>
+        <i>(Hope you've checked that it's open!)</i>
+      </p>
+
       <hr>
       <footer>
         <p class="footer">
