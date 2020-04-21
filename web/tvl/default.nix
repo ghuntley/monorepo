@@ -55,7 +55,7 @@ let
       <p>
         It's pretty straightforward.
       </p>
-      <img src="/static/tvl.svg" alt="Who's who?">
+      ${builtins.readFile tvlGraph}
       <br>
       <span style="text-align:center;font-style:italic;">
         (Protip: Most of these names are clickable!)
@@ -78,7 +78,6 @@ in runCommandNoCC "website" {} ''
   mkdir -p $out/static
   cp ${homepage} $out/index.html
   cp -r ${./static}/* $out/static
-  cp ${tvlGraph} $out/static/tvl.svg
 
   # Some assets are stolen from the blog
   cp ${depot.web.homepage}/static/jetbrains-* $out/static
