@@ -59,9 +59,9 @@ digraph tvl {
   google -> tazjin;
   eve -> tazjin;
   unspecific -> tazjin;
+  edef -> tazjin;
 
   // via nix
-  edef -> nix;
   jusrin -> nix;
   ghuntley -> nix;
   flokli -> nix;
@@ -126,7 +126,7 @@ digraph tvl {
   puck -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
   qyliss -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
   glittershark -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
-
+  edef -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
   cynthia -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
   eta -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
 }
