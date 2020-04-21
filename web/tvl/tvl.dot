@@ -8,8 +8,8 @@ digraph tvl {
 
   // people
   ac;
-  andi [href="https://andreas.rammhold.de/"];
-  anna [href="https://femalelegends.com/"];
+  andi [label="andi-" href="https://andreas.rammhold.de/"];
+  maskerad [href="https://femalelegends.com/"];
   anon1 [color="grey" fontcolor="grey"];
   aurora [href="https://nonegenderleftfox.aventine.se/"];
   benjojo [href="https://benjojo.co.uk/"];
@@ -19,14 +19,14 @@ digraph tvl {
   eta [href="https://theta.eu.org/"];
   firefly [href="http://firefly.nu/"];
   flokli [href="https://flokli.de/"];
-  geoffrey [href="https://ghuntley.com/"];
+  ghuntley [href="https://ghuntley.com/"];
   glittershark [href="http://gws.fyi"];
   grahamc [href="https://grahamc.com/"];
   isomer [href="https://www.lorier.net/"];
-  joern [href="https://twitter.com/FR31H31T"];
-  justinw [href="https://jusrin.dev/"];
+  borb [href="https://twitter.com/FR31H31T"];
+  jusrin [href="https://jusrin.dev/"];
   leah2 [href="https://leahneukirchen.org/"];
-  loke;
+  tehhobbit;
   lukegb [href="https://lukegb.com/"];
   marcusr [href="http://marcus.nordaaker.com/"];
   multi [href="https://1.0.168.192.in-addr.xyz/"];
@@ -62,8 +62,8 @@ digraph tvl {
 
   // via nix
   edef -> nix;
-  justinw -> nix;
-  geoffrey -> nix;
+  jusrin -> nix;
+  ghuntley -> nix;
   flokli -> nix;
   andi -> nix;
   grahamc -> nix;
@@ -80,7 +80,7 @@ digraph tvl {
   qyliss -> edef;
 
   // via spotify
-  loke -> spotify;
+  tehhobbit -> spotify;
   seven -> spotify;
 
   // via google
@@ -91,9 +91,9 @@ digraph tvl {
   // random primary
   eta -> anon1;
   anon1 -> google;
-  anna -> unspecific;
+  maskerad -> unspecific;
   marcusr -> unspecific;
-  joern -> unspecific;
+  borb -> unspecific;
   aurora -> eve;
   poigon -> eve;
   cynthia -> benjojo;
