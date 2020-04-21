@@ -65,6 +65,14 @@ in lib.fix(self: {
     ];
 
     trustedUsers = [ "root" "tazjin" ];
+
+    binaryCaches = [
+      "https://tazjin.cachix.org"
+    ];
+
+    binaryCachePublicKeys = [
+      "tazjin.cachix.org-1:IZkgLeqfOr1kAZjypItHMg1NoBjm4zX9Zzep8oRSh7U="
+    ];
   };
   nixpkgs.pkgs = nixpkgs;
 
