@@ -20,7 +20,7 @@ digraph tvl {
   firefly;
   flokli [href="https://flokli.de/"];
   geoffrey [href="https://ghuntley.com/"];
-  glittershark [href="https://gws.fyi"];
+  glittershark [href="http://gws.fyi"];
   grahamc [href="https://grahamc.com/"];
   isomer [href="https://www.lorier.net/"];
   joern [href="https://twitter.com/FR31H31T"];
@@ -40,14 +40,14 @@ digraph tvl {
   wpcarro [href="https://wpcarro.dev/"];
 
   // companies (blue)
-  spotify [color="#4285f4" fontcolor="#4285f4"];
-  google [color="#4285f4" fontcolor="#4285f4"];
+  spotify [color="#4285f4" fontcolor="#4285f4" href="https://www.spotify.com/"];
+  google [color="#4285f4" fontcolor="#4285f4" href="https://www.google.com/"];
 
   // communities? (red)
-  eve [color="#DB4437" fontcolor="#DB4437"];
-  nix [color="#DB4437" fontcolor="#DB4437"];
-  ircv3 [color="#DB4437" fontcolor="#DB4437"];
-  lgbtslack [label="lgbt.tech" color="#DB4437" fontcolor="#DB4437"];
+  eve [color="#DB4437" fontcolor="#DB4437" href="https://www.eveonline.com/"];
+  nix [color="#DB4437" fontcolor="#DB4437" href="https://nixos.org/nix/"];
+  ircv3 [color="#DB4437" fontcolor="#DB4437" href="https://ircv3.net/"];
+  lgbtslack [label="lgbt.tech" color="#DB4437" fontcolor="#DB4437" href="https://lgbtq.technology/"];
   unspecific [color="grey" fontcolor="grey"];
   baby [color="pink" fontcolor="pink"];
 
