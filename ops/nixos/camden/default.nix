@@ -107,6 +107,7 @@ in lib.fix(self: {
 
     # programs from nixpkgs
     (with nixpkgs; [
+      bat
       curl
       direnv
       emacs26-nox
@@ -115,6 +116,7 @@ in lib.fix(self: {
       jq
       pass
       pciutils
+      ripgrep
     ]);
 
   users = {
