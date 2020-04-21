@@ -1,7 +1,13 @@
 { depot, pkgs, ... }:
 
 let
-  inherit (pkgs) writeText runCommandNoCC;
+  inherit (pkgs) graphviz runCommandNoCC writeText;
+
+  tvlGraph = runCommandNoCC "tvl.png" {
+    nativeBuildInputs = with pkgs; [ fontconfig freetype cairo jetbrains-mono ];
+  } ''
+    ${graphviz}/bin/neato -Tpng ${./tvl.dot} > $out
+  '';
 
   homepage = writeText "index.html" ''
     <!DOCTYPE html>
@@ -44,6 +50,14 @@ let
       </p>
 
       <hr>
+      <h2>Where did all these people come from?</h2>
+
+      <p>
+        It's pretty straightforward.
+      </p>
+      <img src="/static/tvl.png" alt="Who's who?">
+
+      <hr>
       <footer>
         <p class="footer">
           <a class="uncoloured-link" href="https://tazj.in">homepage</a>
@@ -60,6 +74,7 @@ in runCommandNoCC "website" {} ''
   mkdir -p $out/static
   cp ${homepage} $out/index.html
   cp -r ${./static}/* $out/static
+  cp ${tvlGraph} $out/static/tvl.png
 
   # Some assets are stolen from the blog
   cp ${depot.web.homepage}/static/jetbrains-* $out/static

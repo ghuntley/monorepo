@@ -30,6 +30,7 @@ let
       c-ares
       cacert
       cachix
+      cairo
       cargo
       cgit
       clang_9
@@ -48,16 +49,20 @@ let
       fira
       fira-code
       fira-mono
+      fontconfig
+      freetype
       gettext
       glibc
       gnutar
       go
       google-cloud-sdk
+      graphviz
       grpc
       gzip
       haskell
       iana-etc
       imagemagickBig
+      jetbrains-mono
       jq
       kontemplate
       lib
