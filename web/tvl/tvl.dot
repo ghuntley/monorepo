@@ -8,7 +8,7 @@ digraph tvl {
 
   // people
   ac;
-  andi href=["https://andreas.rammhold.de/"];
+  andi [href="https://andreas.rammhold.de/"];
   anna [href="https://femalelegends.com/"];
   anon1 [color="grey" fontcolor="grey"];
   aurora [href="https://nonegenderleftfox.aventine.se/"];
