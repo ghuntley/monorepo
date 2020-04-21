@@ -41,13 +41,13 @@ let
         channel on Freenode.
       </p>
 
-      <p>
+      <div style="text-align:center;">
         <a href="https://meet.google.com/mng-biyw-xbb" target="_blank">
-          <button>Join The Lounge!</button>
+          <button style="color:initial;">Join The Lounge!</button>
         </a>
         <br>
         <i>(Hope you've checked that it's open!)</i>
-      </p>
+      </div>
 
       <hr>
       <h2>Where did all these people come from?</h2>
