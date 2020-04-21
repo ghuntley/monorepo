@@ -10,6 +10,7 @@ digraph tvl {
   ac;
   andi;
   anna;
+  anon1 [color="grey" fontcolor="grey"];
   aurora;
   benjojo;
   cynthia;
@@ -30,13 +31,13 @@ digraph tvl {
   marcusr;
   multi;
   ncl;
+  poigon;
   profpatsch;
   puck;
   qyliss;
   seven;
   tazjin;
   wpcarro;
-  anon1 [color="grey" fontcolor="grey"];
 
   // companies (blue)
   spotify [color="#4285f4" fontcolor="#4285f4"];
@@ -94,6 +95,7 @@ digraph tvl {
   marcusr -> unspecific;
   joern -> unspecific;
   aurora -> eve;
+  poigon -> eve;
   cynthia -> benjojo;
   ac -> wpcarro;
   glittershark -> wpcarro;
