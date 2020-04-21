@@ -21,6 +21,7 @@ let
       <style>
         svg {
           max-width: inherit;
+          height: auto;
         }
       </style>
     </head>
