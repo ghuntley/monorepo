@@ -18,6 +18,11 @@ let
       <link rel="stylesheet" type="text/css" href="/static/tazjin.css" media="all">
       <link rel="icon" type="image/webp" href="/static/favicon.webp">
       <title>The Virus Lounge</title>
+      <style>
+        svg {
+          max-width: inherit;
+        }
+      </style>
     </head>
     <body class="light">
       <header>
@@ -53,13 +58,9 @@ let
       <h2>Where did all these people come from?</h2>
 
       <p>
-        It's pretty straightforward.
+        It's pretty straightforward. Feel free to click on people, too.
       </p>
       ${builtins.readFile tvlGraph}
-      <br>
-      <span style="text-align:center;font-style:italic;">
-        (Protip: Most of these names are clickable!)
-      </span>
 
       <hr>
       <footer>
