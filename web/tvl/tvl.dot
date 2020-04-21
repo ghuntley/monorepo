@@ -49,7 +49,7 @@ digraph tvl {
   ircv3 [color="#DB4437" fontcolor="#DB4437" href="https://ircv3.net/"];
   lgbtslack [label="lgbt.tech" color="#DB4437" fontcolor="#DB4437" href="https://lgbtq.technology/"];
   unspecific [color="grey" fontcolor="grey"];
-  baby [color="pink" fontcolor="pink"];
+  baby [color="pink" fontcolor="pink" href="https://cynthia.re/s/baby"];
 
   // primary edges (how did they end up in TVL?)
 
