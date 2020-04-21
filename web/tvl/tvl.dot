@@ -17,7 +17,7 @@ digraph tvl {
   edef [href="https://edef.eu/files/edef.hs"];
   espes;
   eta [href="https://theta.eu.org/"];
-  firefly;
+  firefly [href="http://firefly.nu/"];
   flokli [href="https://flokli.de/"];
   geoffrey [href="https://ghuntley.com/"];
   glittershark [href="http://gws.fyi"];
@@ -29,7 +29,7 @@ digraph tvl {
   loke;
   lukegb [href="https://lukegb.com/"];
   marcusr [href="http://marcus.nordaaker.com/"];
-  multi;
+  multi [href="https://1.0.168.192.in-addr.xyz/"];
   ncl;
   poigon;
   profpatsch [href="http://profpatsch.de/"];
