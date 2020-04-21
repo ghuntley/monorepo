@@ -1,5 +1,12 @@
 [
   {
+    class = "misc";
+    title = "The Virus Lounge";
+    url = "https://tvl.fyi";
+    date = 1587435629;
+    description = "A daily social video call in these trying pandemic times. Join us!";
+  }
+  {
     class = "project";
     title = "depot";
     url = "https://git.tazj.in/about";
