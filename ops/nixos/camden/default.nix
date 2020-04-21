@@ -183,6 +183,13 @@ in lib.fix(self: {
       };
       postRun = "systemctl reload nginx";
     };
+
+    certs."tvl.fyi" = {
+      user = "nginx";
+      group = "nginx";
+      webroot = "/var/lib/acme/acme-challenge";
+      postRun = "systemctl reload nginx";
+    };
   };
 
   # Forward logs to Google Cloud Platform
