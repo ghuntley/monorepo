@@ -9,7 +9,7 @@ let
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="The Virus Lounge">
-      <link rel="stylesheet" type="text/css" href="/static/tvl.css" media="all">
+      <link rel="stylesheet" type="text/css" href="/static/tazjin.css" media="all">
       <link rel="icon" type="image/webp" href="/static/favicon.webp">
       <title>The Virus Lounge</title>
     </head>
