@@ -7,7 +7,7 @@ digraph tvl {
   tazjin -> TVL [style="bold"];
 
   // people
-  ac;
+  ac [href="https://the-alex.github.io/about/"];
   andi [label="andi-" href="https://andreas.rammhold.de/"];
   maskerad [href="https://femalelegends.com/"];
   anon1 [color="grey" fontcolor="grey"];
