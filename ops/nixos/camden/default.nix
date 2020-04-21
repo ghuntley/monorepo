@@ -65,6 +65,14 @@ in lib.fix(self: {
     ];
 
     trustedUsers = [ "root" "tazjin" ];
+
+    binaryCaches = [
+      "https://tazjin.cachix.org"
+    ];
+
+    binaryCachePublicKeys = [
+      "tazjin.cachix.org-1:IZkgLeqfOr1kAZjypItHMg1NoBjm4zX9Zzep8oRSh7U="
+    ];
   };
   nixpkgs.pkgs = nixpkgs;
 
@@ -99,6 +107,7 @@ in lib.fix(self: {
 
     # programs from nixpkgs
     (with nixpkgs; [
+      bat
       curl
       direnv
       emacs26-nox
@@ -107,6 +116,7 @@ in lib.fix(self: {
       jq
       pass
       pciutils
+      ripgrep
     ]);
 
   users = {
