@@ -27,6 +27,7 @@ with (import ./default.nix {}); [
   tools.emacs
   web.blog
   web.cgit-taz
+  web.tvl
 
   # Nugget is not currently built because it depends on various things
   # (such as chromium-vaapi) that don't work in CI.
