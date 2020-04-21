@@ -283,6 +283,21 @@ in lib.fix(self: {
       '';
     };
 
+    virtualHosts.tvl = {
+      serverName = "tvl.fyi";
+      useACMEHost = "tvl.fyi";
+      root = depot.web.tvl;
+      addSSL = true;
+
+      extraConfig = ''
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+
+        location ~* \.(webp|woff2)$ {
+          add_header Cache-Control "public, max-age=31536000";
+        }
+      '';
+    };
+
     virtualHosts.cgit = {
       serverName = "git.tazj.in";
       serverAliases = [ "git.camden.tazj.in" ];
