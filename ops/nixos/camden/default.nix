@@ -173,6 +173,25 @@ in lib.fix(self: {
     };
   };
 
+  # NixOS 20.03 broke nginx and I can't be bothered to debug it
+  # anymore, all solution attempts have failed, so here's a
+  # brute-force fix.
+  systemd.services.fix-nginx = {
+    script = "${nixpkgs.coreutils}/bin/chown -R nginx: /var/spool/nginx";
+
+    serviceConfig = {
+      User = "root";
+      Type = "oneshot";
+    };
+  };
+
+  systemd.timers.fix-nginx = {
+    wantedBy = [ "multi-user.target" ];
+    timerConfig = {
+      OnCalendar = "minutely";
+    };
+  };
+
   # Provision a TLS certificate outside of nginx to avoid
   # nixpkgs#38144
   security.acme = {
