@@ -9,10 +9,11 @@ digraph tvl {
   // people
   ac [href="https://the-alex.github.io/about/"];
   andi [label="andi-" href="https://andreas.rammhold.de/"];
-  maskerad [href="https://femalelegends.com/"];
   anon1 [color="grey" fontcolor="grey"];
+  aranea;
   aurora [href="https://nonegenderleftfox.aventine.se/"];
   benjojo [href="https://benjojo.co.uk/"];
+  borb [href="https://twitter.com/FR31H31T"];
   cynthia [href="https://cynthia.re/"];
   edef [href="https://edef.eu/files/edef.hs"];
   espes;
@@ -23,20 +24,21 @@ digraph tvl {
   glittershark [href="http://gws.fyi"];
   grahamc [href="https://grahamc.com/"];
   isomer [href="https://www.lorier.net/"];
-  borb [href="https://twitter.com/FR31H31T"];
   jusrin [href="https://jusrin.dev/"];
   leah2 [href="https://leahneukirchen.org/"];
-  tehhobbit;
   lukegb [href="https://lukegb.com/"];
   marcusr [href="http://marcus.nordaaker.com/"];
+  maskerad [href="https://femalelegends.com/"];
   multi [href="https://1.0.168.192.in-addr.xyz/"];
   ncl;
   poigon;
   profpatsch [href="http://profpatsch.de/"];
   puck [href="https://puckipedia.com/"];
   qyliss [href="https://alyssa.is"];
+  rcombs [href="http://rcombs.me/"];
   seven [href="https://open.spotify.com/user/so7"];
   tazjin [href="https://tazj.in/"];
+  tehhobbit;
   wpcarro [href="https://wpcarro.dev/"];
 
   // companies (blue)
@@ -78,6 +80,7 @@ digraph tvl {
   ncl -> edef;
   puck -> edef;
   qyliss -> edef;
+  rcombs -> edef;
 
   // via spotify
   tehhobbit -> spotify;
@@ -89,16 +92,17 @@ digraph tvl {
   wpcarro -> google;
 
   // random primary
-  eta -> anon1;
-  anon1 -> google;
-  maskerad -> unspecific;
-  marcusr -> unspecific;
-  borb -> unspecific;
-  aurora -> eve;
-  poigon -> eve;
-  cynthia -> benjojo;
   ac -> wpcarro;
+  anon1 -> google;
+  aranea -> multi;
+  aurora -> eve;
+  borb -> unspecific;
+  cynthia -> benjojo;
+  eta -> anon1;
   glittershark -> wpcarro;
+  marcusr -> unspecific;
+  maskerad -> unspecific;
+  poigon -> eve;
 
   // secondary edges (how are they connected otherwise?)
 
