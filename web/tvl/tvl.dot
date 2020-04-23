@@ -42,6 +42,7 @@ digraph tvl {
   tazjin [href="https://tazj.in/"];
   tehhobbit;
   wpcarro [href="https://wpcarro.dev/"];
+  yuuko;
 
   // companies (blue)
   spotify [color="#4285f4" fontcolor="#4285f4" href="https://www.spotify.com/"];
@@ -108,6 +109,7 @@ digraph tvl {
   maskerad -> unspecific;
   poigon -> eve;
   q3k -> unspecific;
+  yuuko -> ncl;
 
   // secondary edges (how are they connected otherwise?)
 
