@@ -15,6 +15,7 @@ digraph tvl {
   benjojo [href="https://benjojo.co.uk/"];
   borb [href="https://twitter.com/FR31H31T"];
   cynthia [href="https://cynthia.re/"];
+  drathier;
   edef [href="https://edef.eu/files/edef.hs"];
   espes;
   eta [href="https://theta.eu.org/"];
@@ -34,6 +35,7 @@ digraph tvl {
   poigon;
   profpatsch [href="http://profpatsch.de/"];
   puck [href="https://puckipedia.com/"];
+  q3k;
   qyliss [href="https://alyssa.is"];
   rcombs [href="http://rcombs.me/"];
   seven [href="https://open.spotify.com/user/so7"];
@@ -98,12 +100,14 @@ digraph tvl {
   aurora -> eve;
   borb -> unspecific;
   cynthia -> benjojo;
+  drathier -> maskerad;
   eta -> anon1;
   glittershark -> wpcarro;
   jooiiee1 -> unspecific;
   marcusr -> unspecific;
   maskerad -> unspecific;
   poigon -> eve;
+  q3k -> unspecific;
 
   // secondary edges (how are they connected otherwise?)
 
