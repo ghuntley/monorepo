@@ -138,4 +138,6 @@ digraph tvl {
   edef -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
   cynthia -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
   eta -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
+  aranea -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
+  aranea -> profpatsch [weight=0 style="dotted" color="grey" arrowhead="none"];
 }
