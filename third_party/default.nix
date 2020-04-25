@@ -87,6 +87,7 @@ let
       pkgconfig
       pounce
       protobuf
+      python3
       python3Packages
       remarshal
       rink
