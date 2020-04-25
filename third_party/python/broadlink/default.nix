@@ -10,13 +10,6 @@ let
 in buildPythonPackage (lib.fix (self: {
   pname = "python-broadlink";
   version = "0.13.2";
-
-  src = fetchFromGitHub {
-    owner = "mjg59";
-    repo = "python-broadlink";
-    rev = self.version;
-    sha256 = "0dwqzx294sjdc8dg1sd3z6mhll0zzsb8k0lzs63nyhm2nc9pyv6j";
-  };
-
+  src = ./.;
   propagatedBuildInputs = [ cryptography ];
 }))
