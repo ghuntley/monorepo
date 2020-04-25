@@ -41,7 +41,7 @@ commands = {
 
 class LightController:
     def __init__(self):
-        devices = broadlink.discover(timeout=2)
+        devices = broadlink.discover(timeout=2, discover_ip_address='192.168.1.11')
         if devices == []:
             raise Exception('no devices found')
         devices[0].auth()
