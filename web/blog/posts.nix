@@ -14,6 +14,13 @@
     content = ./posts/best-tools.md;
   }
   {
+    key = "nixery-layers";
+    title = "Nixery: Improved Layering Design";
+    date = 1565391600;
+    content = ./posts/nixery-layers.md;
+    draft = true;
+  }
+  {
     key = "reversing-watchguard-vpn";
     title = "Reverse-engineering WatchGuard Mobile VPN";
     date = 1486830338;
