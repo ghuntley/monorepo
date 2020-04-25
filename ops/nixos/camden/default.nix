@@ -1,5 +1,5 @@
 # This file configures camden.tazj.in, my homeserver.
-{ depot, lib, ... }:
+{ depot, pkgs, lib, ... }:
 
 config: let
   nixpkgs = import depot.third_party.nixpkgsSrc {
@@ -100,6 +100,7 @@ in lib.fix(self: {
   environment.systemPackages =
     # programs from the depot
     (with depot; [
+      fun.idual.setAlarm
       third_party.git
       third_party.honk
       third_party.pounce
@@ -344,6 +345,15 @@ in lib.fix(self: {
             proxy_pass http://localhost:2448/cgit.cgi/depot/;
         }
       '';
+    };
+  };
+
+  # Timer units that can be started with systemd-run to set my alarm.
+  systemd.user.services.light-alarm = {
+    script = "${depot.fun.idual.script}/bin/__init__.py";
+    postStart = "${pkgs.systemd}/bin/systemctl --user stop light-alarm.timer";
+    serviceConfig = {
+      Type = "oneshot";
     };
   };
 

@@ -62,8 +62,10 @@ if __name__ == "__main__":
     #
     # The command sending doesn't always work, hence this brute-force
     # approach.
+    print('Initialising light controller')
     ctrl = LightController()
 
+    print('Turning on the lights. Wakey, wakey!')
     for i in range(9):
         ctrl.send_cmd('morning')
         time.sleep(0.2)
