@@ -18,7 +18,6 @@
     title = "Nixery: Improved Layering Design";
     date = 1565391600;
     content = ./posts/nixery-layers.md;
-    draft = true;
   }
   {
     key = "reversing-watchguard-vpn";
