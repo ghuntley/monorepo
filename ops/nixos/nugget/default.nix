@@ -73,10 +73,6 @@ in depot.lib.fix(self: {
         psk = "washyourface";
       };
     };
-
-    extraHosts = ''
-      10.0.1.205 camden git.tazj.in tazj.in camden.tazj.in git.camden.tazj.in
-    '';
   };
 
   # Generate an immutable /etc/resolv.conf from the nameserver settings
