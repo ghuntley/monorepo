@@ -5,11 +5,11 @@
 { ... }:
 
 let
-  # Tracking nixos-20.03 as of 2020-04-21.
-  commit = "1e90c46c2d98f9391df79954a74d14f263cad729";
+  # Tracking nixos-20.03 as of 2020-04-04.
+  commit = "b0c285807d6a9f1b7562ec417c24fa1a30ecc31a";
   nixpkgsSrc = fetchTarball {
     url = "https://github.com/NixOS/nixpkgs-channels/archive/${commit}.tar.gz";
-    sha256 = "1xs0lgh3q1hbrj0lbpy3czw41cv6vxx9kdf2npwc58z8xq3sdqmh";
+    sha256 = "0waapr7aqz0h1fy1fqlx981ygllh91qx9sz1l2j2h59s46cdircl";
   };
   nixpkgs = import nixpkgsSrc {
     config.allowUnfree = true;
