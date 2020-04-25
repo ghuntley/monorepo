@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='idualctl',
@@ -10,7 +10,7 @@ setup(
     url='https://git.tazj.in/about/fun/idual',
     packages=['idual'],
     package_dir = {'idual': ''},
-    scripts = ['idual.py'],
+    scripts = ['__init__.py'],
     install_requires=['broadlink>=0.13.2'],
     include_package_data=True,
 )

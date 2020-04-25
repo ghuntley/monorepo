@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-colours = {
+import base64
+import broadlink
+import time
+
+commands = {
     # system commands
     'on'       : 'JgBIAAABK5AVERQ2FBEUERQSFBEUERQSFBEUNhQ2FDUUNhQ2FDYUNRU1FBIUERQRFBIUERQRFBIUERQ2FDYUNRQ2FDYUNhQ1FQANBQ==',
     'off'      : 'JgBIAAABLJAUERQ2FBEUEhQRFBEUEhQRFBEUNhQ2FDUVNRQ2FDYUNhQRFDYUERQSFBEUERQSFBEUNhQRFDYUNhQ2FDUUNhQ2FAANBQ==',
@@ -35,6 +39,33 @@ colours = {
     'desaturate' : 'JgBIAAABLI8VERQ2FBEUERQSFBEUERURFBEUNhQ1FTUUNhQ2FDYUNRQ2FDYUNhQ1FREUERQSFBEUERQSFBEUERQ2FDYUNhQ1FQANBQ==',
 }
 
+class LightController:
+    def __init__(self):
+        devices = broadlink.discover(timeout=2)
+        if devices == []:
+            raise Exception('no devices found')
+        devices[0].auth()
+        self.device = devices[0]
+
+    def send_cmd(self, name):
+        packet = base64.b64decode(commands[name])
+        self.device.send_data(packet)
+
+    def lights_on(self):
+        self.send_cmd('on')
+
+    def lights_off(self):
+        self.send_cmd('off')
+
 if __name__ == "__main__":
-    # execute only if run as a script
-    print(colours)
+    # Attempt to turn the lights on, in morning mode, 10 times.
+    #
+    # The command sending doesn't always work, hence this brute-force
+    # approach.
+    ctrl = LightController()
+
+    for i in range(9):
+        ctrl.send_cmd('morning')
+        time.sleep(0.2)
+        ctrl.lights_on()
+        time.sleep(0.8)
