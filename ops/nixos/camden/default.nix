@@ -88,7 +88,7 @@ in lib.fix(self: {
       }
     ];
 
-    firewall.allowedTCPPorts = [ 22 8080 80 443 1935 ];
+    firewall.enable = false;
   };
 
   time.timeZone = "UTC";
