@@ -100,6 +100,7 @@ in lib.fix(self: {
   environment.systemPackages =
     # programs from the depot
     (with depot; [
+      fun.idual.script
       fun.idual.setAlarm
       third_party.git
       third_party.honk
@@ -350,7 +351,7 @@ in lib.fix(self: {
 
   # Timer units that can be started with systemd-run to set my alarm.
   systemd.user.services.light-alarm = {
-    script = "${depot.fun.idual.script}/bin/__init__.py";
+    script = "${depot.fun.idual.script}/bin/idualctl wakey";
     postStart = "${pkgs.systemd}/bin/systemctl --user stop light-alarm.timer";
     serviceConfig = {
       Type = "oneshot";
