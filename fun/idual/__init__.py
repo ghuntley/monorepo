@@ -39,17 +39,22 @@ commands = {
     'desaturate' : 'JgBIAAABLI8VERQ2FBEUERQSFBEUERURFBEUNhQ1FTUUNhQ2FDYUNRQ2FDYUNhQ1FREUERQSFBEUERQSFBEUERQ2FDYUNhQ1FQANBQ==',
 }
 
+def cmd(name):
+    return base64.b64decode(commands[name])
+
 class LightController:
     def __init__(self):
-        devices = broadlink.discover(timeout=2, discover_ip_address='192.168.1.11')
-        if devices == []:
+        self.devices = broadlink.discover(timeout=10, max_devices=2)
+        if self.devices == []:
             raise Exception('no devices found')
-        devices[0].auth()
-        self.device = devices[0]
+        for device in self.devices:
+            device.auth()
 
-    def send_cmd(self, name):
-        packet = base64.b64decode(commands[name])
-        self.device.send_data(packet)
+    def send_cmd(self, name, iterations=5):
+        packet = cmd(name)
+        for i in range(iterations):
+            for device in self.devices:
+                device.send_data(packet)
 
     def lights_on(self):
         self.send_cmd('on')
