@@ -145,6 +145,9 @@ in lib.fix(self: {
   # Join Tailscale into home network
   services.tailscale.enable = true;
 
+  # Allow sudo-ing via the forwarded SSH agent.
+  security.pam.enableSSHAgentAuth = true;
+
   # Run cgit for the depot. The onion here is nginx(thttpd(cgit)).
   systemd.services.cgit = {
     wantedBy = [ "multi-user.target" ];
