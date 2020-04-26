@@ -193,6 +193,7 @@ in depot.lib.fix(self: {
     };
 
     programs.fish.enable = true;
+    programs.ssh.startAgent = true;
 
     services.redshift.enable = true;
     services.openssh.enable = true;
