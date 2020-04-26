@@ -89,6 +89,7 @@ in depot.lib.fix(self: {
   environment.systemPackages =
     # programs from the depot
     (with depot; [
+      fun.idual.script
       lieer
       nuggetEmacs
       ops.kontemplate
