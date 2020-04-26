@@ -9,8 +9,7 @@ setup(
     author_email='mail@tazj.in',
     url='https://git.tazj.in/about/fun/idual',
     packages=['idual'],
-    package_dir = {'idual': ''},
-    scripts = ['__init__.py'],
+    scripts = ['idualctl'],
     install_requires=['broadlink>=0.13.2'],
     include_package_data=True,
 )

@@ -1,9 +1,7 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import base64
 import broadlink
 import time
+import sys
 
 commands = {
     # system commands
@@ -51,28 +49,17 @@ class LightController:
             device.auth()
 
     def send_cmd(self, name, iterations=5):
+        "Send a command, repeatedly for reliability"
         packet = cmd(name)
         for i in range(iterations):
             for device in self.devices:
                 device.send_data(packet)
 
-    def lights_on(self):
-        self.send_cmd('on')
-
-    def lights_off(self):
-        self.send_cmd('off')
-
-if __name__ == "__main__":
-    # Attempt to turn the lights on, in morning mode, 10 times.
-    #
-    # The command sending doesn't always work, hence this brute-force
-    # approach.
-    print('Initialising light controller')
-    ctrl = LightController()
-
-    print('Turning on the lights. Wakey, wakey!')
-    for i in range(9):
-        ctrl.send_cmd('morning')
-        time.sleep(0.2)
-        ctrl.lights_on()
-        time.sleep(0.8)
+    def wakey(self):
+        "Turn on the lights in the morning, try repeatedly for reasons."
+        print('Turning on the lights. Wakey, wakey!')
+        for i in range(5):
+            self.send_cmd('morning')
+            time.sleep(0.3)
+            self.send_cmd('on')
+            time.sleep(0.3)
