@@ -72,7 +72,7 @@ def gendevice(devtype, host, mac, name=None, cloud=None):
     return device_class(host, mac, devtype, name=name, cloud=cloud)
 
 
-def discover(timeout=None, local_ip_address=None, discover_ip_address='255.255.255.255'):
+def discover(timeout=None, local_ip_address=None, discover_ip_address='255.255.255.255', max_devices=100):
     if local_ip_address is None:
         local_ip_address = socket.gethostbyname(socket.gethostname())
     if local_ip_address.startswith('127.'):
@@ -140,7 +140,7 @@ def discover(timeout=None, local_ip_address=None, discover_ip_address='255.255.2
         device = gendevice(devtype, host, mac, name=name, cloud=cloud)
         return device
 
-    while (time.time() - starttime) < timeout:
+    while ((time.time() - starttime) < timeout) and (len(devices) < max_devices):
         cs.settimeout(timeout - (time.time() - starttime))
         try:
             response = cs.recvfrom(1024)
