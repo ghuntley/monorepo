@@ -7,6 +7,7 @@ digraph tvl {
   tazjin -> TVL [style="bold"];
 
   // people
+  Q [href="https://magicalcodewit.ch/"];
   ac [href="https://the-alex.github.io/about/"];
   andi [label="andi-" href="https://andreas.rammhold.de/"];
   anon1 [color="grey" fontcolor="grey"];
@@ -95,6 +96,7 @@ digraph tvl {
   wpcarro -> google;
 
   // random primary
+  Q -> cynthia;
   ac -> wpcarro;
   anon1 -> google;
   aranea -> multi;
@@ -140,6 +142,7 @@ digraph tvl {
   edef -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
   cynthia -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
   eta -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
+  Q -> baby [weight=0 style="dotted" arrowhead="none" color="pink"];
   aranea -> nix [weight=0 style="dotted" color="grey" arrowhead="none"];
   aranea -> profpatsch [weight=0 style="dotted" color="grey" arrowhead="none"];
 }
